@@ -1,0 +1,14 @@
+.registerlink:hover {
+    text-decoration: underline;
+}
+
+.fourzerofour {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.fourzerofour h1, .fourzerofour h3 {
+    margin: 1rem;
+}

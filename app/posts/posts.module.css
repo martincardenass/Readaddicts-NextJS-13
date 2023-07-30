@@ -1,0 +1,50 @@
+.posts {
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.posts ul {
+    margin: 0;
+    padding: 2rem;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(300px, 1fr)
+    );
+    gap: 2rem;
+}
+
+.posts img {
+    border-radius: 50%;
+    margin-right: 0.25rem;
+}
+
+.posts li {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.usercontainer {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.usercontainer h4 {
+    color: rgb(50, 50, 50);
+}
+.usercontainer h4::first-letter {
+    text-transform: capitalize;
+}
+
+.nofirstname h3 {
+    text-transform: capitalize;
+}

@@ -1,0 +1,64 @@
+.usersmain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.usersmain input[type="text"], .usersmain input[type="password"]  {
+    padding: .5rem;
+    border: 0;
+    border-bottom: 1px solid #ed2085;
+}
+
+.usersmain input[type="submit"] {
+    margin: 0 auto;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ed2085;
+    transition: all .25s ease;
+}
+
+.usersmain input[type="submit"]:hover {
+    border: 1px solid #d44d91;
+    background-color: #ed2085;
+    color: white;
+}
+
+.usersmain input[type="submit"]:active {
+    background-color: #d80d73;
+}
+
+.usersmain input:focus {
+    outline: none;
+}
+
+
+
+.form {
+    gap: .75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formfield {
+    gap: 2rem;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.register:hover {
+    text-decoration: underline;
+}
+
+.errormessage {
+    background-color: rgb(245, 245, 245);
+    /* border-radius: 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

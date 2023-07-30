@@ -1,0 +1,14 @@
+.badhttpstatuscode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.badhttpstatuscode h1, .badhttpstatuscode h3 {
+    margin: 1rem;
+}
+
+.gohome:hover {
+    text-decoration: underline;
+}
