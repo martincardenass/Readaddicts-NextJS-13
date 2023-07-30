@@ -1,4 +1,4 @@
-async function updateProfile (formData) {
+async function patchProfile (formData) {
   try {
     const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/update')
     const res = await fetch(url, {
@@ -21,4 +21,4 @@ async function updateProfile (formData) {
   }
 }
 
-export default updateProfile
+export default patchProfile

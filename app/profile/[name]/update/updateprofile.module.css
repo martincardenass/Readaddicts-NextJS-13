@@ -12,3 +12,34 @@
 .gohome:hover {
     text-decoration: underline;
 }
+
+.inputfield {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.updateform {
+    padding: 1rem 0;
+    background-color: white;
+}
+
+.updateformcontainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.updateformcontainer img {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading h1 {
+        font-weight: 400;
+}
