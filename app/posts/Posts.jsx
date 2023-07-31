@@ -1,10 +1,14 @@
 import styles from './posts.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const DynamicMenu = dynamic(() => import('./Menu'))
 
 const Posts = ({ posts, postsStatus }) => {
   return (
     <section className={styles.posts}>
+      <h1>Welcome, check out the latest posts</h1>
       {postsStatus === 200 && (
         <ul>
           {posts.map((post) => (
@@ -44,6 +48,9 @@ const Posts = ({ posts, postsStatus }) => {
                 </p>
                 <p>{post.content}</p>
               </Link>
+              <div className={styles.editicons}>
+                <DynamicMenu username={post.author} />
+              </div>
             </li>
           ))}
         </ul>

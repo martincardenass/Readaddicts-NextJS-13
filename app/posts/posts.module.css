@@ -5,17 +5,21 @@
     align-items: center;
 }
 
+.posts h1 {
+    text-align: center;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 32px;
+}
+
 .posts ul {
     margin: 0;
     padding: 2rem;
-    display: grid;
+    /* width: 60%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-content: center;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(300px, 1fr)
-    );
-    gap: 2rem;
 }
 
 .posts img {
@@ -24,11 +28,23 @@
 }
 
 .posts li {
+    width: 60%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    margin: .5rem 0;
     padding: 2rem;
     background-color: white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.editicons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 1.1rem;
 }
 
 .usercontainer {
@@ -47,4 +63,49 @@
 
 .nofirstname h3 {
     text-transform: capitalize;
+}
+
+.threedots {
+    font-size: 24px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.popupmenu {
+    position: absolute;
+    top: 75%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    width: 170px;
+    z-index: 9999;
+    margin: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.popupmenu p {
+    margin: 0;
+    padding: .75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.popupmenu p:last-child {
+    border: none;
+    color: red;
+}
+
+.popupmenu p:hover:first-child {
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: rgb(241, 241, 241);
+}
+
+.popupmenu p:hover:last-child {
+    cursor: pointer;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(241, 241, 241);
 }

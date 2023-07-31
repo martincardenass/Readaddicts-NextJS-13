@@ -1,0 +1,79 @@
+.newpost {
+    padding: 1rem 0;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newpostcontainer {
+    padding: 2.5rem;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.newpostcontainer img {
+    border-radius: 50%;
+}
+
+.newpostcontainer input[type="text"] {
+    padding: .5rem;
+    border: 0;
+    font-size: 18px;
+    border-bottom: 1px solid #ed2085;
+}
+
+.newpostcontainer input[type="submit"] {
+    margin: 0 auto;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ed2085;
+    transition: all .25s ease;
+}
+
+.newpostcontainer input[type="submit"]:hover {
+    border: 1px solid #d44d91;
+    background-color: #ed2085;
+    color: white;
+}
+
+.newpostcontainer input[type="submit"]:active {
+    background-color: #d80d73;
+}
+
+.newpostcontainer input:focus {
+    outline: none;
+}
+
+.postedimage {
+    filter: grayscale();
+}
+.postedinput {
+    gap: 1rem;
+}
+
+.postedinput input[type="submit"], .postedinput input[type="text"]  {
+    cursor: not-allowed;
+}
+
+.newpostdenied {
+    padding: 1rem 0;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: not-allowed;
+}
+
+.flexor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

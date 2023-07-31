@@ -3,11 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './user.module.css'
 import dynamic from 'next/dynamic'
-import { crown, userSvg, pencil } from './svg'
+import { crown, userSvg, pencil } from '@/app/svg'
 
-const DynamicPencil = dynamic(() => import('./EditPencil'), {
-  loading: () => <p>Loading...</p>
-})
+const DynamicPencil = dynamic(() => import('./EditPencil'))
 
 const UserProfile = async ({ params, children }) => {
   const { name } = params

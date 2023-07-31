@@ -1,0 +1,27 @@
+@keyframes slide-in-bottom {
+    0% {
+      transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+.customalert {
+    display: flex;
+    position: fixed;
+    bottom: 2%;
+    right: 1%;
+    background-color: #be185d;
+    color: #fbcfe8;
+    border: 1px solid #ec4899;
+    border-radius: 5px;
+    width: 125px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    animation:slide-in-bottom .5s cubic-bezier(.25,.46,.45,.94) both
+}

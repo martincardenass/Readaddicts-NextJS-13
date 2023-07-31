@@ -52,9 +52,22 @@
     top: 0;
     right: 0;
     position: absolute;
-    padding: 1rem;
+    padding: 0 1rem;
     align-items: center;
     display: flex;
+}
+
+.pencilpopup {
+    background-color: white;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    width: 50px;
+    padding: 0 1rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .usernamecontainer h1 {

@@ -1,6 +1,6 @@
-async function getUserComments (userId) {
+async function getUserComments (username) {
   try {
-    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/' + userId + '/comments')
+    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/' + username + '/comments')
     const res = await fetch(url, { cache: 'no-store' })
 
     const statusCode = res.status

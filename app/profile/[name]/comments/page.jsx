@@ -4,11 +4,12 @@ import styles from '../posts/listofposts.module.css'
 const DynamicListOfComments = dynamic(() => import('./ListOfComents'), {
   loading: () => <h1>Loading...</h1>
 })
-const CommentsPage = () => {
+const CommentsPage = ({ params }) => {
+  const { name } = params
   return (
     <main className={styles.main}>
       <h1>Comments</h1>
-      <DynamicListOfComments />
+      <DynamicListOfComments name={name} />
     </main>
   )
 }

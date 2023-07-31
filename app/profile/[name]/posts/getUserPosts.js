@@ -1,7 +1,7 @@
-async function getUserPosts (userId) {
+async function getUserPosts (username) {
   try {
     const url = new URL(
-      process.env.NEXT_PUBLIC_API_URL + 'User/' + userId + '/posts'
+      process.env.NEXT_PUBLIC_API_URL + 'User/' + username + '/posts'
     )
     const res = await fetch(url, { cache: 'no-cache' })
 
