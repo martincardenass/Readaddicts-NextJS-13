@@ -39,12 +39,11 @@ const HomePage = () => {
   const handlePost = async (e) => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.target))
-    let result
     if (formData.content !== '') {
-      result = await createPost(formData.content)
+      const data = await createPost(formData.content)
       setPosted(true)
       setShowAlert(true)
-      setMsg(result)
+      setMsg(data)
     }
   }
 

@@ -2,6 +2,9 @@ import getComments from './getComments'
 import styles from './comments.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const DynamicAddComment = dynamic(() => import('./AddComent'))
 
 const CommentsPage = async ({ params }) => {
   const { id } = params
@@ -10,84 +13,101 @@ const CommentsPage = async ({ params }) => {
   const status = comments.status
 
   if (status === 404) {
-    return <h1 className={styles.h1styles}>{commentsData} <span className={styles.addcomment}>Add one</span></h1>
+    return (
+      <h1 className={styles.h1styles}>
+        {commentsData} <span className={styles.addcomment}>Add one</span>
+      </h1>
+    )
   }
 
   if (status === 200) {
     return (
       <article className={styles.comments}>
         <ul>
-          {commentsData.map((comment) => comment.parent_Comment_Id === null && (
-            <li key={comment.comment_Id}>
-              {comment.author === 'Anonymous'
-                ? (
-                  <section className={styles.usersection}>
-                    {comment.profile_Picture && (
-                      <Image
-                        src={comment.profile_Picture}
-                        alt={comment.author}
-                        width={40}
-                        height={40}
-                      />
-                    )}
-                    <p>
-                      <span>{comment.author}</span> says...
-                    </p>
-                  </section>
-                  )
-                : (
-                  <Link
-                    href={`/profile/${comment.author}`}
-                    className={styles.usersection}
-                  >
-                    {comment.profile_Picture && (
-                      <Image
-                        src={comment.profile_Picture}
-                        alt={comment.author}
-                        width={40}
-                        height={40}
-                      />
-                    )}
-                    <p>
-                      <span>{comment.author}</span> says
-                    </p>
-                  </Link>
-                  )}
-              <section>
-                {comment.content}
-                <span className={styles.date}>
-                  {new Date(comment.created).toLocaleDateString()}{' '}
-                  <span style={{ color: 'rgb(150, 150, 150)' }}>
-                    {new Date(comment.created).getHours()}:
-                    {new Date(comment.created).getMinutes()}
-                  </span>
-                </span>
-              </section>
-              <ul className={styles.childcomments}>
-                {commentsData.map(childComment => (
-                  childComment.parent_Comment_Id === comment.comment_Id && (
-                    <li key={childComment.comment_Id}>
+          {commentsData.map(
+            (comment) =>
+              comment.parent_Comment_Id === null && (
+                <li key={comment.comment_Id}>
+                  {comment.author === 'Anonymous'
+                    ? (
                       <section className={styles.usersection}>
-                        {childComment.profile_Picture && (
+                        {comment.profile_Picture && (
                           <Image
-                            src={childComment.profile_Picture}
-                            alt={childComment.author}
+                            src={comment.profile_Picture}
+                            alt={comment.author}
                             width={40}
                             height={40}
                           />
                         )}
-                        <p>
-                          <span>{childComment.author}</span> replied
-                        </p>
+                        <p>{comment.author}</p>
+                        <span className={styles.date}>
+                          {new Date(comment.created).toLocaleDateString()}{' '}
+                          <span style={{ color: 'rgb(150, 150, 150)' }}>
+                            {new Date(comment.created).getHours()}:
+                            {new Date(comment.created).getMinutes()}
+                          </span>
+                        </span>
                       </section>
-                      <p>{childComment.content}</p>
-                    </li>
-                  )
-                ))}
-              </ul>
-            </li>
-          ))}
+                      )
+                    : (
+                      <Link
+                        href={`/profile/${comment.author}`}
+                        className={styles.usersection}
+                      >
+                        {comment.profile_Picture && (
+                          <Image
+                            src={comment.profile_Picture}
+                            alt={comment.author}
+                            width={40}
+                            height={40}
+                          />
+                        )}
+                        <p>{comment.author}</p>
+                        <span className={styles.date}>
+                          {new Date(comment.created).toLocaleDateString()}{' '}
+                          <span style={{ color: 'rgb(150, 150, 150)' }}>
+                            {new Date(comment.created).getHours()}:
+                            {new Date(comment.created).getMinutes()}
+                          </span>
+                        </span>
+                      </Link>
+                      )}
+                  {comment.content}
+                  <ul className={styles.childcomments}>
+                    {commentsData.map(
+                      (childComment) =>
+                        childComment.parent_Comment_Id ===
+                          comment.comment_Id && (
+                            <li key={childComment.comment_Id}>
+                              <section className={styles.usersection}>
+                                {childComment.profile_Picture && (
+                                  <Image
+                                    src={childComment.profile_Picture}
+                                    alt={childComment.author}
+                                    width={40}
+                                    height={40}
+                                  />
+                                )}
+                                <p>{childComment.author}</p> replied
+                                <span className={styles.date}>
+                                  {new Date(comment.created).toLocaleDateString()}{' '}
+                                  <span style={{ color: 'rgb(150, 150, 150)' }}>
+                                    {new Date(comment.created).getHours()}:
+                                    {new Date(comment.created).getMinutes()}
+                                  </span>
+                                </span>
+                              </section>
+                              <span>{childComment.content}</span>
+                              <p>Reply to this comment</p>
+                            </li>
+                        )
+                    )}
+                  </ul>
+                </li>
+              )
+          )}
         </ul>
+        <DynamicAddComment postId={id} />
       </article>
     )
   }

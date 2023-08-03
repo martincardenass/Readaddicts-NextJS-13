@@ -15,7 +15,6 @@
 .posts ul {
     margin: 0;
     padding: 2rem;
-    /* width: 60%; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,11 +39,29 @@
     position: relative;
 }
 
+.posts li:hover {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
 .editicons {
     position: absolute;
     top: 0;
     right: 0;
     padding-right: 1.1rem;
+}
+
+.commenticon {
+    gap: .5rem;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    bottom: 0;
+    right: 0;
+    padding: 1.1rem;
+}
+
+.commenticon > div:hover {
+    cursor: pointer;
 }
 
 .usercontainer {

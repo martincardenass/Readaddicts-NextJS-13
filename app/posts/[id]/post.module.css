@@ -1,21 +1,33 @@
 .post {
-    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5rem 0;
-    gap: 5rem;
+    padding: 2.5rem;
+}
+
+.postflex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    gap: 2rem;
+    border-radius: 25px;
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    min-width: 35%;
 }
 
 .usercontainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .usercontainer h1 {
-    font-size: 48px;
+    font-size: 32px;
+    font-weight: 400;
     margin: 0;
 }
 
@@ -27,22 +39,23 @@
     text-transform: capitalize;
 }
 
-.usercontainertext {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-}
-
 .textcontainer {
-    font-size: 24px;
-    width: 25%;
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .textcontainer span {
-    font-size: 16px;
-    flex-direction: row;
+    font-size: 14px;
+}
+
+.loadcomments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadcomments h3 {
+    font-weight: 400;
 }

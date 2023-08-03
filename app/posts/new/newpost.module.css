@@ -7,6 +7,10 @@
     justify-content: center;
 }
 
+.newpostcontainer:hover {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
 .newpostcontainer {
     padding: 2.5rem;
     border-radius: 15px;
@@ -14,6 +18,8 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .newpostcontainer img {
@@ -53,9 +59,6 @@
 
 .postedimage {
     filter: grayscale();
-}
-.postedinput {
-    gap: 1rem;
 }
 
 .postedinput input[type="submit"], .postedinput input[type="text"]  {

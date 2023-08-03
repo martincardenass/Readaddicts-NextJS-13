@@ -1,65 +1,117 @@
 .comments {
-    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
-.comments ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.comments ul:first-child {
+    min-width: 50%;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 25px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.date {
+    font-size: 12px;
+    padding: 0 1rem;
 }
 
 .comments li {
-    width: 500px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* border-bottom: 1px solid rgb(225, 225, 225); */
+    padding-bottom: 0.5rem;
 }
 
-.comments img {
-    border-radius: 50%;
+.childcomments {
+    margin: 1rem 0;
+    padding: .5rem 1.5rem;
+    border-radius: 15px;
+    background-color: whitesmoke;
+}
+
+.childcomments p {
+    margin: .25rem;
 }
 
 .usersection {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: .5rem;
 }
 
-.usersection span {
-    font-weight: bold;
+.usersection img {
+    border-radius: 50%;
 }
 
-.usersection p::first-letter {
-    text-transform: capitalize;
+.comments p {
+    font-weight: 600;
 }
 
-.date {
-    font-size: 10px;
-    padding: 0 1rem;
-}
-
-.childcomments p {
-    margin: 0;
-}
-
-.h1styles {
-    font-weight: 500;
-    text-align: center;
+.replyparagraph {
+    cursor: pointer;
 }
 
 .addcomment {
-    font-weight: 600;
-    color: rgb(24, 24, 24);
+    background-color: white;
+    padding: 2.5rem 5rem;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.addcomment:hover {
+.addcomment img {
+    border-radius: 50%;
+}
+
+.addcomment input[type="text"] {
+    padding: .5rem;
+    border: 0;
+    border-bottom: 1px solid #ed2085;
+    margin-right: 1rem;
+}
+
+.addcomment input[type="submit"] {
+    margin: 0 auto;
     cursor: pointer;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ed2085;
+    transition: all .25s ease;
+}
+
+.addcomment input[type="submit"]:hover {
+    border: 1px solid #d44d91;
+    background-color: #ed2085;
+    color: white;
+}
+
+.addcomment input[type="submit"]:active {
+    background-color: #d80d73;
+}
+
+.addcomment input:focus {
+    outline: none;
+}
+
+.addcommentcontainer p {
+    text-align: center;
+    font-weight: 500;
+    display: flex;
+}
+
+.addcommentcontainer > p > div::first-letter {
+   text-transform: capitalize;
+}
+
+.addcommentcontainer > p > a:hover {
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.addcommentcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

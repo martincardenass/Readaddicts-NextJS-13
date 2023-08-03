@@ -13,7 +13,7 @@ const Menu = ({ username }) => {
 
   if (user?.username === username) {
     return (
-      <>
+      <div className={styles.editicons}>
         <div onClick={handleClick} className={styles.threedots}>
           ...
         </div>
@@ -23,11 +23,11 @@ const Menu = ({ username }) => {
             <p>Delete this post</p>
           </div>
         )}
-      </>
+      </div>
     )
   } else {
     return (
-      <>
+      <div className={styles.editicons}>
         <div onClick={handleClick} className={styles.threedots}>
           ...
         </div>
@@ -37,7 +37,7 @@ const Menu = ({ username }) => {
             <p>See comments</p>
           </div>
         )}
-      </>
+      </div>
     )
   }
 }

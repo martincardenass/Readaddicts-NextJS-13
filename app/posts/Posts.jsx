@@ -4,11 +4,12 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
 const DynamicMenu = dynamic(() => import('./Menu'))
+const DynamicIcons = dynamic(() => import('./Icons'))
 
 const Posts = ({ posts, postsStatus }) => {
   return (
     <section className={styles.posts}>
-      <h1>Welcome, check out the latest posts</h1>
+      <h1>Welcome back</h1>
       {postsStatus === 200 && (
         <ul>
           {posts.map((post) => (
@@ -40,7 +41,7 @@ const Posts = ({ posts, postsStatus }) => {
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
                 <p>
-                  <span>{new Date(post.created).toLocaleDateString()}{' '}</span>
+                  <span>{new Date(post.created).toLocaleDateString()} </span>
                   <span style={{ color: 'rgb(150, 150, 150)' }}>
                     {new Date(post.created).getHours()}:
                     {new Date(post.created).getMinutes()}
@@ -48,9 +49,8 @@ const Posts = ({ posts, postsStatus }) => {
                 </p>
                 <p>{post.content}</p>
               </Link>
-              <div className={styles.editicons}>
-                <DynamicMenu username={post.author} />
-              </div>
+              <DynamicMenu username={post.author} />
+              <DynamicIcons id={post.post_Id} />
             </li>
           ))}
         </ul>

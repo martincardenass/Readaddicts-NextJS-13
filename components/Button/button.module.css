@@ -1,0 +1,63 @@
+.effect {
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    /* Variables that can be changed through props */
+    --effect-name: ripple;
+    --effect-duration: 1000ms;
+    --effect-top: 0px;
+    --effect-left: 0px;
+    --effect-height: 100px;
+    --effect-width: 100px;
+    --effect-color: white;
+
+    --button-width: 100px;
+    --button-height: 35px;
+    --button-background-color: rgb(235, 235, 235);
+    --button-text-color: black;
+}
+
+.effect span {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    padding:  0;
+    cursor: pointer;
+    border: none;
+    width: var(--button-width);
+    height: var(--button-height);
+    border-radius: 7px;
+}
+
+.effect::before {
+    content: '';
+    position: absolute;
+    opacity: 0.5;
+    top: var(--effect-top);
+    left: var(--effect-left);
+    height: var(--effect-height);
+    width: var(--effect-width);
+    border-radius: 50%;
+    transform: scale(0);
+    background: var(--effect-color);
+}
+
+.active::before {
+    border-radius: 50%;
+    animation: ripple var(--effect-duration) linear forwards;
+}
+
+@keyframes ripple {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(6);
+        opacity: 0;
+    }
+}
