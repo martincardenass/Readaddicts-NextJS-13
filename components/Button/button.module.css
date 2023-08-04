@@ -16,7 +16,7 @@
     --button-width: 100px;
     --button-height: 35px;
     --button-background-color: rgb(235, 235, 235);
-    --button-text-color: black;
+    --button-text-color: black ;
 }
 
 .effect span {

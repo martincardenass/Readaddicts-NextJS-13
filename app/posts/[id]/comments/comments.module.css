@@ -1,16 +1,20 @@
 .comments {
+    flex-direction: column;
+    align-items: center;
+}
+
+.commentsmain {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .comments ul:first-child {
-    min-width: 50%;
+    margin: 0;
     background-color: white;
-    padding: 2.5rem;
+    padding: 2.6rem;
     border-radius: 25px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .date {
@@ -52,8 +56,11 @@
 }
 
 .addcomment {
+    margin: 1rem 0;
+    border: 1px solid rgba(0, 0, 0, 0.25);
     background-color: white;
-    padding: 2.5rem 5rem;
+    /* width: 100%; */
+    padding: 2rem 1.64rem;
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -68,27 +75,6 @@
     padding: .5rem;
     border: 0;
     border-bottom: 1px solid #ed2085;
-    margin-right: 1rem;
-}
-
-.addcomment input[type="submit"] {
-    margin: 0 auto;
-    cursor: pointer;
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid #ed2085;
-    transition: all .25s ease;
-}
-
-.addcomment input[type="submit"]:hover {
-    border: 1px solid #d44d91;
-    background-color: #ed2085;
-    color: white;
-}
-
-.addcomment input[type="submit"]:active {
-    background-color: #d80d73;
 }
 
 .addcomment input:focus {

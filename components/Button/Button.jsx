@@ -91,7 +91,7 @@ const Button = ({
       className={`${styles.effect} ${ripple ? styles.active : ''}`}
     >
       <span>
-        <Link href={href}>{text}</Link>
+        {href ? (<Link href={href}>{text}</Link>) : text}
       </span>
     </div>
   )

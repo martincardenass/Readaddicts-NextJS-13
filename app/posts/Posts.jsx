@@ -9,7 +9,6 @@ const DynamicIcons = dynamic(() => import('./Icons'))
 const Posts = ({ posts, postsStatus }) => {
   return (
     <section className={styles.posts}>
-      <h1>Welcome back</h1>
       {postsStatus === 200 && (
         <ul>
           {posts.map((post) => (

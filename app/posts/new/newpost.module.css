@@ -7,10 +7,6 @@
     justify-content: center;
 }
 
-.newpostcontainer:hover {
-    border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
 .newpostcontainer {
     padding: 2.5rem;
     border-radius: 15px;
@@ -18,8 +14,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.25);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .newpostcontainer img {
@@ -33,36 +28,8 @@
     border-bottom: 1px solid #ed2085;
 }
 
-.newpostcontainer input[type="submit"] {
-    margin: 0 auto;
-    cursor: pointer;
-    padding: .5rem 2rem;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid #ed2085;
-    transition: all .25s ease;
-}
-
-.newpostcontainer input[type="submit"]:hover {
-    border: 1px solid #d44d91;
-    background-color: #ed2085;
-    color: white;
-}
-
-.newpostcontainer input[type="submit"]:active {
-    background-color: #d80d73;
-}
-
 .newpostcontainer input:focus {
     outline: none;
-}
-
-.postedimage {
-    filter: grayscale();
-}
-
-.postedinput input[type="submit"], .postedinput input[type="text"]  {
-    cursor: not-allowed;
 }
 
 .newpostdenied {
@@ -75,8 +42,18 @@
     cursor: not-allowed;
 }
 
-.flexor {
+.inputandcharcount {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
+}
+
+.inputandcharcount div {
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
+}
+
+.inputandcharcount p {
+    font-size: 10px;
 }

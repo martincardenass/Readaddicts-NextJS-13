@@ -41,9 +41,21 @@ const HomePage = () => {
     const formData = Object.fromEntries(new FormData(e.target))
     if (formData.content !== '') {
       const data = await createPost(formData.content)
-      setPosted(true)
-      setShowAlert(true)
-      setMsg(data)
+      console.log(data)
+      // * error handling
+      if (data.status === 400) {
+        const errorText = data.text[0].error
+        const replacedErrorText = errorText.replace(errorText, 'Please provide at least 8 characters')
+        setMsg(replacedErrorText)
+        // * There are only two status responses 400 or 200. Explicit error handling its not necessary just use else
+      } else {
+        setMsg('Post published successfully') // * Delete any error messages (if any)
+        setPosted(true)
+        setShowAlert(true)
+      }
+      // * else formData its empty so the input does not have any info
+    } else {
+      setMsg('Your post cannot be empty')
     }
   }
 

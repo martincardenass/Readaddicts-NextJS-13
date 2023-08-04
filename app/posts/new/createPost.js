@@ -14,10 +14,10 @@ async function createPost (content) {
     const statusCode = res.status
 
     if (!res.ok) {
-      return { text: await res.text(), status: statusCode }
+      return { text: await res.json(), status: statusCode }
     }
 
-    return { text: await res.text(), status: statusCode }
+    return { data: await res.text(), status: statusCode }
   } catch (error) {
     return error.message
   }
