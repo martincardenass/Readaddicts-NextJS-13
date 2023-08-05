@@ -13,13 +13,14 @@ const Menu = ({ username }) => {
 
   if (user?.username === username) {
     return (
-      <div className={styles.editicons}>
+      <div className={styles.edituserlogged}>
         <div onClick={handleClick} className={styles.threedots}>
           ...
         </div>
         {toggle && (
-          <div className={styles.popupmenu}>
+          <div className={styles.popmenuuserlogged}>
             <p>Edit this post</p>
+            <p>See comments</p>
             <p>Delete this post</p>
           </div>
         )}
@@ -27,7 +28,7 @@ const Menu = ({ username }) => {
     )
   } else {
     return (
-      <div className={styles.editicons}>
+      <div className={styles.edituserlogged}>
         <div onClick={handleClick} className={styles.threedots}>
           ...
         </div>

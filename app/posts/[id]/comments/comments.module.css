@@ -100,3 +100,7 @@
     flex-direction: column;
     align-items: center;
 }
+
+.h1styles {
+    font-weight: 400;
+}

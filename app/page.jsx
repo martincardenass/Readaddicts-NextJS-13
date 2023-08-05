@@ -97,7 +97,7 @@ const HomePage = () => {
     // const limit = (posts?.length || 0) + 3
     if (isIntersecting) {
       const fetchPosts = async () => {
-        const postsData = await getPosts(page, 3)
+        const postsData = await getPosts(page, 5)
         setPostsStatus(postsData?.status)
 
         setPosts(prevPosts => [...prevPosts, ...postsData.data])

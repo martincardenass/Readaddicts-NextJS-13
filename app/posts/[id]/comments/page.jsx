@@ -12,7 +12,7 @@ const CommentsPage = async ({ params }) => {
   if (status === 404) {
     return (
       <h1 className={styles.h1styles}>
-        {commentsData} <span className={styles.addcomment}>Add one</span>
+        {commentsData}
       </h1>
     )
   }

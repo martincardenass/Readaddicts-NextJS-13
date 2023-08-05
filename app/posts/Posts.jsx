@@ -2,6 +2,7 @@ import styles from './posts.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { getTimeAgo } from '@/utility/relativeTime'
 
 const DynamicMenu = dynamic(() => import('./Menu'))
 const DynamicIcons = dynamic(() => import('./Icons'))
@@ -29,23 +30,13 @@ const Posts = ({ posts, postsStatus }) => {
                       {post.first_Name}{' '}
                       {post.last_Name && <>{post.last_Name}</>}
                     </h3>
-                    <h4>({post.author})</h4>
+                    <h4>(@{post.author})</h4>
                   </>
                 )}
-                {!post.first_Name && (
-                  <div className={styles.nofirstname}>
-                    <h3>{post.author}</h3>
-                  </div>
-                )}
+                {!post.first_Name && <h3>@{post.author}</h3>}
+                <p>{getTimeAgo(new Date(post.created).getTime())}</p>
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
-                <p>
-                  <span>{new Date(post.created).toLocaleDateString()} </span>
-                  <span style={{ color: 'rgb(150, 150, 150)' }}>
-                    {new Date(post.created).getHours()}:
-                    {new Date(post.created).getMinutes()}
-                  </span>
-                </p>
                 <p>{post.content}</p>
               </Link>
               <DynamicMenu username={post.author} />
