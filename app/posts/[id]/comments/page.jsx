@@ -96,7 +96,7 @@ const CommentsPage = async ({ params }) => {
                                 </span>
                               </section>
                               <span>{childComment.content}</span>
-                              <p>Reply to this comment</p>
+                              {/* <p>Reply to this comment</p> */}
                             </li>
                           )
                       )}

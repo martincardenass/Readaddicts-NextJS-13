@@ -51,11 +51,11 @@
 }
 
 .overlay {
-    position: fixed;
     background-color: rgb(243, 243, 243);
     height: 100vh;
     width: 100%;
-    animation:fade-in-bck .6s cubic-bezier(.39,.575,.565,1.000) both
+    animation:fade-in-bck .6s cubic-bezier(.39,.575,.565,1.000) both;
+    z-index: 9999;
 }
 
 .user p {
