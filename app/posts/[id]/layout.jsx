@@ -10,6 +10,7 @@ const DynamicAddComment = dynamic(() => import('./comments/AddComent'))
 const DynamicOptions = dynamic(() => import('./Options'))
 const DynamicComments = dynamic(() => import('./CommentsChild'))
 const DynamicDeletePost = dynamic(() => import('./DeleteChild'))
+const DynamicUpdatePost = dynamic(() => import('./UpdateChild'))
 
 const Post = async ({ params, children }) => {
   const { id } = params
@@ -43,7 +44,17 @@ const Post = async ({ params, children }) => {
               {!postData.first_Name && <h3>@{postData.author}</h3>}
             </Link>
             <section className={styles.date}>
-              <p>{getTimeAgo(new Date(postData.created).getTime())}</p>
+              {postData.modified !== '0001-01-01T00:00:00'
+                ? (
+                  <p>
+                    Modified {getTimeAgo(new Date(postData.modified).getTime())}
+                  </p>
+                  )
+                : (
+                  <p>
+                    Created {getTimeAgo(new Date(postData.created).getTime())}
+                  </p>
+                  )}
               <span className={styles.datetooltip} style={{ fontSize: '12px' }}>
                 {new Date(postData.created).toLocaleDateString()}
                 <span style={{ color: 'rgb(200, 200, 200)' }}>
@@ -57,7 +68,9 @@ const Post = async ({ params, children }) => {
             <p>{postData.content}</p>
           </section>
           <DynamicOptions username={postData.author} id={id} />
+          {/* This children uses conditional rendering based on the pathname */}
           <DynamicDeletePost>{children}</DynamicDeletePost>
+          <DynamicUpdatePost>{children}</DynamicUpdatePost>
         </article>
       )}
       <div>

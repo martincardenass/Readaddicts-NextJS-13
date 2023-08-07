@@ -34,7 +34,17 @@ const Posts = ({ posts, postsStatus }) => {
                   </>
                 )}
                 {!post.first_Name && <h3>@{post.author}</h3>}
-                <p>{getTimeAgo(new Date(post.created).getTime())}</p>
+                {post.modified !== '0001-01-01T00:00:00'
+                  ? (
+                    <p>
+                      Modified {getTimeAgo(new Date(post.modified).getTime())}
+                    </p>
+                    )
+                  : (
+                    <p>
+                      Created {getTimeAgo(new Date(post.created).getTime())}
+                    </p>
+                    )}
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
                 <p>{post.content}</p>

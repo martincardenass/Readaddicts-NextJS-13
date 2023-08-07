@@ -1,10 +1,12 @@
 'use client'
 import { useAuth } from '@/hooks/useAuth'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import styles from './post.module.css'
 
 const Options = ({ username, id }) => {
   const { user } = useAuth()
+  const pathname = usePathname()
 
   return (
     <>
@@ -14,11 +16,11 @@ const Options = ({ username, id }) => {
           <section className={styles.optionscontainer}>
             <Link href={`/posts/${id}/delete`}>
               <span className='material-symbols-outlined'>delete</span>
-              Delete post
+              <span className={pathname.includes('/delete') ? styles.active : ''}>Delete post</span>
             </Link>
             <Link href={`/posts/${id}/edit`}>
               <span className='material-symbols-outlined'>edit_note</span>
-              Edit post
+              <span className={pathname.includes('/edit') ? styles.active : ''}>Edit post</span>
             </Link>
           </section>
         </section>

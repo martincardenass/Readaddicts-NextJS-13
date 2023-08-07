@@ -20,7 +20,7 @@ const RemovePost = ({ params }) => {
   return (
     <section className={styles.optionsdelete}>
       <h3>
-        Post with ID {id} will be{' '}
+        This post will be{' '}
         <span style={{ color: 'rgb(255, 63, 63)' }}>deleted</span>.
       </h3>
       <p>
@@ -38,7 +38,6 @@ const RemovePost = ({ params }) => {
         <Button
           href={`/posts/${id}`}
           text='Cancel'
-          backgroundColor='rgb(200, 200, 200)'
         />
       </div>
       {msg && <Alert message={msg} width='100px' />}

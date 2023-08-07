@@ -1,6 +1,7 @@
 'use client'
 import getPosts from './getPosts'
 import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import createPost from './posts/new/createPost'
@@ -30,12 +31,16 @@ const HomePage = () => {
   const ref = useRef(null)
   const [isIntersecting, setIsIntersecting] = useState(false)
   const [page, setPage] = useState(1)
+  const router = useRouter()
 
   const handlePost = async (e) => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.target))
     if (formData.content !== '') {
       const data = await createPost(formData.content)
+      if (data.data !== undefined) {
+        router.push(`/posts/${data.data}`)
+      }
       // * error handling
       if (data.status === 400) {
         const errorText = data.text[0].error
@@ -94,7 +99,6 @@ const HomePage = () => {
   }, [ref, options])
 
   useEffect(() => {
-    // const limit = (posts?.length || 0) + 3
     if (isIntersecting) {
       const fetchPosts = async () => {
         const postsData = await getPosts(page, 5)
