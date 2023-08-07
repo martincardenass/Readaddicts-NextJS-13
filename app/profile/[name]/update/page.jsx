@@ -80,8 +80,6 @@ const UpdateProfile = ({ params }) => {
       }
     })
 
-    console.log(fieldsHaveChanged)
-
     if (fieldsHaveChanged) {
       result = await patchProfile(formData)
       setUpdated(true)

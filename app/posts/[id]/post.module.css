@@ -104,8 +104,57 @@
 
 .options {
     display: flex;
-    background-color: white;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
     border-radius: 25px;
-    padding: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.optionscontainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.optionscontainer a {
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.optionscontainer a:first-child:hover {
+    /* text-decoration: underline; */
+}
+
+.optionscontainer a:last-child {
+    /* width: 50%; */
+    /* background-color: cyan; */
+}
+
+.optionsdelete {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.optionsdelete h3 {
+    font-weight: 500;
+    margin: .25rem;
+}
+
+.deletebuttons {
+    display: flex;
+    gap: 1rem;
 }

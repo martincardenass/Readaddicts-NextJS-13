@@ -8,8 +8,10 @@ import { getTimeAgo } from '@/utility/relativeTime'
 const DynamicLoadComments = dynamic(() => import('./LoadComments'))
 const DynamicAddComment = dynamic(() => import('./comments/AddComent'))
 const DynamicOptions = dynamic(() => import('./Options'))
+const DynamicComments = dynamic(() => import('./CommentsChild'))
+const DynamicDeletePost = dynamic(() => import('./DeleteChild'))
 
-const page = async ({ params, children }) => {
+const Post = async ({ params, children }) => {
   const { id } = params
   const post = await getPost(id)
   const postData = post.data
@@ -54,17 +56,18 @@ const page = async ({ params, children }) => {
           <section className={styles.textcontainer}>
             <p>{postData.content}</p>
           </section>
-          <DynamicOptions username={postData.author} />
+          <DynamicOptions username={postData.author} id={id} />
+          <DynamicDeletePost>{children}</DynamicDeletePost>
         </article>
       )}
       <div>
         <DynamicAddComment postId={id} />
         <DynamicLoadComments id={id} />
-        {children}
+        <DynamicComments>{children}</DynamicComments>
       </div>
       {post.status === 404 && <p>{post.data}</p>}
     </main>
   )
 }
 
-export default page
+export default Post
