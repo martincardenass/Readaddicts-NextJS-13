@@ -31,14 +31,16 @@ const DynamicUpdateForm = dynamic(() => import('./UpdateForm'), {
   )
 })
 
+const DynamicAlert = dynamic(() => import('@/components/Alert/Alert'))
+
 const UpdateProfile = ({ params }) => {
   const { name } = params
   const { user } = useAuth()
-  const [msg, setMsg] = useState(null)
   const [thisUser, setThisUser] = useState(null)
   const [paramsUser, setParamsUser] = useState(null)
   const [status, setStatus] = useState(null)
   const [image, setImage] = useState(null)
+  const [updated, setUpdated] = useState(false)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -64,10 +66,27 @@ const UpdateProfile = ({ params }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault()
+    let result
     const formData = new FormData(e.target)
-    const result = await patchProfile(formData)
+    const formDataHasContentChecker = Object.fromEntries(new FormData(e.target))
 
-    setMsg(result)
+    const fieldsHaveChanged = Object.values(formDataHasContentChecker).some(field => {
+      if (typeof field === 'object') {
+        // * imageFile its an object, if image has no name it means no image has been provided
+        return field.name !== ''
+      } else {
+        // * while the other areas are strings. If fields are empty, then nothing was provided
+        return field !== ''
+      }
+    })
+
+    console.log(fieldsHaveChanged)
+
+    if (fieldsHaveChanged) {
+      result = await patchProfile(formData)
+      setUpdated(true)
+      console.log(result)
+    }
   }
 
   const handleImageSelect = (e) => {
@@ -84,13 +103,16 @@ const UpdateProfile = ({ params }) => {
 
   if (thisUser?.user_Id === paramsUser?.user_Id) {
     return (
-      <DynamicUpdateForm
-        thisUser={thisUser}
-        handleUpdate={handleUpdate}
-        handleImageSelect={handleImageSelect}
-        image={image}
-        msg={msg}
-      />
+      <>
+        <DynamicUpdateForm
+          thisUser={thisUser}
+          handleUpdate={handleUpdate}
+          handleImageSelect={handleImageSelect}
+          image={image}
+        />
+        {updated && <DynamicAlert message='Your changes have been saved.' width='240px' />}
+        {!updated && <DynamicAlert message='Beware! No field changes detected' width='270px' />}
+      </>
     )
   }
 

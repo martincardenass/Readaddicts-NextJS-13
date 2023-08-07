@@ -32,7 +32,7 @@ const ListOfPosts = ({ name }) => {
                   width={35}
                   height={35}
                 />
-                <h4>{post.author}</h4>
+                <h4>@{post.author}</h4>
                 <p>
                   <span>{new Date(post.created).toLocaleDateString()} </span>
                   <span style={{ color: 'rgb(150, 150, 150)' }}>

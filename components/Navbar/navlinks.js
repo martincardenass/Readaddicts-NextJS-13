@@ -1,9 +1,9 @@
 export const navLinks = [
   { href: '/', key: 'Home', text: 'Home' },
-  { href: '/', key: 'Users', text: 'Users' },
-  { href: '/', key: 'Posts', text: 'Posts' },
-  { href: '/', key: 'TopComments', text: 'Top Comments' },
-  { href: '/', key: 'Saved', text: 'Saved' }
+  { href: '/users', key: 'Users', text: 'Users' },
+  { href: '/osts', key: 'Posts', text: 'Posts' },
+  { href: '/topcomments', key: 'TopComments', text: 'Top Comments' },
+  { href: '/saved', key: 'Saved', text: 'Saved' }
 ]
 
 export const categories = [

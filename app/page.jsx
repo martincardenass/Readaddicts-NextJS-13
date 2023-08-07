@@ -108,10 +108,6 @@ const HomePage = () => {
     }
   }, [isIntersecting])
 
-  useEffect(() => {
-    console.log(posts)
-  }, [posts])
-
   return (
     <>
       {userStatusCode === 404 && <DynamicLogin />}

@@ -5,31 +5,27 @@
 
 .post {
     display: flex;
-    justify-content: center;
-    height: 100%;
+    flex-direction: column;
     width: 55%;
     padding: 1rem 2.5rem;
 }
 
 .postflex {
     display: flex;
-    width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 2rem;
-    gap: 10rem;
-    border-radius: 25px;
+    padding: 1rem 2rem;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.25);
-    min-width: 35%;
 }
 
-.postflex a > div {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
+.postflex h4 {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .usercontainer {
@@ -54,11 +50,14 @@
 }
 
 .textcontainer {
-    font-size: 18px;
-}
-
-.textcontainer span {
-    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: none;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: white;
+    padding: 1rem 2.5rem;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .loadcomments {
@@ -72,4 +71,41 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+
+.date {
+    position: relative;
+    cursor: pointer;
+}
+
+.date::first-letter {
+    text-transform: uppercase;
+} 
+
+.datetooltip {
+    display: none;
+    background-color: #8d8d8d;
+    color: #fff;
+    padding: .5rem;
+    z-index: 1;
+    position: absolute;
+    top: 20%;
+    right: 110%;
+    opacity: 0;
+    border-radius: 25px;
+    gap: .25rem;
+}
+
+.date:hover .datetooltip {
+    display: flex;
+    opacity: 1;
+}
+
+.options {
+    display: flex;
+    background-color: white;
+    border-radius: 25px;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }

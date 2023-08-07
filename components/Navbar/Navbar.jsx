@@ -5,8 +5,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from './navbar.module.css'
 import { useAuth } from '@/hooks/useAuth'
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
+  const pathname = usePathname()
   const { user, userStatusCode } = useAuth()
   const [toggle, setToggle] = useState(false)
   const [popup, setPopup] = useState(false)
@@ -36,7 +38,7 @@ const Navbar = () => {
     <ul>
       {navLinks.map((link) => (
         <li key={link.key}>
-          <Link href={link.href}>{link.text}</Link>
+          <Link href={link.href} className={pathname === link.href ? styles.active : ''}>{link.text}</Link>
         </li>
       ))}
     </ul>

@@ -3,9 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from './post.module.css'
 import dynamic from 'next/dynamic'
+import { getTimeAgo } from '@/utility/relativeTime'
 
 const DynamicLoadComments = dynamic(() => import('./LoadComments'))
 const DynamicAddComment = dynamic(() => import('./comments/AddComent'))
+const DynamicOptions = dynamic(() => import('./Options'))
 
 const page = async ({ params, children }) => {
   const { id } = params
@@ -24,24 +26,35 @@ const page = async ({ params, children }) => {
               <Image
                 src={postData.profile_Picture}
                 alt={postData.author}
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
-              <div>
-                <h1>{postData.author}</h1>
-                <span>
-                  {new Date(postData.created).toLocaleDateString()}{' '}
-                  <span style={{ color: 'rgb(150, 150, 150)' }}>
-                    {new Date(postData.created).getHours()}:
-                    {new Date(postData.created).getMinutes()}
-                  </span>
-                </span>
-              </div>
+              {postData.first_Name && (
+                <>
+                  <h3>
+                    {postData.first_Name}{' '}
+                    {postData.last_Name && <>{postData.last_Name}</>}
+                  </h3>
+                  <h4>(@{postData.author})</h4>
+                </>
+              )}
+              {!postData.first_Name && <h3>@{postData.author}</h3>}
             </Link>
-            <section className={styles.textcontainer}>
-              <p>{postData.content}</p>
+            <section className={styles.date}>
+              <p>{getTimeAgo(new Date(postData.created).getTime())}</p>
+              <span className={styles.datetooltip} style={{ fontSize: '12px' }}>
+                {new Date(postData.created).toLocaleDateString()}
+                <span style={{ color: 'rgb(200, 200, 200)' }}>
+                  {new Date(postData.created).getHours()}:
+                  {new Date(postData.created).getMinutes()}
+                </span>
+              </span>
             </section>
           </section>
+          <section className={styles.textcontainer}>
+            <p>{postData.content}</p>
+          </section>
+          <DynamicOptions username={postData.author} />
         </article>
       )}
       <div>

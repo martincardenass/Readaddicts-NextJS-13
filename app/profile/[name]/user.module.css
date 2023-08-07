@@ -20,24 +20,28 @@
 }
 
 .userprofilecontainer {
-    width: 80%;
+    width: 50%;
+    margin: 2.5rem 0;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     background-color: white;
-    border-left: 1px solid rgba(0, 0, 0, 0.25);
-    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .userprofilecontainer img {
     border-radius: 50%;
+    /* border: 5px solid rgb(255, 0, 0); */
 }
 
 .usercontainer {
-    gap: 3.5rem;
+    gap: 1rem;
     align-items: center;
     display: flex;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     background-color: rgb(245, 245, 245);
-    padding: 2.5rem;
+    padding: 2rem 1rem;
     position: relative;
 }
 
@@ -55,10 +59,10 @@
     padding: 0 1rem;
     align-items: center;
     display: flex;
+    user-select: none;
 }
 
 .pencilpopup {
-    background-color: white;
     cursor: pointer;
     top: 0;
     right: 0;
@@ -68,6 +72,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 .usernamecontainer h1 {
@@ -75,9 +80,12 @@
     margin: 0;
 }
 
-.usernamecontainer h3  {
-    font-size: 32px;
-    color: rgb(0, 80, 155)
+.flexor h3 {
+    font-size: 24px;
+}
+
+.flexor h3:last-child {
+    color: rgb(0, 0, 0, .25)
 }
 
 .usernamecontainer h3::first-letter, .usernamecontainer p::first-letter {
@@ -111,19 +119,27 @@
 
 .usersmenu {
     border-top: 1px solid rgba(0, 0, 0, 0.25);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
 .usersmenu > a {
     padding: 1rem;
-    border-left: 1px solid rgba(0, 0, 0, 0.25);
-    border-right: 1px solid rgba(0, 0, 0, 0.25);
     cursor: pointer;
     text-align: center;
 }
 
-.usersmenu > a:hover {
+.usersmenu > a:hover:first-child {
+    background-color: aliceblue;
+    border-bottom-left-radius: 25px;
+}
+
+.usersmenu > a:hover:last-child {
+    background-color: aliceblue;
+    border-bottom-right-radius: 25px;
+}
+
+.usersmenu .active {
+    font-weight: 500;
     background-color: aliceblue;
 }

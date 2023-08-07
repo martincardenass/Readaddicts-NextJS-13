@@ -13,7 +13,7 @@ const EditPencil = ({ name, pencil }) => {
     return (
       <Link href={`/profile/${name}/update`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className={hover ? styles.pencilpopup : styles.pencil}>
         <p>
-          {pencil}
+          <span className='material-symbols-outlined'>edit_note</span>
         </p>
       </Link>
     )

@@ -46,6 +46,10 @@
     padding: 0 1rem;
 }
 
+.links .active {
+    font-weight: 500;
+}
+
 .menu {
     display: none;
 }

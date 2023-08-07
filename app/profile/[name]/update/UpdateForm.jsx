@@ -1,18 +1,24 @@
+'use client'
 import styles from '@/components/Login/users.module.css'
 import styles2 from './updateprofile.module.css'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
+import { useRef } from 'react'
+import { useSubmitRef } from '@/utility/formSubmitRef'
 
-const UpdateForm = ({
-  thisUser,
-  handleUpdate,
-  msg,
-  handleImageSelect,
-  image
-}) => {
+const DynamicButton = dynamic(() => import('@/components/Button/Button'))
+
+const UpdateForm = ({ thisUser, handleUpdate, handleImageSelect, image }) => {
+  const formRef = useRef(null)
+  const handleSubmit = useSubmitRef(formRef)
+
   return (
     <article className={`${styles.usersmain} ${styles2.updateform}`}>
-      <h1 style={{ fontWeight: '500', fontSize: '48px' }}>Update profile</h1>
-      <form onSubmit={handleUpdate} className={styles2.updateformcontainer}>
+      <form
+        ref={formRef}
+        onSubmit={handleUpdate}
+        className={styles2.updateformcontainer}
+      >
         <section className={styles2.inputfield}>
           <p>Profile picture:</p>
           <input
@@ -72,7 +78,12 @@ const UpdateForm = ({
         </section>
         <section className={styles2.inputfield}>
           <p>Password:</p>
-          <input type='password' name='password' autoComplete='off' placeholder='**************' />
+          <input
+            type='password'
+            name='password'
+            autoComplete='off'
+            placeholder='**************'
+          />
         </section>
         <section className={styles2.inputfield}>
           <p>Gender:</p>
@@ -105,9 +116,14 @@ const UpdateForm = ({
             placeholder={thisUser?.bio}
           />
         </section>
-        <input type='submit' />
       </form>
-      {msg && <section>{msg.data}</section>}
+      <div onClick={handleSubmit}>
+        <DynamicButton
+          text='Update'
+          backgroundColor='#ed2085'
+          textColor='white'
+        />
+      </div>
     </article>
   )
 }

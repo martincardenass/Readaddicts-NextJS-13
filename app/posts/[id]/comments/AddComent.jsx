@@ -1,17 +1,22 @@
 'use client'
 import { useAuth } from '@/hooks/useAuth'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import createComment from './postComment'
 import styles from './comments.module.css'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { useSubmitRef } from '@/utility/formSubmitRef'
 
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
+const DynamicAlert = dynamic(() => import('@/components/Alert/Alert'))
 
 const AddComent = ({ postId }) => {
   const { user } = useAuth()
   const formRef = useRef(null)
   const [response, setResponse] = useState('')
+  const [commentPosted, setCommentPosted] = useState(false)
+
+  const handleSubmit = useSubmitRef(formRef)
 
   const postComment = async (e) => {
     e.preventDefault()
@@ -21,41 +26,44 @@ const AddComent = ({ postId }) => {
     if (formData.content !== '') {
       const data = await createComment(postId, formData.content)
       setResponse(data)
+      setCommentPosted(true)
     }
   }
 
-  const formSubmitFromRef = (e) => {
-    e.preventDefault()
-    if (formRef.current) {
-      formRef.current.dispatchEvent(
-        new Event('submit', { cancelable: true, bubbles: true })
-      )
-    }
-  }
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCommentPosted(false)
+    }, 3000)
 
-  console.log(response) // !!!!!!!!!!
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [response, commentPosted])
 
   return (
-    <section className={styles.addcommentcontainer}>
-      <section className={styles.addcomment}>
-        <Image
-          src={user?.profile_Picture}
-          alt={user?.username}
-          width={50}
-          height={50}
-        />
-        <form ref={formRef} onSubmit={postComment}>
-          <input type='text' name='content' placeholder='Write a comment' />
-        </form>
-        <div onClick={formSubmitFromRef}>
-          <DynamicButton
-            text='Comment'
-            backgroundColor='#ed2085'
-            textColor='white'
+    <>
+      {commentPosted && <DynamicAlert message={response.data} width='150px' />}
+      <section className={styles.addcommentcontainer}>
+        <section className={styles.addcomment}>
+          <Image
+            src={user?.profile_Picture}
+            alt={user?.username}
+            width={50}
+            height={50}
           />
-        </div>
+          <form ref={formRef} onSubmit={postComment}>
+            <input type='text' name='content' placeholder='Write a comment' />
+          </form>
+          <div onClick={handleSubmit}>
+            <DynamicButton
+              text='Comment'
+              backgroundColor='#ed2085'
+              textColor='white'
+            />
+          </div>
+        </section>
       </section>
-    </section>
+    </>
   )
 }
 

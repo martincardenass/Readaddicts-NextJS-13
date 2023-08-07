@@ -3,9 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './user.module.css'
 import dynamic from 'next/dynamic'
-import { crown, userSvg, pencil } from '@/app/svg'
 
 const DynamicPencil = dynamic(() => import('./EditPencil'))
+const DynamicUserMenu = dynamic(() => import('./UserMenu'))
 
 const UserProfile = async ({ params, children }) => {
   const { name } = params
@@ -38,16 +38,24 @@ const UserProfile = async ({ params, children }) => {
           />
           <div className={styles.usernamecontainer}>
             <span className={styles.flexor}>
-              <h1>
+              <h3>
                 {userdata.first_Name} {userdata.last_Name}
-              </h1>
-              <h3>({userdata.username})</h3>
+              </h3>
+              <h3>@{userdata.username}</h3>
             </span>
             <span className={styles.childsection}>
               <p style={{ fontStyle: 'italic' }}>{userdata.bio}</p>
               <div>
                 <span>
-                  {userdata.role === 'admin' ? crown : userSvg}
+                  {userdata.role === 'admin'
+                    ? (
+                      <span className='material-symbols-outlined'>
+                        supervisor_account
+                      </span>
+                      )
+                    : (
+                      <span className='material-symbols-outlined'>person</span>
+                      )}
                   <p>{userdata.role}</p>
                 </span>
                 <p>{userdata.gender}</p>
@@ -57,16 +65,9 @@ const UserProfile = async ({ params, children }) => {
               </div>
             </span>
           </div>
-          <DynamicPencil pencil={pencil} name={name} />
+          <DynamicPencil name={name} />
         </div>
-        <nav className={styles.usersmenu}>
-          <Link href={`/profile/${name}/posts`}>
-            Posts
-          </Link>
-          <Link href={`/profile/${name}/comments`}>
-            Comments
-          </Link>
-        </nav>
+        <DynamicUserMenu name={name} />
         {children}
       </section>
     </article>

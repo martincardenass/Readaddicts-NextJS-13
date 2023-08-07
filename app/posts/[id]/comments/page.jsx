@@ -2,6 +2,7 @@ import getComments from './getComments'
 import styles from './comments.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getTimeAgo } from '@/utility/relativeTime'
 
 const CommentsPage = async ({ params }) => {
   const { id } = params
@@ -11,9 +12,9 @@ const CommentsPage = async ({ params }) => {
 
   if (status === 404) {
     return (
-      <h1 className={styles.h1styles}>
+      <h4 style={{ fontWeight: 400, textAlign: 'center' }}>
         {commentsData}
-      </h1>
+      </h4>
     )
   }
 
@@ -38,13 +39,7 @@ const CommentsPage = async ({ params }) => {
                             />
                           )}
                           <p>{comment.author}</p>
-                          <span className={styles.date}>
-                            {new Date(comment.created).toLocaleDateString()}{' '}
-                            <span style={{ color: 'rgb(150, 150, 150)' }}>
-                              {new Date(comment.created).getHours()}:
-                              {new Date(comment.created).getMinutes()}
-                            </span>
-                          </span>
+                          <p className={styles.date}>{getTimeAgo(new Date(comment.created).getTime())}</p>
                         </section>
                         )
                       : (
@@ -60,47 +55,35 @@ const CommentsPage = async ({ params }) => {
                               height={40}
                             />
                           )}
-                          <p>{comment.author}</p>
-                          <span className={styles.date}>
-                            {new Date(comment.created).toLocaleDateString()}{' '}
-                            <span style={{ color: 'rgb(150, 150, 150)' }}>
-                              {new Date(comment.created).getHours()}:
-                              {new Date(comment.created).getMinutes()}
-                            </span>
-                          </span>
+                          <p>@{comment.author}</p>
+                          <p className={styles.date}>{getTimeAgo(new Date(comment.created).getTime())}</p>
                         </Link>
                         )}
                     {comment.content}
-                    <ul className={styles.childcomments}>
-                      {commentsData.map(
-                        (childComment) =>
-                          childComment.parent_Comment_Id ===
+
+                    {commentsData.map(
+                      (childComment) =>
+                        childComment.parent_Comment_Id ===
                           comment.comment_Id && (
-                            <li key={childComment.comment_Id}>
-                              <section className={styles.usersection}>
-                                {childComment.profile_Picture && (
-                                  <Image
-                                    src={childComment.profile_Picture}
-                                    alt={childComment.author}
-                                    width={40}
-                                    height={40}
-                                  />
-                                )}
-                                <p>{childComment.author}</p> replied
-                                <span className={styles.date}>
-                                  {new Date(comment.created).toLocaleDateString()}{' '}
-                                  <span style={{ color: 'rgb(150, 150, 150)' }}>
-                                    {new Date(comment.created).getHours()}:
-                                    {new Date(comment.created).getMinutes()}
-                                  </span>
-                                </span>
-                              </section>
-                              <span>{childComment.content}</span>
-                              {/* <p>Reply to this comment</p> */}
-                            </li>
-                          )
-                      )}
-                    </ul>
+                            <ul key={childComment.comment_Id} className={styles.childcomments}>
+                              <li>
+                                <section className={styles.usersection}>
+                                  {childComment.profile_Picture && (
+                                    <Image
+                                      src={childComment.profile_Picture}
+                                      alt={childComment.author}
+                                      width={40}
+                                      height={40}
+                                    />
+                                  )}
+                                  <p>{childComment.author}</p> replied
+                                  <p className={styles.date}>{getTimeAgo(new Date(comment.created).getTime())}</p>
+                                </section>
+                                <span>{childComment.content}</span>
+                              </li>
+                            </ul>
+                        )
+                    )}
                   </li>
                 )
             )}
