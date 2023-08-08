@@ -1,48 +1,51 @@
 'use client'
 import { useAuth } from '@/hooks/useAuth'
-import { useEffect, useRef, useState } from 'react'
-import createComment from './postComment'
+import { useRef } from 'react'
 import styles from './comments.module.css'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useSubmitRef } from '@/utility/formSubmitRef'
+import { useFetcher } from '@/hooks/useFetcher'
+import { usePathname, useRouter } from 'next/navigation'
 
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
 const DynamicAlert = dynamic(() => import('@/components/Alert/Alert'))
 
 const AddComent = ({ postId }) => {
+  const {
+    createAComment,
+    commentPosted,
+    commentPostedResponse,
+    commentsStatus
+  } = useFetcher()
   const { user } = useAuth()
   const formRef = useRef(null)
-  const [response, setResponse] = useState('')
-  const [commentPosted, setCommentPosted] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
 
   const handleSubmit = useSubmitRef(formRef)
 
-  const postComment = async (e) => {
+  const postComment = (e) => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.target))
 
     // * Only make a request if content is sent
     if (formData.content !== '') {
-      const data = await createComment(postId, formData.content)
-      setResponse(data)
-      setCommentPosted(true)
+      createAComment(postId, formData.content)
+      if (!pathname.includes('/comments')) {
+        router.push(`${postId}/comments`)
+      }
     }
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setCommentPosted(false)
-    }, 3000)
-
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [response, commentPosted])
-
   return (
     <>
-      {commentPosted && <DynamicAlert message={response.data} width='150px' />}
+      {commentPosted && (
+        <DynamicAlert
+          message={commentsStatus === 400 ? 'An error ocurred' : commentPostedResponse}
+          width='150px'
+        />
+      )}
       <section className={styles.addcommentcontainer}>
         <section className={styles.addcomment}>
           <Image

@@ -1,12 +1,16 @@
 .postpage {
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+.postandoptions {
+    width: 60%;
 }
 
 .post {
     display: flex;
     flex-direction: column;
-    width: 55%;
     padding: 1rem 2.5rem;
 }
 
@@ -103,6 +107,7 @@
 }
 
 .options {
+    margin: 1rem 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,7 +134,7 @@
 }
 
 .optionsdelete {
-    margin: 2rem 0;
+    margin: 1rem 2.5rem;
     padding: 1rem;
     background-color: white;
     display: flex;

@@ -3,6 +3,7 @@ import getUserComments from './getUserComments'
 import { useEffect, useState } from 'react'
 import styles from '../posts/listofposts.module.css'
 import Image from 'next/image'
+import { getTimeAgo } from '@/utility/relativeTime'
 
 const ListOfComents = ({ name }) => {
   const [comments, setComments] = useState(null)
@@ -27,13 +28,17 @@ const ListOfComents = ({ name }) => {
               <div>
                 <Image src={comment.profile_Picture} alt={comment.author} width={35} height={35} />
                 <h4>@{comment.author}</h4>
-                <p>
-                  <span>{new Date(comment.created).toLocaleDateString()}{' '}</span>
-                  <span style={{ color: 'rgb(150, 150, 150)' }}>
-                    {new Date(comment.created).getHours()}:
-                    {new Date(comment.created).getMinutes()}
-                  </span>
-                </p>
+                {comment.modified !== '0001-01-01T00:00:00'
+                  ? (
+                    <span>
+                      Modified {getTimeAgo(new Date(comment.modified).getTime())}
+                    </span>
+                    )
+                  : (
+                    <span>
+                      Created {getTimeAgo(new Date(comment.created).getTime())}
+                    </span>
+                    )}
               </div>
               <p>{comment.content}</p>
             </li>

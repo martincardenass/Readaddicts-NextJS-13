@@ -21,6 +21,12 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault()
     window.localStorage.removeItem('token') // * Remove the token from localStorage if it exists
     const data = Object.fromEntries(new FormData(e.target))
+
+    if (data.username === '' || data.password === '') {
+      setMsg('Please provide all fields')
+      return
+    }
+
     const auth = await authenticate(data.username, data.password)
 
     // * If credentials are correct, login

@@ -2,10 +2,17 @@
 import styles from './users.module.css'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
+import Button from '../Button/Button'
+import { useRef } from 'react'
+import { useSubmitRef } from '@/utility/formSubmitRef'
+import Alert from '../Alert/Alert'
 
 const Login = () => {
   const { handleLogin, msg } = useAuth()
   const fields = { username: '', password: '' }
+  const formRef = useRef()
+
+  const handleSubmit = useSubmitRef(formRef)
 
   return (
     <main className={styles.usersmain}>
@@ -16,7 +23,7 @@ const Login = () => {
           <span className={styles.register}>Register</span>
         </Link>
       </p>
-      <form className={styles.form} onSubmit={handleLogin}>
+      <form ref={formRef} className={styles.form} onSubmit={handleLogin}>
         <section className={styles.formfield}>
           <p>Username:</p>
           <input
@@ -37,13 +44,11 @@ const Login = () => {
             required
           />
         </section>
-        <input type='submit' value='Login' />
-        {msg && (
-          <section className={styles.errormessage}>
-            <p>{msg}</p>
-          </section>
-        )}
       </form>
+      <div onClick={handleSubmit}>
+        <Button text='Login' backgroundColor='#ed2085' textColor='white' />
+      </div>
+      {msg && <Alert message={msg} width={msg === 'Wrong password' ? '150px' : '225px'} />}
     </main>
   )
 }

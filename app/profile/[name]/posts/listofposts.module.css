@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     margin: 0;
-    padding: 1rem 2.5rem;
+    padding: 1rem 5rem;
 }
 
 .postslist ul {
@@ -10,12 +10,9 @@
     margin: 0;
     padding: 0;
 }
-.postslist ul h4 {
-    font-weight: 500;
-}
 
 .postslist ul h4 {
-    text-transform: capitalize;
+    font-weight: 600;
 }
 
 .postslist ul li > div {
@@ -34,5 +31,10 @@
 
 .postslist ul li > p:last-child {
     padding: 1rem 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(0, 0, 0, .5);
+}
+
+.postslist ul li span {
+    font-size: 12px;
+    color: rgb(0, 0, 0, .5);
 }
