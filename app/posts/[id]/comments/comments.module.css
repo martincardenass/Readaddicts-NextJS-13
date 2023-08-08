@@ -1,18 +1,9 @@
-.comments {
-    flex-direction: column;
-    align-items: center;
-}
-
-.commentsmain {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .comments ul:first-child {
     margin: 0;
     background-color: white;
-    padding: 2.6rem;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
     border-radius: 25px;
     border: 1px solid rgba(0, 0, 0, 0.25);
 }
@@ -100,4 +91,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.commentinput {
+    display: flex;
+    flex-direction: column;
+}
+
+.commentinput div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+}
+
+.commentinput div p {
+    font-size: 10px;
+    font-weight: 400;
 }

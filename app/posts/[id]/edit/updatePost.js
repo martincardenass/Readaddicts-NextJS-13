@@ -13,7 +13,7 @@ async function updatePost (postId, content) {
     const statusCode = res.status
 
     if (!res.ok) {
-      return { data: await res.text(), status: statusCode }
+      return { text: await res.json(), status: statusCode }
     }
 
     return { data: await res.text(), status: statusCode }

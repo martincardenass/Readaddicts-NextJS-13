@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import createPost from './posts/new/createPost'
+import errorTextReplace from '@/utility/errorTextReplace'
 
 const DynamicLogin = dynamic(() => import('@/components/Login/Login'), {
   loading: () => <h1>Loading...</h1>
@@ -43,11 +44,7 @@ const HomePage = () => {
       }
       // * error handling
       if (data.status === 400) {
-        const errorText = data.text[0].error
-        const replacedErrorText = errorText.replace(
-          errorText,
-          'Please provide at least 8 characters'
-        )
+        const replacedErrorText = errorTextReplace(data)
         setMsg(replacedErrorText)
         // * There are only two status responses 400 or 200. Explicit error handling its not necessary just use else
       } else {
