@@ -11,6 +11,7 @@ async function getPosts (page, pageSize) {
     if (!res.ok) {
       return { data: await res.text(), status: statusCode }
     }
+
     return { data: await res.json(), status: statusCode }
   } catch (error) {
     return error.message

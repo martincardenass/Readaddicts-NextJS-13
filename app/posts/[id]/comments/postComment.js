@@ -1,6 +1,10 @@
-async function createComment (postId, content) {
+async function createComment (postId, content, parentComment) {
   try {
     const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'Comment/post/' + postId)
+    if (parentComment) {
+      url.searchParams.set('parentCommentId', parentComment)
+    }
+
     const res = await fetch(url, {
       method: 'POST',
       headers: {

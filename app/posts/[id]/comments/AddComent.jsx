@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
 const DynamicAlert = dynamic(() => import('@/components/Alert/Alert'))
 
-const AddComent = ({ postId }) => {
+const AddComent = ({ postId, parent, placeholderText, href }) => {
   const [characters, setCharacters] = useState(0)
   const { createAComment, commentPosted, commentPostedResponse, commentsPost } =
     useFetcher()
@@ -26,14 +26,14 @@ const AddComent = ({ postId }) => {
     const formData = Object.fromEntries(new FormData(e.target))
 
     if (formData.content !== '') {
-      createAComment(postId, formData.content)
+      createAComment(postId, formData.content, parent)
     }
   }
 
   useEffect(() => {
     const status = commentsPost?.status
-    if (status !== 400 && status !== null && status !== undefined) {
-      router.push(`/posts/${postId}/comments`)
+    if (status !== 400 && status !== null && status !== undefined && commentPosted !== false) {
+      router.push(href)
     }
   }, [commentsPost])
 
@@ -52,15 +52,15 @@ const AddComent = ({ postId }) => {
           <Image
             src={user?.profile_Picture}
             alt={user?.username}
-            width={75}
-            height={75}
+            width={50}
+            height={50}
           />
           <div className={styles.commentinput}>
             <form ref={formRef} onSubmit={postComment}>
               <input
                 type='text'
                 name='content'
-                placeholder='Leave a comment'
+                placeholder={placeholderText}
                 onChange={handleCharacterCount}
               />
             </form>

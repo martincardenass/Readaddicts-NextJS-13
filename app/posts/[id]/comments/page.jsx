@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 const DynamicComments = dynamic(() => import('./Comments'), {
-  loading: () => <h3>Loading...</h3>
+  loading: () => <h3 style={{ textAlign: 'center' }}>Loading comments...</h3>
 })
 
 const CommentsPage = ({ params }) => {

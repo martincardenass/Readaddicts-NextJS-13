@@ -3,6 +3,8 @@ import { createContext, useContext, useState } from 'react'
 import getPost from '@/app/posts/[id]/getPost'
 import updatePost from '@/app/posts/[id]/edit/updatePost'
 import getComments from '@/app/posts/[id]/comments/getComments'
+import getComment from '@/app/posts/[id]/comments/getComment'
+import getChildComments from '@/app/posts/[id]/comments/getChildComments'
 import createComment from '@/app/posts/[id]/comments/postComment'
 import errorTextReplace from '@/utility/errorTextReplace'
 
@@ -45,6 +47,10 @@ export const Fetcher = ({ children }) => {
   const [commentsPost, setCommentsPost] = useState(null)
   const [commentPosted, setCommentPosted] = useState(false)
   const [commentPostedResponse, setCommentPostedResponse] = useState(null)
+  const [comment, setComment] = useState(null)
+  const [commentStatus, setCommentStatus] = useState(null)
+  const [childComment, setChildComment] = useState(null)
+  const [childCommentStatus, setChildCommentStatus] = useState(null)
 
   const fetchComments = async (postId) => {
     const fetched = await getComments(postId)
@@ -52,15 +58,13 @@ export const Fetcher = ({ children }) => {
     setCommentsStatus(fetched.status)
   }
 
-  const createAComment = async (postId, content) => {
-    const response = await createComment(postId, content)
+  const createAComment = async (postId, content, parent) => {
+    const response = await createComment(postId, content, parent)
 
     if (response.status === 400) {
       const text = errorTextReplace(response)
 
-      const replacedErrorText = text?.replace(
-        text, '8 characters min'
-      )
+      const replacedErrorText = text?.replace(text, '8 characters min')
       setCommentPostedResponse(replacedErrorText)
     } else {
       setCommentPostedResponse(response.data)
@@ -71,6 +75,18 @@ export const Fetcher = ({ children }) => {
         setCommentPosted(false)
       }, 3000)
     }
+  }
+
+  const fetchComment = async (commentId) => {
+    const fetched = await getComment(commentId)
+    setComment(fetched.data)
+    setCommentStatus(fetched.status)
+  }
+
+  const fetchChildComments = async (commentId) => {
+    const fetched = await getChildComments(commentId)
+    setChildComment(fetched.data)
+    setChildCommentStatus(fetched.status)
   }
 
   return (
@@ -85,10 +101,16 @@ export const Fetcher = ({ children }) => {
         commentPostedResponse,
         commentPosted,
         commentsPost,
+        comment,
+        commentStatus,
+        childComment,
+        childCommentStatus,
         fetchPost,
         patchPost,
         fetchComments,
-        createAComment
+        createAComment,
+        fetchComment,
+        fetchChildComments
       }}
     >
       {children}

@@ -7,9 +7,12 @@ import getUser from '@/app/profile/[name]/getUser'
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(
-    () => window.localStorage.getItem('token') || null
-  )
+  let initialToken
+  if (typeof window !== 'undefined') {
+    initialToken = window && window.localStorage.getItem('token')
+  }
+  const [token, setToken] = useState(initialToken)
+
   const [tokenDecoded, setTokenDecoded] = useState(
     () => jwt.decode(token) || null
   )
@@ -54,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       setUser(data.text)
       setUserStatusCode(data.status)
     }
+
     fetchUser()
   }, [tokenDecoded?.unique_name])
 

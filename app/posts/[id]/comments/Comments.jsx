@@ -46,40 +46,24 @@ const Comments = ({ comments, id }) => {
                     </p>
                   </Link>
                   )}
-              <Link href={`/posts/${id}/comments/${comment.comment_Id}`}>
+              <div className={styles.contentsection}>
                 {comment.content}
-              </Link>
-              <p>Leave a reply</p>
-              {comments?.map(
-                (childComment) =>
-                  childComment.parent_Comment_Id ===
-                  comment.comment_Id && (
-                    <ul
-                      key={childComment.comment_Id}
-                      className={styles.childcomments}
-                    >
-                      <li>
-                        <section className={styles.usersection}>
-                          {childComment.profile_Picture && (
-                            <Image
-                              src={childComment.profile_Picture}
-                              alt={childComment.author}
-                              width={40}
-                              height={40}
-                            />
-                          )}
-                          <p>{childComment.author}</p> replied
-                          <p className={styles.date}>
-                            {getTimeAgo(
-                              new Date(comment.created).getTime()
-                            )}
-                          </p>
-                        </section>
-                        <span>{childComment.content}</span>
-                      </li>
-                    </ul>
-                  )
-              )}
+                {comment.replies > 0
+                  ? (
+                    <b>
+                      <Link href={`/posts/${id}/comments/${comment.comment_Id}`}>
+                        {comment.replies} replies
+                      </Link>
+                    </b>
+                    )
+                  : (
+                    <b>
+                      <Link href={`/posts/${id}/comments/${comment.comment_Id}/reply`}>
+                        Reply to this comment
+                      </Link>
+                    </b>
+                    )}
+              </div>
             </li>
           )
       )}
