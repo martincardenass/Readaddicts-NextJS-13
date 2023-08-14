@@ -30,7 +30,7 @@ const Post = ({ params, children }) => {
       </article>
       <div>
         <DynamicAddComment postId={id} placeholderText='Leave a comment' href={`/posts/${id}/comments`} />
-        <DynamicLoadComments id={id} />
+        <DynamicLoadComments id={id} comments={post.comments} />
         <DynamicComments>{children}</DynamicComments>
       </div>
     </main>

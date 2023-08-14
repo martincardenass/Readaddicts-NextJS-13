@@ -4,10 +4,9 @@ async function updatePost (postId, content) {
     const res = await fetch(url, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${window.localStorage.getItem('token')}`
       },
-      body: JSON.stringify({ content })
+      body: content
     })
 
     const statusCode = res.status

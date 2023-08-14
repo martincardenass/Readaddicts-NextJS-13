@@ -5,26 +5,28 @@ import dynamic from 'next/dynamic'
 
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
 
-const LoadComments = ({ id }) => {
+const LoadComments = ({ id, comments }) => {
   const pathname = usePathname()
 
   // * If the pathname is /comments we dont need to display the Show Comments component
-  if (!pathname.includes('/comments')) {
+  if (!pathname.includes('/comments') && comments > 0) {
     return (
       <>
         <section className={styles.loadcomments}>
           <DynamicButton
-            text='Show comments'
+            text={`Show ${comments} comments`}
             href={`/posts/${id}/comments`}
             backgroundColor='white'
-            width='150px'
+            width='175px'
             effectColor='rgb(235, 235, 235)'
-            effectWidth='150px'
-            effectHeight='150px'
+            effectWidth='175px'
+            effectHeight='175px'
           />
         </section>
       </>
     )
+  } if (!pathname.includes('/comments') && comments <= 0) {
+    return <h3 style={{ textAlign: 'center' }}>Be the first comment.</h3>
   }
 }
 

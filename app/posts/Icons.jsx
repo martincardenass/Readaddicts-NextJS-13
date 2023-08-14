@@ -3,10 +3,16 @@ import dynamic from 'next/dynamic'
 
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
 
-const Icons = ({ id }) => {
+const Icons = ({ id, commentCount }) => {
   return (
     <div className={styles.commenticon}>
-      <DynamicButton text='Comments' href={`/posts/${id}/comments`} />
+      <DynamicButton
+        text={
+          commentCount > 0 ? `${commentCount} comments` : 'No comments yet'
+        }
+        href={`/posts/${id}/comments`}
+        width={commentCount > 0 ? '125px' : '150px'}
+      />
     </div>
   )
 }

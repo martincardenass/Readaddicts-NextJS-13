@@ -16,13 +16,15 @@ const EditPost = ({ params }) => {
 
   const handleUpdate = (e) => {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
-    const fieldsHaveChanged = Object.values(data).some(
+    const data = new FormData(e.target)
+    const dataHasChanges = Object.fromEntries(new FormData(e.target))
+
+    const fieldsHaveChanged = Object.values(dataHasChanges).some(
       (field) => field !== post.content
     )
 
     if (fieldsHaveChanged) {
-      patchPost(id, data.content)
+      patchPost(id, data)
     }
   }
 

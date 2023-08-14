@@ -50,7 +50,7 @@ const Posts = ({ posts, postsStatus }) => {
                 <p>{post.content}</p>
               </Link>
               <DynamicMenu username={post.author} />
-              <DynamicIcons id={post.post_Id} />
+              <DynamicIcons id={post.post_Id} commentCount={post.comments} />
             </li>
           ))}
         </ul>

@@ -8,24 +8,81 @@
 }
 
 .newpostcontainer {
-    padding: 2.5rem;
-    border-radius: 15px;
+    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+    border-radius: 25px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    /* gap: 1rem; */
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.newpostitems {
+    display: flex;
+}
+
+.newpostcontainer span {
+    cursor: pointer;
+    user-select: none;
+}
+
+.newpostcontainer span:hover {
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.newpostitems {
     display: flex;
     align-items: center;
     gap: 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    flex-direction: row;
 }
 
 .newpostcontainer img {
     border-radius: 50%;
 }
 
+.uploadedimages {
+    padding: 0;
+    margin: 0;
+    margin-bottom: -1rem;
+}
+
+.uploadedimages ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.uploadedimages span {
+    color: white;
+    position: relative;
+    background-color: rgb(255, 113, 113);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    bottom: 85%;
+    right: 13%;
+}
+
+.uploadedimages span:hover {
+    color: white;
+    background-color: rgb(255, 47, 47);
+}
+
+.uploadedimages img {
+    padding: 0 .5rem;
+    border-radius: 0 !important;
+    object-fit: cover;
+}
 .newpostcontainer input[type="text"] {
     padding: .5rem;
     border: 0;
     font-size: 18px;
     border-bottom: 1px solid #ed2085;
+}
+
+.newpostcontainer input[type='file'] {
+    display: none;
 }
 
 .newpostcontainer input:focus {
