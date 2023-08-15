@@ -8,13 +8,11 @@ import createPost from './createPost'
 import errorTextReplace from '@/utility/errorTextReplace'
 
 const DynamicButton = dynamic(() => import('@/components/Button/Button'))
-const DynamicAlert = dynamic(() => import('@/components/Alert/Alert'))
 
 const NewPostPage = ({ user }) => {
   const [characters, setCharacters] = useState(0)
   const [images, setImages] = useState([])
   const [posted, setPosted] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
   const [msg, setMsg] = useState(null)
   const formRef = useRef(null)
   const fileRef = useRef(null)
@@ -55,14 +53,23 @@ const NewPostPage = ({ user }) => {
     }
     const formDataChecker = Object.fromEntries(new FormData(e.target))
 
-    console.log(formDataChecker)
-
     if (formDataChecker.content !== '') {
       const data = await createPost(formData)
       if (data.data !== undefined) {
         router.push(`/posts/${data.data}`)
       }
-      // * error handling
+
+      if (data.status === undefined) { // * If token expires, log out the user
+        setMsg('Your session has expired. Logging out...')
+        setPosted(false)
+
+        setTimeout(() => {
+          window.localStorage.removeItem('token')
+          window.location.reload()
+        }, 1000)
+        return
+      }
+
       if (data.status === 400) {
         const replacedErrorText = errorTextReplace(data)
         setMsg(replacedErrorText)
@@ -70,7 +77,6 @@ const NewPostPage = ({ user }) => {
       } else {
         setMsg('Post published successfully') // * Delete any error messages (if any)
         setPosted(true)
-        setShowAlert(true)
       }
       // * else formData its empty so the input does not have any info
     } else {
@@ -80,18 +86,16 @@ const NewPostPage = ({ user }) => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setShowAlert(false)
       setPosted(false)
     }, 3000)
 
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [posted, showAlert])
+  }, [posted])
 
   return (
     <>
-      {showAlert && <DynamicAlert message='Post added' />}
       <main className={posted ? styles.newpostdenied : styles.newpost}>
         <section className={styles.newpostcontainer}>
           <div className={styles.newpostitems}>

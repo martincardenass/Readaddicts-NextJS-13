@@ -6,14 +6,15 @@ import { getTimeAgo } from '@/utility/relativeTime'
 
 const DynamicMenu = dynamic(() => import('./Menu'))
 const DynamicIcons = dynamic(() => import('./Icons'))
+const DynamicImages = dynamic(() => import('./Images'))
 
 const Posts = ({ posts, postsStatus }) => {
   return (
     <section className={styles.posts}>
       {postsStatus === 200 && (
-        <ul>
+        <ul className={styles.postsul}>
           {posts.map((post) => (
-            <li key={post.post_Id}>
+            <li className={styles.postsli} key={post.post_Id}>
               <Link
                 href={`/profile/${post.author}`}
                 className={styles.usercontainer}
@@ -41,14 +42,13 @@ const Posts = ({ posts, postsStatus }) => {
                     </p>
                     )
                   : (
-                    <p>
-                      Created {getTimeAgo(new Date(post.created).getTime())}
-                    </p>
+                    <p>Created {getTimeAgo(new Date(post.created).getTime())}</p>
                     )}
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
                 <p>{post.content}</p>
               </Link>
+              {post.images.length > 0 && <DynamicImages images={post.images} href={`/posts/${post.post_Id}`} />}
               <DynamicMenu username={post.author} />
               <DynamicIcons id={post.post_Id} commentCount={post.comments} />
             </li>

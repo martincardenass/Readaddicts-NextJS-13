@@ -198,3 +198,12 @@
 .inputandcharcount p {
     font-size: 12px;
 }
+
+.images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.images img{
+    object-fit: cover;
+}

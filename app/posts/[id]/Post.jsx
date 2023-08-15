@@ -6,11 +6,31 @@ import Image from 'next/image'
 import { getTimeAgo } from '@/utility/relativeTime'
 
 const Post = ({ id }) => {
-  const { fetchPost, post, status, changed } = useFetcher()
+  const {
+    fetchPost,
+    post,
+    status,
+    changed
+  } = useFetcher()
+  const img = []
 
   useEffect(() => {
     fetchPost(id)
   }, [changed])
+
+  if (post.images !== undefined) {
+    for (let i = 0; i < post.images.length; i++) {
+      img.push(
+        <Image
+          key={post.images[i].image_Id}
+          src={post.images[i].image_Url}
+          alt={post.images[i].image_Id}
+          width={150}
+          height={150}
+        />
+      )
+    }
+  }
 
   return (
     status === 200 && (
@@ -55,6 +75,9 @@ const Post = ({ id }) => {
         </section>
         <section className={styles.textcontainer}>
           <p>{post.content}</p>
+          {post.images.length > 0 && (
+            <section className={styles.images}>{img}</section>
+          )}
         </section>
       </article>
     )
