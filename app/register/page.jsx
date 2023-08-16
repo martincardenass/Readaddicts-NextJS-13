@@ -1,5 +1,5 @@
-// import Link from 'next/link'
 import styles from '@/components/Login/users.module.css'
+import Button from '@/components/Button/Button'
 
 const Register = () => {
   return (
@@ -24,12 +24,9 @@ const Register = () => {
           </p>
           <input type='password' placeholder='Password' required />
         </section>
-        <section className={styles.formfield}>
-          <p>Bio:</p>
-          <input type='text' placeholder='Type something about you...' />
-        </section>
-        <input type='submit' value='Register' />
+        {/* <input type='submit' value='Register' /> */}
       </form>
+      <Button text='Sign up' backgroundColor='#ed2085' textColor='white' effectColor='rgb(235, 235, 235)' />
     </main>
   )
 }

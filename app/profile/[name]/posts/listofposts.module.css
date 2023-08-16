@@ -38,3 +38,9 @@
     font-size: 12px;
     color: rgb(0, 0, 0, .5);
 }
+
+.errormessage h1 {
+    padding: 1rem;
+    font-weight: 400;
+    text-align: center;
+}

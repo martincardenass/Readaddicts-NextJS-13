@@ -139,7 +139,7 @@ export const Fetcher = ({ children }) => {
   const patchPost = async (id, content) => {
     try {
       const data = await updatePost(id, content)
-      console.log(data)
+
       dispatch({
         type: 'PATCH_POST',
         payload: data

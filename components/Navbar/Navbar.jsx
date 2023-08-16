@@ -29,7 +29,8 @@ const Navbar = () => {
     </svg>
   )
 
-  const handleLogout = () => { // ! Will probably change this? Idk
+  const handleLogout = () => {
+    // ! Will probably change this? Idk
     window.localStorage.removeItem('token')
     window.location.reload()
   }
@@ -38,7 +39,12 @@ const Navbar = () => {
     <ul>
       {navLinks.map((link) => (
         <li key={link.key}>
-          <Link href={link.href} className={pathname === link.href ? styles.active : ''}>{link.text}</Link>
+          <Link
+            href={link.href}
+            className={pathname === link.href ? styles.active : ''}
+          >
+            {link.text}
+          </Link>
         </li>
       ))}
     </ul>
@@ -54,8 +60,12 @@ const Navbar = () => {
         <section className={styles.user}>
           {userStatusCode === 404 && (
             <>
-              <p>Log in</p>
-              <p>Sign up</p>
+              <p>
+                <Link href='/'>Log in</Link>
+              </p>
+              <p>
+                <Link href='/register'>Sign up</Link>
+              </p>
             </>
           )}
           {userStatusCode === 200 && (
@@ -77,7 +87,10 @@ const Navbar = () => {
               </section>
               <section className={popup ? styles.userpopup : styles.hidden}>
                 <section className={styles.popuptext}>
-                  <span>Welcome, {user.username}</span>
+                  <span>
+                    Welcome,{' '}
+                    <span className={styles.uppercase}>{user.username}</span>
+                  </span>
                   <span className={styles.openprofile}>
                     <Link href={`/profile/${user.username}`}>Your profile</Link>
                   </span>
@@ -124,8 +137,13 @@ const Navbar = () => {
                   style={{ borderRadius: '50%' }}
                 />
                 <section className={styles.userinfo}>
-                  <span>Welcome, Martin.</span>
-                  <span>Link</span>
+                  <span>
+                    Welcome,{' '}
+                    <span className={styles.uppercase}>{user.username}</span>
+                  </span>
+                  <span className={styles.openprofile}>
+                    <Link href={`/profile/${user.username}`}>Your profile</Link>
+                  </span>
                 </section>
               </section>
               <p className={styles.userlogout}>Log out</p>

@@ -20,17 +20,15 @@ export const AuthProvider = ({ children }) => {
   const [userStatusCode, setUserStatusCode] = useState(null)
   const [msg, setMsg] = useState(null)
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e, username, password) => {
     e.preventDefault()
     window.localStorage.removeItem('token') // * Remove the token from localStorage if it exists
-    const data = Object.fromEntries(new FormData(e.target))
 
-    if (data.username === '' || data.password === '') {
+    if (username === '' || password === '') {
       setMsg('Please provide all fields')
-      return
     }
 
-    const auth = await authenticate(data.username, data.password)
+    const auth = await authenticate(username, password)
 
     // * If credentials are correct, login
     if (auth.status === 200) {
@@ -51,13 +49,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token])
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const data = await getUser(tokenDecoded?.unique_name)
-      setUser(data.text)
-      setUserStatusCode(data.status)
-    }
+  const fetchUser = async () => {
+    const data = await getUser(tokenDecoded?.unique_name)
+    setUser(data.text)
+    setUserStatusCode(data.status)
+  }
 
+  useEffect(() => {
     fetchUser()
   }, [tokenDecoded?.unique_name])
 

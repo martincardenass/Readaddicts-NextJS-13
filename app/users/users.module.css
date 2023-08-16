@@ -1,0 +1,55 @@
+.users {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.users ul {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    width: 100%;
+    list-style: none;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 4rem;
+}
+
+.users li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    padding: 2rem;
+}
+
+.users img {
+    border-radius: 50%;
+}
+
+.usercontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.usercontainer h1 {
+    font-size: 40px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 1rem;
+    padding: 0;
+    text-transform: capitalize;
+}
+
+.usercontainer p {
+    margin: 0;
+    font-size: 12px;
+}

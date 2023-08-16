@@ -31,7 +31,7 @@
     border: none;
     width: var(--button-width);
     height: var(--button-height);
-    border-radius: 7px;
+    border-radius: 10px;
 }
 
 .effect::before {

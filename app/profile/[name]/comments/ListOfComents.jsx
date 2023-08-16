@@ -49,7 +49,11 @@ const ListOfComents = ({ name }) => {
   }
 
   if (status === 404) {
-    return <h1>{comments}</h1>
+    return (
+      <div className={styles.errormessage}>
+        <h1>{comments}</h1>
+      </div>
+    )
   }
 }
 

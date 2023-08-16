@@ -59,9 +59,11 @@ const UserProfile = async ({ params, children }) => {
                   <p>{userdata.role}</p>
                 </span>
                 <p>{userdata.gender}</p>
-                <p>
-                  <b>Status</b>: {userdata.status}
-                </p>
+                {userdata.status && (
+                  <p>
+                    <b>Status</b>: {userdata.status}
+                  </p>
+                )}
               </div>
             </span>
           </div>

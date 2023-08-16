@@ -57,7 +57,11 @@ const ListOfPosts = ({ name }) => {
   }
 
   if (status === 404) {
-    return <h1>{posts}</h1>
+    return (
+      <div className={styles.errormessage}>
+        <h1>{posts}</h1>
+      </div>
+    )
   }
 }
 
