@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .postandoptions {
-    width: 60%;
+    width: 100%;
 }
 
 .post {
@@ -206,4 +208,10 @@
 
 .images img{
     object-fit: cover;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    margin: 0 2.5rem 1rem 0;
 }

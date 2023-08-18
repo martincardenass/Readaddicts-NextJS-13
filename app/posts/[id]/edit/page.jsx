@@ -4,11 +4,11 @@ import { useFetcher } from '@/hooks/useFetcher'
 import styles from '../post.module.css'
 import Button from '@/components/Button/Button'
 import { useSubmitRef } from '@/utility/formSubmitRef'
-import Alert from '@/components/Alert/Alert'
 
 const EditPost = ({ params }) => {
-  const { patchPost, msg, post, changed } = useFetcher()
+  const { patchPost, msg, post, changed, patchPostStatus } = useFetcher()
   const [characters, setCharacters] = useState(0)
+  const [loading, setLoading] = useState(false)
   const formRef = useRef()
   const { id } = params
 
@@ -24,9 +24,16 @@ const EditPost = ({ params }) => {
     )
 
     if (fieldsHaveChanged) {
+      setLoading(true)
       patchPost(id, data)
     }
   }
+
+  useEffect(() => {
+    if (patchPostStatus === 200) {
+      setLoading(false)
+    }
+  }, [patchPostStatus, changed])
 
   useEffect(() => {
     if (post?.content) {
@@ -57,14 +64,16 @@ const EditPost = ({ params }) => {
           />
         </form>
         <div>
-          <p style={{
-            color:
-            msg === 'Your post cannot be empty' ||
-            msg === 'Please provide at least 8 characters'
-              ? 'red'
-              : 'black'
-          }}
-          >{msg}
+          <p
+            style={{
+              color:
+                msg === 'Your post cannot be empty' ||
+                msg === 'Please provide at least 8 characters'
+                  ? 'red'
+                  : 'black'
+            }}
+          >
+            {msg}
           </p>
           <p style={{ color: characters === 255 ? 'red' : 'black' }}>
             {characters}/255
@@ -73,13 +82,14 @@ const EditPost = ({ params }) => {
       </section>
       <div className={styles.deletebuttons}>
         <div onClick={handleSubmit}>
-          <Button text='Confirm' backgroundColor='rgb(185, 247, 255)' />
+          <Button
+            text='Confirm'
+            backgroundColor='rgb(185, 247, 255)'
+            loading={loading}
+          />
         </div>
         <Button href={`/posts/${id}`} text='Cancel' />
       </div>
-      {changed && (
-        msg === 'Please provide at least 8 characters' ? <Alert message={msg} width='300px' /> : <Alert message={msg} width='200px' />
-      )}
     </section>
   )
 }

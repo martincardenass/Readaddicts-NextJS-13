@@ -4,7 +4,6 @@ import getPost from '@/app/posts/[id]/getPost'
 import updatePost from '@/app/posts/[id]/edit/updatePost'
 import getComments from '@/app/posts/[id]/comments/getComments'
 import getComment from '@/app/posts/[id]/comments/getComment'
-import getChildComments from '@/app/posts/[id]/comments/getChildComments'
 import createComment from '@/app/posts/[id]/comments/postComment'
 import errorTextReplace from '@/utility/errorTextReplace'
 
@@ -15,6 +14,7 @@ const initialState = {
   // * Of posts
   post: {},
   status: null,
+  patchPostStatus: null,
   msg: null,
   changed: false,
 
@@ -24,10 +24,9 @@ const initialState = {
   commentsPost: null,
   commentPosted: false,
   commentPostedResponse: null,
+  commentPostedStatus: null,
   comment: null,
-  commentStatus: null,
-  childComment: null,
-  childCommentStatus: null
+  commentStatus: null
 }
 
 const reducer = (state, action) => {
@@ -54,7 +53,8 @@ const reducer = (state, action) => {
         return {
           ...state,
           msg: 'Post update success',
-          changed: true
+          changed: true,
+          patchPostStatus: actionPayload.status
         }
       }
     }
@@ -87,6 +87,7 @@ const reducer = (state, action) => {
         return {
           ...state,
           commentPostedResponse: actionPayload.data,
+          commentPostedStatus: actionPayload.status,
           commentsPost: actionPayload,
           commentPosted: true
         }
@@ -105,14 +106,6 @@ const reducer = (state, action) => {
         ...state,
         comment: actionPayload.data,
         commentStatus: actionPayload.status
-      }
-    }
-
-    case 'FETCH_CHILDREN_COMMENTS': {
-      return {
-        ...state,
-        childComment: actionPayload.data,
-        childCommentStatus: actionPayload.status
       }
     }
   }
@@ -198,16 +191,13 @@ export const Fetcher = ({ children }) => {
     }
   }
 
-  const fetchChildComments = async (commentId) => {
-    try {
-      const fetched = await getChildComments(commentId)
-      dispatch({
-        type: 'FETCH_CHILDREN_COMMENTS',
-        payload: fetched
-      })
-    } catch (error) {
-      console.error(error)
-    }
+  const updateCommentPostedResponse = (response) => {
+    dispatch({
+      type: 'CREATE_COMMENT',
+      payload: {
+        data: response
+      }
+    })
   }
 
   return (
@@ -215,23 +205,23 @@ export const Fetcher = ({ children }) => {
       value={{
         post: state.post,
         status: state.status,
+        patchPostStatus: state.patchPostStatus,
         msg: state.msg,
         changed: state.changed,
         comments: state.comments,
         commentsStatus: state.commentsStatus,
         commentPostedResponse: state.commentPostedResponse,
+        commentPostedStatus: state.commentPostedStatus,
         commentPosted: state.commentPosted,
         commentsPost: state.commentsPost,
         comment: state.comment,
         commentStatus: state.commentStatus,
-        childComment: state.childComment,
-        childCommentStatus: state.childCommentStatus,
         fetchPost,
         patchPost,
         fetchComments,
         createAComment,
         fetchComment,
-        fetchChildComments
+        updateCommentPostedResponse
       }}
     >
       {children}

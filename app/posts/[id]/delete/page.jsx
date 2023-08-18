@@ -8,10 +8,12 @@ import Alert from '@/components/Alert/Alert'
 
 const RemovePost = ({ params }) => {
   const [msg, setMsg] = useState('')
+  const [loading, setLoading] = useState(false)
   const { id } = params
   const router = useRouter()
 
   const handleDelete = async () => {
+    setLoading(true)
     const result = await deletePost(id)
     setMsg(result.text)
     router.push('/')
@@ -33,6 +35,7 @@ const RemovePost = ({ params }) => {
             text='Confirm'
             backgroundColor='rgb(255, 63, 63)'
             textColor='white'
+            loading={loading}
           />
         </div>
         <Button

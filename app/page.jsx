@@ -5,15 +5,15 @@ import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 
 const DynamicLogin = dynamic(() => import('@/components/Login/Login'), {
-  loading: () => <h1>Loading...</h1>
+  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
 })
 
 const DynamicPosts = dynamic(() => import('./posts/Posts'), {
-  loading: () => <h1>Loading...</h1>
+  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
 })
 
 const DynamicAddPost = dynamic(() => import('./posts/new/page'), {
-  loading: () => <h1>Loading...</h1>
+  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
 })
 
 const HomePage = () => {

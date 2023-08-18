@@ -24,15 +24,15 @@ const Post = ({ params, children }) => {
       <article className={styles.postandoptions}>
         <DynamicPost id={id} />
         <DynamicOptions username={post.author} id={id} />
-        {/* Childrens use onditional rendering based on the pathname */}
+        {/* Childrens use onditional rendering based on the pathname. Might use parallel routes next time */}
         <DynamicDeletePost>{children}</DynamicDeletePost>
         <DynamicUpdatePost>{children}</DynamicUpdatePost>
       </article>
-      <div>
+      <article className={styles.comment}>
         <DynamicAddComment postId={id} placeholderText='Leave a comment' href={`/posts/${id}/comments`} />
         <DynamicLoadComments id={id} comments={post.comments} />
         <DynamicComments>{children}</DynamicComments>
-      </div>
+      </article>
     </main>
   )
 }

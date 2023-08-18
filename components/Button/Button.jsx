@@ -13,7 +13,8 @@ const Button = ({
   effectColor,
   effectWidth, // * If button size is changed, effect size should also be changed
   effectHeight,
-  href
+  href,
+  loading
 }) => {
   const buttonRef = useRef(null)
   const [ripple, setRipple] = useState(false)
@@ -54,7 +55,16 @@ const Button = ({
     if (effectHeight !== undefined) {
       button.style.setProperty('--effect-height', effectHeight)
     }
-  }, [duration, width, height, backgroundColor, textColor, effectColor, effectWidth, effectHeight])
+  }, [
+    duration,
+    width,
+    height,
+    backgroundColor,
+    textColor,
+    effectColor,
+    effectWidth,
+    effectHeight
+  ])
 
   useEffect(() => {
     if (coordinates.x !== 0 && coordinates.y !== 0) {
@@ -91,7 +101,22 @@ const Button = ({
       className={`${styles.effect} ${ripple ? styles.active : ''}`}
     >
       <span>
-        {href ? (<Link href={href}>{text}</Link>) : text}
+        {loading
+          ? (
+            <div className={styles.ldsring}>
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+            )
+          : href
+            ? (
+              <Link href={href}>{text}</Link>
+              )
+            : (
+                text
+              )}
       </span>
     </div>
   )

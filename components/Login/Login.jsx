@@ -85,6 +85,7 @@ const Login = () => {
                 placeholder='Password'
                 onChange={(e) => updateEvent({ type: 'UPDATE_PASSWORD', password: e.target.value })}
                 required
+                autoFocus
               />
             </section>
           </form>
@@ -121,6 +122,7 @@ const Login = () => {
             placeholder='Username'
             required
             autoComplete='off'
+            autoFocus
           />
         </section>
       </form>
