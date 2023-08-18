@@ -7,6 +7,7 @@ const DynamicLoadComments = dynamic(() => import('./LoadComments'))
 const DynamicAddComment = dynamic(() => import('./comments/AddComent'))
 const DynamicOptions = dynamic(() => import('./Options'))
 const DynamicComments = dynamic(() => import('./CommentsChild'))
+const DynamicImages = dynamic(() => import('./ImagesChild'))
 const DynamicDeletePost = dynamic(() => import('./DeleteChild'))
 const DynamicUpdatePost = dynamic(() => import('./UpdateChild'))
 const DynamicPost = dynamic(() => import('./Post'))
@@ -21,15 +22,17 @@ const Post = ({ params, children }) => {
 
   return (
     <main className={styles.postpage}>
+      <DynamicImages>{children}</DynamicImages>
       <article className={styles.postandoptions}>
         <DynamicPost id={id} />
         <DynamicOptions username={post.author} id={id} />
         {/* Childrens use onditional rendering based on the pathname. Might use parallel routes next time */}
         <DynamicDeletePost>{children}</DynamicDeletePost>
         <DynamicUpdatePost>{children}</DynamicUpdatePost>
+
       </article>
       <article className={styles.comment}>
-        <DynamicAddComment postId={id} placeholderText='Leave a comment' href={`/posts/${id}/comments`} />
+        <DynamicAddComment postId={id} placeholderText='Leave a comment...' href={`/posts/${id}/comments`} />
         <DynamicLoadComments id={id} comments={post.comments} />
         <DynamicComments>{children}</DynamicComments>
       </article>

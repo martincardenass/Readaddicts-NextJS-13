@@ -40,14 +40,14 @@ const Comments = ({ comments, id }) => {
                         height={40}
                       />
                     )}
-                    <p>@{comment.author}</p>
+                    <h4>@{comment.author}</h4>
                     <p className={styles.date}>
                       {getTimeAgo(new Date(comment.created).getTime())}
                     </p>
                   </Link>
                   )}
+              <p>{comment.content}</p>
               <div className={styles.contentsection}>
-                {comment.content}
                 {comment.replies > 0
                   ? (
                     <b>
@@ -59,7 +59,7 @@ const Comments = ({ comments, id }) => {
                   : (
                     <b>
                       <Link href={`/posts/${id}/comments/${comment.comment_Id}/reply`}>
-                        Reply to this comment
+                        Leave a reply
                       </Link>
                     </b>
                     )}

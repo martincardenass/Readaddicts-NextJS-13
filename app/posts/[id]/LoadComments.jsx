@@ -14,13 +14,13 @@ const LoadComments = ({ id, comments }) => {
       <>
         <section className={styles.loadcomments}>
           <DynamicButton
-            text={`Show ${comments} comments`}
+            text={`Show ${comments} comments and responses`}
             href={`/posts/${id}/comments`}
             backgroundColor='white'
-            width='175px'
+            width='275px'
             effectColor='rgb(235, 235, 235)'
-            effectWidth='175px'
-            effectHeight='175px'
+            effectWidth='275px'
+            effectHeight='275px'
           />
         </section>
       </>

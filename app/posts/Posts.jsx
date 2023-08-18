@@ -49,7 +49,7 @@ const Posts = ({ posts, postsStatus }) => {
                 <p>{post.content}</p>
               </Link>
               {post.images.length > 0 && <DynamicImages images={post.images} href={`/posts/${post.post_Id}`} />}
-              <DynamicMenu username={post.author} />
+              <DynamicMenu username={post.author} postId={post.post_Id} />
               <DynamicIcons id={post.post_Id} commentCount={post.comments} />
             </li>
           ))}

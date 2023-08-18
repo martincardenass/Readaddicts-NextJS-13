@@ -10,22 +10,25 @@ const Options = ({ username, id }) => {
 
   return (
     <>
-      <h2>Options</h2>
+
       {user?.username === username && (
-        <section className={styles.options}>
-          <section className={styles.optionscontainer}>
-            <Link href={`/posts/${id}/delete`}>
-              <span className='material-symbols-outlined'>delete</span>
-              <span className={pathname.includes('/delete') ? styles.active : ''}>Delete post</span>
-            </Link>
-            <Link href={`/posts/${id}/edit`}>
-              <span className='material-symbols-outlined'>edit_note</span>
-              <span className={pathname.includes('/edit') ? styles.active : ''}>Edit post</span>
-            </Link>
+        <>
+          <h2 style={{ textAlign: 'center' }}>Options</h2>
+          <section className={styles.options}>
+            <section className={styles.optionscontainer}>
+              <Link href={`/posts/${id}/delete`}>
+                <span className='material-symbols-outlined'>delete</span>
+                <span className={pathname.includes('/delete') ? styles.active : ''}>Delete post</span>
+              </Link>
+              <Link href={`/posts/${id}/edit`}>
+                <span className='material-symbols-outlined'>edit_note</span>
+                <span className={pathname.includes('/edit') ? styles.active : ''}>Edit post</span>
+              </Link>
+            </section>
           </section>
-        </section>
+        </>
       )}
-      {user?.username !== username && <p>Not logged in user options</p>}
+      {/* {user?.username !== username && <p>Not logged in user options</p>} */}
     </>
   )
 }

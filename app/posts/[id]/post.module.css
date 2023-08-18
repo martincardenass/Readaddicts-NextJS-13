@@ -212,6 +212,7 @@
 
 .comment {
     display: flex;
+    width: 50%;
     flex-direction: column;
     margin: 0 2.5rem 1rem 0;
 }

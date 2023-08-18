@@ -2,8 +2,9 @@
 import { useState } from 'react'
 import styles from './posts.module.css'
 import { useAuth } from '@/hooks/useAuth'
+import Link from 'next/link'
 
-const Menu = ({ username }) => {
+const Menu = ({ username, postId }) => {
   const [toggle, setToggle] = useState(false)
   const { user } = useAuth()
 
@@ -19,9 +20,15 @@ const Menu = ({ username }) => {
         </div>
         {toggle && (
           <div className={styles.popmenuuserlogged}>
-            <p>Edit this post</p>
-            <p>See comments</p>
-            <p>Delete this post</p>
+            <p>
+              <Link href={`/posts/${postId}/edit`}>Edit post</Link>
+            </p>
+            <p>
+              <Link href={`/posts/${postId}/comments`}>See comments</Link>
+            </p>
+            <p>
+              <Link href={`/posts/${postId}/delete`}>Delete post</Link>
+            </p>
           </div>
         )}
       </div>
@@ -34,8 +41,12 @@ const Menu = ({ username }) => {
         </div>
         {toggle && (
           <div className={styles.popupmenu}>
-            <p>Leave a comment</p>
-            <p>See comments</p>
+            <p>
+              <Link href={`/posts/${postId}`}>Leave a comment</Link>
+            </p>
+            <p>
+              <Link href={`/posts/${postId}/comments`}>See comments</Link>
+            </p>
           </div>
         )}
       </div>

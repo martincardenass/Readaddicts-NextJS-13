@@ -4,6 +4,7 @@ import styles from './post.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getTimeAgo } from '@/utility/relativeTime'
+import { useRouter } from 'next/navigation'
 
 const Post = ({ id }) => {
   const {
@@ -13,6 +14,7 @@ const Post = ({ id }) => {
     changed
   } = useFetcher()
   const img = []
+  const router = useRouter()
 
   useEffect(() => {
     fetchPost(id)
@@ -25,6 +27,8 @@ const Post = ({ id }) => {
           key={post.images[i].image_Id}
           src={post.images[i].image_Url}
           alt={post.images[i].image_Id}
+          onClick={() => router.push(`/posts/${post.post_Id}/image/${post.images[i].image_Id}`)}
+          style={{ cursor: 'pointer' }}
           width={150}
           height={150}
         />
