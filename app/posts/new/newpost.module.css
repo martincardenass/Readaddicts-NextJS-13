@@ -114,3 +114,17 @@
 .inputandcharcount p {
     font-size: 10px;
 }
+
+.nouser {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}

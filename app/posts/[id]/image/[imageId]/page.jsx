@@ -15,9 +15,19 @@ const ImageIdPage = ({ params }) => {
     (image) => image.image_Id === parseInt(imageId)
   )
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Escape') {
+      router.push(`/posts/${post.post_Id}`)
+    }
+  }
+
   if (image) {
     return (
-      <section className={styles.image}>
+      <section
+        className={styles.image}
+        tabIndex={0}
+        onKeyDown={(event) => handleKeyPress(event)}
+      >
         <Link href={`/posts/${post.post_Id}`} className={styles.close} />
         <div className={styles.imagecontainer}>
           <Image

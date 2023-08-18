@@ -1,56 +1,55 @@
 'use client'
 import styles from './newpost.module.css'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
 import { useEffect, useReducer, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import createPost from './createPost'
 import errorTextReplace from '@/utility/errorTextReplace'
-
-const DynamicButton = dynamic(() => import('@/components/Button/Button'))
+import { useSubmitRef } from '@/utility/formSubmitRef'
+import Button from '@/components/Button/Button'
 
 const NewPostPage = ({ user }) => {
-  const [event, updateEvent] = useReducer((event, action) => {
-    const newEvent = { ...event }
+  const [event, updateEvent] = useReducer(
+    (event, action) => {
+      const newEvent = { ...event }
 
-    switch (action.type) {
-      case 'SET_CHARACTERS': {
-        newEvent.characters = action.characters
-        break
+      switch (action.type) {
+        case 'SET_CHARACTERS': {
+          newEvent.characters = action.characters
+          break
+        }
+        case 'SET_IMAGES': {
+          newEvent.images = action.images
+          break
+        }
+        case 'SET_LOADING': {
+          newEvent.loading = action.loading
+          break
+        }
+        case 'SET_MSG': {
+          newEvent.msg = action.msg
+          break
+        }
+        case 'SET_DONE': {
+          newEvent.done = action.done
+        }
       }
-      case 'SET_IMAGES': {
-        newEvent.images = action.images
-        break
-      }
-      case 'SET_LOADING': {
-        newEvent.loading = action.loading
-        break
-      }
-      case 'SET_MSG': {
-        newEvent.msg = action.msg
-        break
-      }
-      case 'SET_DONE': {
-        newEvent.done = action.done
-      }
+
+      return newEvent
+    },
+    {
+      characters: 0,
+      images: [],
+      done: false,
+      msg: null,
+      loading: false
     }
-
-    return newEvent
-  }, {
-    characters: 0, images: [], done: false, msg: null, loading: false
-  })
+  )
   const formRef = useRef(null)
   const fileRef = useRef(null)
   const router = useRouter()
 
-  const formSubmitFromRef = (e) => {
-    e.preventDefault()
-    if (formRef.current) {
-      formRef.current.dispatchEvent(
-        new Event('submit', { cancelable: true, bubbles: true })
-      )
-    }
-  }
+  const handleSubmit = useSubmitRef(formRef)
 
   const handleCharacterCount = (e) => {
     const targetValue = e.target.value
@@ -62,7 +61,8 @@ const NewPostPage = ({ user }) => {
     updateEvent({ type: 'SET_IMAGES', images: files })
   }
 
-  const handleRemoveImg = (index) => { // * Remove the image visually
+  const handleRemoveImg = (index) => {
+    // * Remove the image visually
     const newImages = [...event.images]
     newImages.splice(index, 1)
     updateEvent({ type: 'SET_IMAGES', images: newImages })
@@ -91,8 +91,12 @@ const NewPostPage = ({ user }) => {
         router.push(`/posts/${data.data}`)
       }
 
-      if (data.status === undefined) { // * If token expires, log out the user
-        updateEvent({ type: 'SET_MSG', msg: 'Your session has expired. Logging out...' })
+      if (data.status === undefined) {
+        // * If token expires, log out the user
+        updateEvent({
+          type: 'SET_MSG',
+          msg: 'Your session has expired. Logging out...'
+        })
         updateEvent({ type: 'SET_DONE', done: false })
 
         setTimeout(() => {
@@ -129,13 +133,19 @@ const NewPostPage = ({ user }) => {
       <main className={event.done ? styles.newpostdenied : styles.newpost}>
         <section className={styles.newpostcontainer}>
           <div className={styles.newpostitems}>
-            <Image
-              style={{ filter: event.done ? 'grayscale(100)' : '' }}
-              src={user.profile_Picture}
-              alt={user.username}
-              width={75}
-              height={75}
-            />
+            {user.profile_Picture
+              ? (
+                <Image
+                  style={{ filter: event.done ? 'grayscale(100)' : '' }}
+                  src={user.profile_Picture}
+                  alt={user.username}
+                  width={75}
+                  height={75}
+                />
+                )
+              : (
+                <div className={styles.nouser}>?</div>
+                )}
             <section className={styles.inputandcharcount}>
               <form ref={formRef} onSubmit={handlePost}>
                 <input
@@ -168,7 +178,9 @@ const NewPostPage = ({ user }) => {
                 >
                   {event.msg}
                 </p>
-                <p style={{ color: event.characters === 255 ? 'red' : 'black' }}>
+                <p
+                  style={{ color: event.characters === 255 ? 'red' : 'black' }}
+                >
                   {event.characters}/255
                 </p>
               </div>
@@ -179,8 +191,8 @@ const NewPostPage = ({ user }) => {
             >
               add_photo_alternate
             </span>
-            <div onClick={formSubmitFromRef}>
-              <DynamicButton
+            <div onClick={handleSubmit}>
+              <Button
                 text='Post'
                 backgroundColor={event.done ? '#7a7a7a' : '#ed2085'}
                 textColor='white'

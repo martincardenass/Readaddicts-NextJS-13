@@ -203,6 +203,20 @@
     text-transform: capitalize;
 }
 
+.nouser {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}
+
 @media screen and (max-width: 1050px) {
     .links { display: none; }
     .user { display: none; }

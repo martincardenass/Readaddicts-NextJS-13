@@ -13,12 +13,18 @@ const Users = async () => {
           <li key={user.user_Id}>
             <section className={styles.usercontainer}>
               <Link href={`/profile/${user.username}`}>
-                <Image
-                  src={user.profile_Picture}
-                  alt={user.username}
-                  width={200}
-                  height={200}
-                />
+                {user.profile_Picture
+                  ? (
+                    <Image
+                      src={user.profile_Picture}
+                      alt={user.username}
+                      width={200}
+                      height={200}
+                    />
+                    )
+                  : (
+                    <div className={styles.nouser}>?</div>
+                    )}
               </Link>
               <Link href={`/profile/${user.username}`}>
                 <h1>{user.username}</h1>

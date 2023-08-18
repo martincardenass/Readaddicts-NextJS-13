@@ -1,6 +1,6 @@
 async function authenticate (user, pw) {
   try {
-    const url = process.env.NEXT_PUBLIC_API_URL + 'User/login'
+    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/login')
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

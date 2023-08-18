@@ -69,12 +69,18 @@ const AddComent = ({ postId, parent, placeholderText, href }) => {
   return (
     <section className={styles.addcommentcontainer}>
       <section className={styles.addcomment}>
-        <Image
-          src={user?.profile_Picture}
-          alt={user?.username}
-          width={50}
-          height={50}
-        />
+        {user?.profile_Picture
+          ? (
+            <Image
+              src={user.profile_Picture}
+              alt={user.username}
+              width={50}
+              height={50}
+            />
+            )
+          : (
+            <div className={styles.nouser}>?</div>
+            )}
         <div className={styles.commentinput}>
           <form ref={formRef} onSubmit={postComment}>
             <input
@@ -88,9 +94,9 @@ const AddComent = ({ postId, parent, placeholderText, href }) => {
             <p
               style={{
                 color:
-                    commentPostedResponse === '8 characters min'
-                      ? 'red'
-                      : 'black'
+                  commentPostedResponse === '8 characters min'
+                    ? 'red'
+                    : 'black'
               }}
             >
               {commentPostedResponse}

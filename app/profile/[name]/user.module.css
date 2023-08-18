@@ -45,6 +45,26 @@
     position: relative;
 }
 
+.usercontainer span {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.nouser {
+    width: 225px;
+    height: 225px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}
+
 .usernamecontainer {
     display: flex;
     flex-direction: column;

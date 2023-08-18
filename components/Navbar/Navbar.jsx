@@ -77,13 +77,19 @@ const Navbar = () => {
               <section
                 className={popup ? styles.navuserfocused : styles.navuser}
               >
-                <Image
-                  src={user.profile_Picture}
-                  alt={user.username}
-                  width={50}
-                  height={50}
-                  style={{ borderRadius: '50%' }}
-                />
+                {user.profile_Picture
+                  ? (
+                    <Image
+                      src={user.profile_Picture}
+                      alt={user.username}
+                      width={50}
+                      height={50}
+                      style={{ borderRadius: '50%' }}
+                    />
+                    )
+                  : (
+                    <div className={styles.nouser}>?</div>
+                    )}
               </section>
               <section className={popup ? styles.userpopup : styles.hidden}>
                 <section className={styles.popuptext}>
@@ -129,13 +135,19 @@ const Navbar = () => {
           {user && (
             <section className={styles.useroverlay}>
               <section className={styles.usercontainer}>
-                <Image
-                  src={user.profile_Picture}
-                  alt={user.username}
-                  width={50}
-                  height={50}
-                  style={{ borderRadius: '50%' }}
-                />
+                {user.profile_Picture
+                  ? (
+                    <Image
+                      src={user.profile_Picture}
+                      alt={user.username}
+                      width={50}
+                      height={50}
+                      style={{ borderRadius: '50%' }}
+                    />
+                    )
+                  : (
+                    <div className={styles.nouser}>?</div>
+                    )}
                 <section className={styles.userinfo}>
                   <span>
                     Welcome,{' '}

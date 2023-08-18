@@ -30,12 +30,20 @@ const UserProfile = async ({ params, children }) => {
     <article className={styles.userprofile}>
       <section className={styles.userprofilecontainer}>
         <div className={styles.usercontainer}>
-          <Image
-            src={userdata.profile_Picture}
-            alt={userdata.username}
-            width={225}
-            height={225}
-          />
+          <span>
+            {userdata.profile_Picture
+              ? (
+                <Image
+                  src={userdata.profile_Picture}
+                  alt={userdata.username}
+                  width={225}
+                  height={225}
+                />
+                )
+              : (
+                <div className={styles.nouser}>?</div>
+                )}
+          </span>
           <div className={styles.usernamecontainer}>
             <span className={styles.flexor}>
               <h3>

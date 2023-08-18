@@ -19,12 +19,18 @@ const Posts = ({ posts, postsStatus }) => {
                 href={`/profile/${post.author}`}
                 className={styles.usercontainer}
               >
-                <Image
-                  src={post.profile_Picture}
-                  alt={post.author}
-                  width={45}
-                  height={45}
-                />
+                {post.profile_Picture
+                  ? (
+                    <Image
+                      src={post.profile_Picture}
+                      alt={post.author}
+                      width={50}
+                      height={50}
+                    />
+                    )
+                  : (
+                    <div className={styles.nouser}>?</div>
+                    )}
                 {post.first_Name && (
                   <>
                     <h3>
@@ -48,7 +54,12 @@ const Posts = ({ posts, postsStatus }) => {
               <Link href={`/posts/${post.post_Id}`}>
                 <p>{post.content}</p>
               </Link>
-              {post.images.length > 0 && <DynamicImages images={post.images} href={`/posts/${post.post_Id}`} />}
+              {post.images.length > 0 && (
+                <DynamicImages
+                  images={post.images}
+                  href={`/posts/${post.post_Id}`}
+                />
+              )}
               <DynamicMenu username={post.author} postId={post.post_Id} />
               <DynamicIcons id={post.post_Id} commentCount={post.comments} />
             </li>

@@ -216,3 +216,17 @@
     flex-direction: column;
     margin: 0 2.5rem 1rem 0;
 }
+
+.nouser {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}

@@ -7,12 +7,7 @@ import { getTimeAgo } from '@/utility/relativeTime'
 import { useRouter } from 'next/navigation'
 
 const Post = ({ id }) => {
-  const {
-    fetchPost,
-    post,
-    status,
-    changed
-  } = useFetcher()
+  const { fetchPost, post, status, changed } = useFetcher()
   const img = []
   const router = useRouter()
 
@@ -27,7 +22,10 @@ const Post = ({ id }) => {
           key={post.images[i].image_Id}
           src={post.images[i].image_Url}
           alt={post.images[i].image_Id}
-          onClick={() => router.push(`/posts/${post.post_Id}/image/${post.images[i].image_Id}`)}
+          onClick={() =>
+            router.push(
+              `/posts/${post.post_Id}/image/${post.images[i].image_Id}`
+            )}
           style={{ cursor: 'pointer' }}
           width={150}
           height={150}
@@ -44,12 +42,18 @@ const Post = ({ id }) => {
             href={`/profile/${post.author}`}
             className={styles.usercontainer}
           >
-            <Image
-              src={post.profile_Picture}
-              alt={post.author}
-              width={50}
-              height={50}
-            />
+            {post.profile_Picture
+              ? (
+                <Image
+                  src={post.profile_Picture}
+                  alt={post.author}
+                  width={50}
+                  height={50}
+                />
+                )
+              : (
+                <div className={styles.nouser}>?</div>
+                )}
             {post.first_Name && (
               <>
                 <h3>

@@ -6,6 +6,20 @@
     justify-content: center;
 }
 
+.nouser {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}
+
 .users ul {
     padding: 0;
     margin: 0;
