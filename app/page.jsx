@@ -65,27 +65,26 @@ const HomePage = () => {
     }
   }, [isIntersecting])
 
-  return (
-    <>
-      {userStatusCode === 404 && <DynamicLogin />}
-      {userStatusCode === 200 && (
-        <>
-          <DynamicAddPost user={user} />
-          <DynamicPosts posts={posts} postsStatus={postsStatus} />
-          <p
-            ref={ref}
-            style={{
-              textAlign: 'center',
-              marginTop: '-2rem',
-              userSelect: 'none'
-            }}
-          >
-            .
-          </p>
-        </>
-      )}
-    </>
-  )
+  if (userStatusCode === 404) return <DynamicLogin />
+
+  if (userStatusCode === 200) {
+    return (
+      <>
+        <DynamicAddPost user={user} />
+        <DynamicPosts posts={posts} postsStatus={postsStatus} />
+        <p
+          ref={ref}
+          style={{
+            textAlign: 'center',
+            marginTop: '-2rem',
+            userSelect: 'none'
+          }}
+        >
+          .
+        </p>
+      </>
+    )
+  }
 }
 
 export default HomePage

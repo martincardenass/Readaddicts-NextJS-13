@@ -41,7 +41,6 @@ const Login = () => {
 
   const fetchUser = async () => {
     const data = await getUser(event.username)
-
     updateEvent({ type: 'SET_USER_DATA', userData: data })
   }
 

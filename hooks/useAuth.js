@@ -49,19 +49,27 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token])
 
-  const fetchUser = async () => {
-    const data = await getUser(tokenDecoded?.unique_name)
+  const fetchUser = async (username) => {
+    const data = await getUser(username)
     setUser(data.text)
     setUserStatusCode(data.status)
   }
 
   useEffect(() => {
-    fetchUser()
+    fetchUser(tokenDecoded?.unique_name)
   }, [tokenDecoded?.unique_name])
 
   return (
     <AuthContext.Provider
-      value={{ handleLogin, token, msg, tokenDecoded, user, userStatusCode }}
+      value={{
+        handleLogin,
+        token,
+        msg,
+        tokenDecoded,
+        user,
+        userStatusCode,
+        setUserStatusCode
+      }}
     >
       {children}
     </AuthContext.Provider>
