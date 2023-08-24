@@ -106,12 +106,15 @@ const NewPostPage = ({ user }) => {
         return
       }
 
+      console.log(data)
       if (data.status === 400) {
         const replacedErrorText = errorTextReplace(data)
         updateEvent({ type: 'SET_MSG', msg: replacedErrorText })
-      } else {
+      } if (data.status === 200) {
         updateEvent({ type: 'SET_MSG', msg: 'Post published successfully' })
         updateEvent({ type: 'SET_DONE', done: true })
+      } else {
+        updateEvent({ type: 'SET_MSG', msg: 'Something went wrong' })
       }
     } else {
       updateEvent({ type: 'SET_MSG', msg: 'Your post cannot be empty' })

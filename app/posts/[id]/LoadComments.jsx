@@ -24,7 +24,7 @@ const LoadComments = ({ id, comments }) => {
       </section>
     )
   } if (!pathname.includes('/comments') && comments <= 0) {
-    return <h3 style={{ textAlign: 'center' }}>Be the first comment.</h3>
+    return <h3 style={{ textAlign: 'center', fontWeight: '400' }}>Be the first comment.</h3>
   }
 }
 

@@ -55,6 +55,7 @@ const HomePage = () => {
     if (isIntersecting) {
       const fetchPosts = async () => {
         const postsData = await getPosts(page, 5)
+
         setPostsStatus(postsData?.status)
 
         setPosts((prevPosts) => [...prevPosts, ...postsData.data])
