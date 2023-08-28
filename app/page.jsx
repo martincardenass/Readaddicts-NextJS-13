@@ -17,7 +17,7 @@ const DynamicAddPost = dynamic(() => import('./posts/new/page'), {
 })
 
 const HomePage = () => {
-  const { userStatusCode, user } = useAuth()
+  const { user } = useAuth()
   const [posts, setPosts] = useState([])
   const [postsStatus, setPostsStatus] = useState(null)
   // * ref and isIntersecting for infinite scroll using IntersectionObserver API
@@ -66,9 +66,9 @@ const HomePage = () => {
     }
   }, [isIntersecting])
 
-  if (userStatusCode === 404) return <DynamicLogin />
+  if (!user) return <DynamicLogin />
 
-  if (userStatusCode === 200) {
+  if (user) {
     return (
       <>
         <DynamicAddPost user={user} />

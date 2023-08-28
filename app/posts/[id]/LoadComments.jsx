@@ -1,9 +1,7 @@
 'use client'
 import styles from './post.module.css'
 import { usePathname } from 'next/navigation'
-import dynamic from 'next/dynamic'
-
-const DynamicButton = dynamic(() => import('@/components/Button/Button'))
+import Button from '@/components/Button/Button'
 
 const LoadComments = ({ id, comments }) => {
   const pathname = usePathname()
@@ -12,7 +10,7 @@ const LoadComments = ({ id, comments }) => {
   if (!pathname.includes('/comments') && comments > 0) {
     return (
       <section className={styles.loadcomments}>
-        <DynamicButton
+        <Button
           text={`Show ${comments} comments and responses`}
           href={`/posts/${id}/comments`}
           backgroundColor='white'

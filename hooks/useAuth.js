@@ -1,28 +1,21 @@
 'use client'
 import authenticate from '@/components/Login/authenticate'
-import { createContext, useContext, useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken'
-import getUser from '@/app/profile/[name]/getUser'
+import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  let initialToken
+  let tokenUser
   if (typeof window !== 'undefined') {
-    initialToken = window && window.localStorage.getItem('token')
+    tokenUser = window && window.localStorage.getItem('user')
   }
-  const [token, setToken] = useState(initialToken)
-
-  const [tokenDecoded, setTokenDecoded] = useState(
-    () => jwt.decode(token) || null
-  )
-  const [user, setUser] = useState(null)
-  const [userStatusCode, setUserStatusCode] = useState(null)
+  const [user, setUser] = useState(JSON.parse(tokenUser))
   const [msg, setMsg] = useState(null)
 
   const handleLogin = async (e, username, password) => {
     e.preventDefault()
-    window.localStorage.removeItem('token') // * Remove the token from localStorage if it exists
+    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('user') // * Remove token and user from localStorage if they exist
 
     if (username === '' || password === '') {
       setMsg('Please provide all fields')
@@ -30,45 +23,26 @@ export const AuthProvider = ({ children }) => {
 
     const auth = await authenticate(username, password)
 
-    // * If credentials are correct, login
     if (auth.status === 200) {
-      setToken(auth.text)
-      window.localStorage.setItem('token', auth.text)
+      // * Login and save token and some user info to localStorage
+      window.localStorage.setItem('token', auth.data.token)
+      window.localStorage.setItem('user', JSON.stringify(auth.data.user))
+      setUser(auth.data.user)
+      setMsg('')
     }
 
     // * If credentials are wrong, display a message
     if (auth.status === 400) {
-      setMsg(auth.text)
+      setMsg(auth.data)
     }
   }
-
-  useEffect(() => {
-    if (token) {
-      const decoded = jwt.decode(token)
-      setTokenDecoded(decoded)
-    }
-  }, [token])
-
-  const fetchUser = async (username) => {
-    const data = await getUser(username)
-    setUser(data.text)
-    setUserStatusCode(data.status)
-  }
-
-  useEffect(() => {
-    fetchUser(tokenDecoded?.unique_name)
-  }, [tokenDecoded?.unique_name])
 
   return (
     <AuthContext.Provider
       value={{
         handleLogin,
-        token,
         msg,
-        tokenDecoded,
-        user,
-        userStatusCode,
-        setUserStatusCode
+        user
       }}
     >
       {children}

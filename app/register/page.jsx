@@ -12,7 +12,7 @@ import { acceptedDomains } from './domains'
 
 const SignUpPage = () => {
   const formRef = useRef(null)
-  const { userStatusCode } = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
 
   const registerReducer = (state, action) => {
@@ -174,12 +174,12 @@ const SignUpPage = () => {
   }
 
   useEffect(() => {
-    if (userStatusCode === 200) {
+    if (user) {
       router.push('/')
     }
-  }, [userStatusCode, router])
+  }, [user, router])
 
-  if (userStatusCode === 404) {
+  if (!user) {
     return (
       <main className={styles.usersmain}>
         <h1>Create a new account</h1>

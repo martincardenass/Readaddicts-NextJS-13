@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
   const pathname = usePathname()
-  const { user, userStatusCode } = useAuth()
+  const { user } = useAuth()
   const [toggle, setToggle] = useState(false)
   const [popup, setPopup] = useState(false)
   const [toggleDoor, setToggleDoor] = useState(false)
@@ -30,8 +30,7 @@ const Navbar = () => {
   )
 
   const handleLogout = () => {
-    // ! Will probably change this? Idk
-    window.localStorage.removeItem('token')
+    ['token', 'user'].forEach(item => window.localStorage.removeItem(item))
     window.location.reload()
   }
 
@@ -58,7 +57,7 @@ const Navbar = () => {
           <section className={styles.links}>{navItems}</section>
         </section>
         <section className={styles.user}>
-          {userStatusCode === 404 && (
+          {!user && (
             <>
               <p>
                 <Link href='/'>Log in</Link>
@@ -68,7 +67,7 @@ const Navbar = () => {
               </p>
             </>
           )}
-          {userStatusCode === 200 && (
+          {user && (
             <aside
               onMouseLeave={() => setPopup(false)}
               onMouseEnter={() => setPopup(!popup)}

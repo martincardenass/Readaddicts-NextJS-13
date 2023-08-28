@@ -2,13 +2,17 @@
 import styles from '@/components/Login/users.module.css'
 import styles2 from './updateprofile.module.css'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
 import { useRef } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
+import Button from '@/components/Button/Button'
 
-const DynamicButton = dynamic(() => import('@/components/Button/Button'))
-
-const UpdateForm = ({ thisUser, handleUpdate, handleImageSelect, image }) => {
+const UpdateForm = ({
+  thisUser,
+  handleUpdate,
+  handleImageSelect,
+  image,
+  loading
+}) => {
   const formRef = useRef(null)
   const handleSubmit = useSubmitRef(formRef)
 
@@ -118,10 +122,11 @@ const UpdateForm = ({ thisUser, handleUpdate, handleImageSelect, image }) => {
         </section>
       </form>
       <div onClick={handleSubmit}>
-        <DynamicButton
+        <Button
           text='Update'
           backgroundColor='#ed2085'
           textColor='white'
+          loading={loading}
         />
       </div>
     </article>

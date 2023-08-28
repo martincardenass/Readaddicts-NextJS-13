@@ -1,0 +1,96 @@
+.groupsmain {
+    display: flex;
+    flex-direction: column;
+}
+
+.groupsmain h1 {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.groups {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.groups ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding: 2rem 5rem;
+    margin: 2rem;
+    margin-top: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.groups li {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 2rem;
+    border-radius: 25px;
+    gap: 2rem;
+}
+
+.groups div h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.groups img {
+    border-radius: 50%;
+}
+
+.groups h3 {
+    font-weight: 400;
+}
+
+.groups h3 span {
+    text-transform: capitalize;
+}
+
+.individualgroup {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.individualgroup h1 {
+    font-weight: 500;
+}
+
+.individualgroup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.individualgroup img {
+    border-radius: 50%;
+}
+
+.individualgroup ul li p {
+    text-transform: capitalize;
+}
+
+.individualgroup ul li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}

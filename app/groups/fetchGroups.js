@@ -1,4 +1,4 @@
-import fetcher from '../fetcher'
+import fetcher from '../../utility/fetcher'
 
 const getGroups = () => fetcher('Groups')
 

@@ -41,6 +41,7 @@ const UpdateProfile = ({ params }) => {
   const [status, setStatus] = useState(null)
   const [image, setImage] = useState(null)
   const [updated, setUpdated] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -66,7 +67,6 @@ const UpdateProfile = ({ params }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault()
-    let result
     const formData = new FormData(e.target)
     const formDataHasContentChecker = Object.fromEntries(new FormData(e.target))
 
@@ -81,9 +81,15 @@ const UpdateProfile = ({ params }) => {
     })
 
     if (fieldsHaveChanged) {
-      result = await patchProfile(formData)
+      const userFromtoken = window.localStorage.getItem('user')
+      const user = JSON.parse(userFromtoken)
+      setLoading(true)
+      const newProfile = await patchProfile(formData)
+      user.profile_Picture = newProfile.data.profile_Picture
+      const updatedUser = JSON.stringify(user)
+      window.localStorage.setItem('user', updatedUser)
       setUpdated(true)
-      console.log(result)
+      setLoading(false)
     }
   }
 
@@ -107,6 +113,7 @@ const UpdateProfile = ({ params }) => {
           handleUpdate={handleUpdate}
           handleImageSelect={handleImageSelect}
           image={image}
+          loading={loading}
         />
         {updated && <DynamicAlert message='Your changes have been saved.' width='240px' />}
         {!updated && <DynamicAlert message='Beware! No field changes detected' width='270px' />}

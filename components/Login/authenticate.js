@@ -10,14 +10,11 @@ async function authenticate (user, pw) {
       })
     })
 
-    const response = await res.text() // * Return the token if successful
-    const statusCode = res.status // * Return the status code
-
-    if (!res.ok) { // * Return error message and status code
-      return { text: response, status: statusCode }
+    if (!res.ok) {
+      return { data: await res.text(), status: res.status }
     }
 
-    return { text: response, status: statusCode }
+    return { data: await res.json(), status: res.status }
   } catch (error) {
     return error.message
   }
