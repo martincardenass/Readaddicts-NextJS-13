@@ -1,19 +1,5 @@
-async function validateEmail (email) {
-  try {
-    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/Validator/EmailExists/' + email)
+import fieldsValidator from '@/utility/validator'
 
-    const res = await fetch(url, {
-      method: 'POST'
-    })
-
-    if (!res.ok) {
-      return res.json()
-    }
-
-    return res.json()
-  } catch (error) {
-    return error.message
-  }
-}
+const validateEmail = (email) => fieldsValidator('User/Validator/EmailExists/', email)
 
 export default validateEmail

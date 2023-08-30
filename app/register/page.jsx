@@ -10,96 +10,97 @@ import validateUsername from './usernameValidator'
 import validateEmail from './emailValidator'
 import { acceptedDomains } from './domains'
 
+const registerReducer = (state, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case 'SET_RESPONSE': {
+      if (payload.status === 400) {
+        return {
+          ...state,
+          error: payload.text[0]
+        }
+      }
+
+      if (payload.status === 200) {
+        window.localStorage.setItem('token', payload.data.token)
+        window.localStorage.setItem('user', JSON.stringify(payload.data.user))
+        window.location.reload()
+        return { ...state }
+      }
+      return { ...state }
+    }
+
+    case 'IS_USERNAME_TAKEN': {
+      if (payload.ok) {
+        return {
+          ...state,
+          isUsernameTaken: true,
+          userBorder: 'red'
+        }
+      } else {
+        return {
+          ...state,
+          isUsernameTaken: false,
+          userBorder: '#73ff83'
+        }
+      }
+    }
+
+    case 'IS_EMAIL_TAKEN': {
+      if (payload.ok) {
+        return {
+          ...state,
+          isEmailTaken: true,
+          emailBorder: 'red'
+        }
+      } else {
+        return {
+          ...state,
+          isEmailTaken: false,
+          emailBorder: '#73ff83'
+        }
+      }
+    }
+
+    case 'PASSWORD_VALIDATOR': {
+      if (payload.length < 6) {
+        return {
+          ...state,
+          isPasswordValid: false,
+          passwordBorder: 'red'
+        }
+      } else {
+        return {
+          ...state,
+          isPasswordValid: true,
+          passwordBorder: '#73ff83'
+        }
+      }
+    }
+
+    case 'USERNAME_ERROR': {
+      return {
+        ...state,
+        isUsernameTaken: true, // * Username its not taken in this case but just doing it for the error handling
+        userBorder: 'red'
+      }
+    }
+
+    case 'EMAIL_ERROR': {
+      return {
+        ...state,
+        isEmailTaken: true, // * Same as above
+        emailBorder: 'red'
+      }
+    }
+  }
+}
+
 const SignUpPage = () => {
   const formRef = useRef(null)
   const { user } = useAuth()
   const router = useRouter()
-
-  const registerReducer = (state, action) => {
-    const { type, payload } = action
-
-    switch (type) {
-      case 'SET_RESPONSE': {
-        if (payload.status === 400) {
-          return {
-            ...state,
-            error: payload.text[0]
-          }
-        }
-
-        if (payload.status === 200) {
-          window.localStorage.setItem('token', payload.data)
-          window.location.reload()
-          return { ...state }
-        }
-        return { ...state }
-      }
-
-      case 'IS_USERNAME_TAKEN': {
-        if (payload.ok) {
-          return {
-            ...state,
-            isUsernameTaken: true,
-            userBorder: 'red'
-          }
-        } else {
-          return {
-            ...state,
-            isUsernameTaken: false,
-            userBorder: '#73ff83'
-          }
-        }
-      }
-
-      case 'IS_EMAIL_TAKEN': {
-        if (payload.ok) {
-          return {
-            ...state,
-            isEmailTaken: true,
-            emailBorder: 'red'
-          }
-        } else {
-          return {
-            ...state,
-            isEmailTaken: false,
-            emailBorder: '#73ff83'
-          }
-        }
-      }
-
-      case 'PASSWORD_VALIDATOR': {
-        if (payload.length < 6) {
-          return {
-            ...state,
-            isPasswordValid: false,
-            passwordBorder: 'red'
-          }
-        } else {
-          return {
-            ...state,
-            isPasswordValid: true,
-            passwordBorder: '#73ff83'
-          }
-        }
-      }
-
-      case 'USERNAME_ERROR': {
-        return {
-          ...state,
-          isUsernameTaken: true, // * Username its not taken in this case but just doing it for the error handling
-          userBorder: 'red'
-        }
-      }
-
-      case 'EMAIL_ERROR': {
-        return {
-          ...state,
-          isEmailTaken: true, // * Same as above
-          emailBorder: 'red'
-        }
-      }
-    }
-  }
 
   const [state, dispatch] = useReducer(registerReducer, {
     error: '',

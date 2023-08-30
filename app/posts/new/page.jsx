@@ -106,7 +106,6 @@ const NewPostPage = ({ user }) => {
         return
       }
 
-      console.log(data)
       if (data.status === 400) {
         const replacedErrorText = errorTextReplace(data)
         updateEvent({ type: 'SET_MSG', msg: replacedErrorText })

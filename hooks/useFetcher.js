@@ -1,6 +1,8 @@
 'use client'
 import { createContext, useContext, useReducer } from 'react'
 import getPost from '@/app/posts/[id]/getPost'
+import getGroup from '@/app/groups/[groupId]/fetchGroup'
+import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
 import updatePost from '@/app/posts/[id]/edit/updatePost'
 import getComments from '@/app/posts/[id]/comments/getComments'
 import getComment from '@/app/posts/[id]/comments/getComment'
@@ -9,16 +11,15 @@ import errorTextReplace from '@/utility/errorTextReplace'
 
 const FetcherContext = createContext(null)
 
-// * useReducer implementation
 const initialState = {
-  // * Of posts
+  // * Posts
   post: {},
   status: null,
   patchPostStatus: null,
   msg: null,
   changed: false,
 
-  // * of comments
+  // * Comments
   comments: {},
   commentsStatus: null,
   commentsPost: null,
@@ -26,7 +27,13 @@ const initialState = {
   commentPostedResponse: null,
   commentPostedStatus: null,
   comment: null,
-  commentStatus: null
+  commentStatus: null,
+
+  // * Groups
+  group: {},
+  groupStatus: null,
+  groupChanged: false,
+  groupLoading: false
 }
 
 const reducer = (state, action) => {
@@ -108,6 +115,63 @@ const reducer = (state, action) => {
         commentStatus: actionPayload.status
       }
     }
+
+    case 'FETCH_GROUP': {
+      return {
+        ...state,
+        group: actionPayload.data,
+        groupStatus: actionPayload.status
+      }
+    }
+
+    case 'SET_GROUP_CHANGED_FALSE': {
+      return {
+        ...state,
+        groupChanged: false
+      }
+    }
+
+    case 'JOIN_GROUP': {
+      const data = actionPayload
+      if (data.status === 200) {
+        return {
+          ...state,
+          groupChanged: true
+        }
+      } else {
+        return {
+          ...state
+        }
+      }
+    }
+
+    case 'LEAVE_GROUP': {
+      const data = actionPayload
+      if (data.status === 200) {
+        return {
+          ...state,
+          groupChanged: true
+        }
+      } else {
+        return {
+          ...state
+        }
+      }
+    }
+
+    case 'SET_GROUP_LOADING_TRUE': {
+      return {
+        ...state,
+        groupLoading: true
+      }
+    }
+
+    case 'SET_GROUP_LOADING_FALSE': {
+      return {
+        ...state,
+        groupLoading: false
+      }
+    }
   }
   return state
 }
@@ -149,6 +213,7 @@ export const Fetcher = ({ children }) => {
   }
 
   // * Comments
+
   const fetchComments = async (postId) => {
     try {
       const fetched = await getComments(postId)
@@ -200,6 +265,64 @@ export const Fetcher = ({ children }) => {
     })
   }
 
+  // * Groups
+
+  const fetchGroupById = async (groupId) => {
+    try {
+      const fetched = await getGroup(groupId)
+      dispatch({
+        type: 'FETCH_GROUP',
+        payload: fetched
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleJoinGroup = async (groupId) => {
+    try {
+      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
+
+      const data = await groupJoinLeave(groupId, 'POST')
+      dispatch({
+        type: 'JOIN_GROUP',
+        payload: data
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
+    }
+
+    setTimeout(() => {
+      dispatch({
+        type: 'SET_GROUP_CHANGED_FALSE'
+      })
+    }, 1000)
+  }
+
+  const handleLeaveGroup = async (groupId) => {
+    try {
+      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
+
+      const data = await groupJoinLeave(groupId, 'DELETE')
+      dispatch({
+        type: 'LEAVE_GROUP',
+        payload: data
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
+    }
+
+    setTimeout(() => {
+      dispatch({
+        type: 'SET_GROUP_CHANGED_FALSE'
+      })
+    }, 1000)
+  }
+
   return (
     <FetcherContext.Provider
       value={{
@@ -216,12 +339,19 @@ export const Fetcher = ({ children }) => {
         commentsPost: state.commentsPost,
         comment: state.comment,
         commentStatus: state.commentStatus,
+        group: state.group,
+        groupStatus: state.groupStatus,
+        groupChanged: state.groupChanged,
+        groupLoading: state.groupLoading,
         fetchPost,
+        fetchGroupById,
         patchPost,
         fetchComments,
         createAComment,
         fetchComment,
-        updateCommentPostedResponse
+        updateCommentPostedResponse,
+        handleJoinGroup,
+        handleLeaveGroup
       }}
     >
       {children}

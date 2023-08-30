@@ -7,7 +7,6 @@
     font-size: 32px;
     font-weight: 500;
     text-align: center;
-    margin-bottom: 0;
 }
 
 .groups {
@@ -93,4 +92,12 @@
     align-items: center;
     gap: 1rem;
     margin: 1.5rem 0;
+}
+
+.groupsheader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: -1rem;
 }
