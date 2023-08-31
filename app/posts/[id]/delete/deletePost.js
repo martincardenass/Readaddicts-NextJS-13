@@ -12,10 +12,10 @@ async function deletePost (postId) {
     const statusCode = res.status
 
     if (!res.ok) {
-      return { text: await res.text(), status: statusCode }
+      return { data: await res.json(), status: statusCode }
     }
 
-    return { text: await res.text(), status: statusCode }
+    return { data: await res.json(), status: statusCode }
   } catch (error) {
     return error.message
   }

@@ -20,7 +20,7 @@ async function createComment (postId, content, parentComment) {
       return { text: await res.json(), status: statusCode }
     }
 
-    return { data: await res.text(), status: statusCode }
+    return { data: await res.json(), status: statusCode }
   } catch (error) {
     return error.message
   }

@@ -7,18 +7,15 @@ import { useSubmitRef } from '@/utility/formSubmitRef'
 import { useFetcher } from '@/hooks/useFetcher'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/Button/Button'
+import createComment from './postComment'
 
 const AddComent = ({ postId, parent, placeholderText, href }) => {
   const [characters, setCharacters] = useState(0)
+  const [newComment, setNewComment] = useState(null)
   const [loading, setLoading] = useState(false)
-  const {
-    createAComment,
-    commentPosted,
-    commentPostedResponse,
-    commentPostedStatus,
-    commentsPost,
-    updateCommentPostedResponse
-  } = useFetcher()
+  const [msg, setMsg] = useState(null)
+
+  const { updateCommentPostedResponse, commentPosted } = useFetcher()
   const { user } = useAuth()
   const formRef = useRef(null)
   const router = useRouter()
@@ -28,38 +25,57 @@ const AddComent = ({ postId, parent, placeholderText, href }) => {
   const postComment = async (e) => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.target))
-
     const content = formData.content
 
     if (content !== '') {
       if (content.length >= 8) {
         setLoading(true)
-      }
+        const data = await createComment(postId, formData.content, parent)
 
-      await createAComment(postId, formData.content, parent)
+        if (data?.status === 200) {
+          updateCommentPostedResponse(true)
+          setNewComment(data)
+          setMsg('Comment posted')
+        }
+
+        if (data?.status === undefined) {
+          setMsg('Something went wrong')
+          setTimeout(() => {
+            ;['token', 'user'].forEach((item) =>
+              window.localStorage.removeItem(item)
+            )
+            window.location.reload()
+          }, 2000)
+        }
+      } else {
+        setMsg('Min 8 characters')
+      }
+    } else {
+      setMsg('Comment cannot be empty')
     }
   }
 
   useEffect(() => {
-    if (commentPostedStatus === 200) {
+    if (newComment?.status === 200) {
       setLoading(false)
       setTimeout(() => {
-        updateCommentPostedResponse(null)
+        updateCommentPostedResponse(false)
+        setMsg('')
       }, 2000)
     }
-  }, [commentPostedStatus, commentPosted])
+  }, [newComment, commentPosted])
 
   useEffect(() => {
-    const status = commentsPost?.status
+    const status = newComment?.status
     if (
       status !== 400 &&
       status !== null &&
       status !== undefined &&
-      commentPosted !== false
+      newComment !== false
     ) {
       router.push(href)
     }
-  }, [commentsPost])
+  }, [newComment])
 
   const handleCharacterCount = (e) => {
     const targetValue = e.target.value
@@ -93,13 +109,10 @@ const AddComent = ({ postId, parent, placeholderText, href }) => {
           <div>
             <p
               style={{
-                color:
-                  commentPostedResponse === '8 characters min'
-                    ? 'red'
-                    : 'black'
+                color: msg === 'Min 8 characters' ? 'red' : 'black'
               }}
             >
-              {commentPostedResponse}
+              {msg}
             </p>
             <p style={{ color: characters === 255 ? 'red' : 'black' }}>
               {characters}/255

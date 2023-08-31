@@ -92,7 +92,7 @@ const NewPostPage = ({ user }) => {
       }
 
       if (data.status === undefined) {
-        // * If token expires, log out the user
+        // * If token its invalid, log out the user
         updateEvent({
           type: 'SET_MSG',
           msg: 'Your session has expired. Logging out...'
@@ -101,6 +101,7 @@ const NewPostPage = ({ user }) => {
 
         setTimeout(() => {
           window.localStorage.removeItem('token')
+          window.localStorage.removeItem('user')
           window.location.reload()
         }, 1000)
         return

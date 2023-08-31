@@ -4,19 +4,26 @@ import { useRouter } from 'next/navigation'
 import styles from '../post.module.css'
 import deletePost from './deletePost'
 import Button from '@/components/Button/Button'
-import Alert from '@/components/Alert/Alert'
 
 const RemovePost = ({ params }) => {
-  const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState(null)
+
   const { id } = params
   const router = useRouter()
 
   const handleDelete = async () => {
     setLoading(true)
-    const result = await deletePost(id)
-    setMsg(result.text)
-    router.push('/')
+    const res = await deletePost(id)
+
+    if (res.status === undefined || res.status === 500) {
+      setMessage('Something went wrong')
+      setLoading(false)
+    }
+
+    if (res.status === 200) {
+      router.push('/')
+    }
   }
 
   return (
@@ -26,10 +33,11 @@ const RemovePost = ({ params }) => {
         <span style={{ color: 'rgb(255, 63, 63)' }}>deleted</span>.
       </h3>
       <p>
-        Please note all the <span style={{ textDecoration: 'underline' }}>comments</span> of this post will also be{' '}
+        Please note all <span style={{ textDecoration: 'underline' }}>comments and images</span> of this post will also be{' '}
         <span style={{ color: 'rgb(255, 63, 63)' }}>deleted</span>!
       </p>
       <div className={styles.deletebuttons}>
+        {message && <span style={{ color: 'red' }}>{message}</span>}
         <div onClick={handleDelete}>
           <Button
             text='Confirm'
@@ -43,7 +51,6 @@ const RemovePost = ({ params }) => {
           text='Cancel'
         />
       </div>
-      {msg && <Alert message={msg} width='100px' />}
     </section>
   )
 }

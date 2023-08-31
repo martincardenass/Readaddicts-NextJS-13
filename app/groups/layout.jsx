@@ -5,7 +5,7 @@ const DynamicGroups = dynamic(() => import('./Groups'), {
   loading: () => <h1>Loading groups...</h1>
 })
 
-const GroupsLayout = async ({ children, modal }) => {
+const GroupsLayout = async ({ children }) => {
   const fetched = await getGroups()
   const groups = fetched.data
 

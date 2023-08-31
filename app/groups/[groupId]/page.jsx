@@ -26,12 +26,18 @@ const GroupIdPage = ({ params }) => {
     return (
       <section className={styles.individualgroup}>
         <h1>{group.group_Name}</h1>
-        <Image
-          src={group.group_Picture}
-          alt={group.group_Name}
-          width={300}
-          height={300}
-        />
+        {group.group_Picture
+          ? (
+            <Image
+              src={group.group_Picture}
+              alt={group.group_Name}
+              width={300}
+              height={300}
+            />
+            )
+          : (
+            <div className={styles.noimageid}>?</div>
+            )}
         <JoinGroupButton
           groupdId={groupId}
           members={group.members}
@@ -60,7 +66,11 @@ const GroupIdPage = ({ params }) => {
       </section>
     )
   } else {
-    return <h1>Group does not exist</h1>
+    return (
+      <h1 style={{ textAlign: 'center' }}>
+        Group does not exist or was deleted
+      </h1>
+    )
   }
 }
 

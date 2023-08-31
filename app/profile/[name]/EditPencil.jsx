@@ -4,7 +4,7 @@ import styles from './user.module.css'
 import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
 
-const EditPencil = ({ name, pencil }) => {
+const EditPencil = ({ name }) => {
   const [hover, setHover] = useState(false)
   const { user } = useAuth()
 

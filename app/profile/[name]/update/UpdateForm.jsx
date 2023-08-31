@@ -2,19 +2,22 @@
 import styles from '@/components/Login/users.module.css'
 import styles2 from './updateprofile.module.css'
 import Image from 'next/image'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
 
-const UpdateForm = ({
-  thisUser,
-  handleUpdate,
-  handleImageSelect,
-  image,
-  loading
-}) => {
+const UpdateForm = ({ user, handleUpdate, loading }) => {
   const formRef = useRef(null)
   const handleSubmit = useSubmitRef(formRef)
+  const [image, setImage] = useState(null)
+
+  const handleImageSelect = (e) => {
+    e.preventDefault()
+    const file = e.target.files[0]
+    if (file) {
+      setImage(URL.createObjectURL(file))
+    }
+  }
 
   return (
     <article className={`${styles.usersmain} ${styles2.updateform}`}>
@@ -41,7 +44,7 @@ const UpdateForm = ({
             type='text'
             name='username'
             autoComplete='off'
-            placeholder={thisUser?.username}
+            placeholder={user?.username}
             readOnly
             style={{ cursor: 'not-allowed' }}
           />
@@ -50,7 +53,7 @@ const UpdateForm = ({
             type='text'
             name='username'
             autoComplete='off'
-            placeholder={thisUser?.role}
+            placeholder={user?.role}
             readOnly
             style={{ cursor: 'not-allowed' }}
           />
@@ -61,14 +64,14 @@ const UpdateForm = ({
             type='text'
             name='first_Name'
             autoComplete='off'
-            placeholder={thisUser?.first_Name}
+            placeholder={user?.first_Name}
           />
           <p>Last name:</p>
           <input
             type='text'
             name='last_Name'
             autoComplete='off'
-            placeholder={thisUser?.last_Name}
+            placeholder={user?.last_Name}
           />
         </section>
         <section className={styles2.inputfield}>
@@ -77,7 +80,7 @@ const UpdateForm = ({
             type='text'
             name='email'
             autoComplete='off'
-            placeholder={thisUser?.email}
+            placeholder={user?.email}
           />
         </section>
         <section className={styles2.inputfield}>
@@ -95,15 +98,15 @@ const UpdateForm = ({
             type='text'
             name='gender'
             autoComplete='off'
-            placeholder={thisUser?.gender}
+            placeholder={user?.gender}
           />
         </section>
         <section className={styles2.inputfield}>
-          {thisUser?.birthday
+          {user?.birthday
             ? (
               <p>
                 Your birthday:{' '}
-                {thisUser?.birthday ? thisUser.birthday.split('T')[0] : ''}
+                {user?.birthday ? user.birthday.split('T')[0] : ''}
               </p>
               )
             : (
@@ -117,7 +120,7 @@ const UpdateForm = ({
             type='text'
             name='bio'
             autoComplete='off'
-            placeholder={thisUser?.bio}
+            placeholder={user?.bio}
           />
         </section>
       </form>

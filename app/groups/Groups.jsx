@@ -23,12 +23,18 @@ const Groups = ({ groups }) => {
           {groups.map((group) => (
             <li key={group.group_Id}>
               <Link href={`/groups/${group.group_Id}`}>
-                <Image
-                  src={group.group_Picture}
-                  alt={group.group_Name}
-                  width={150}
-                  height={150}
-                />
+                {group.group_Picture
+                  ? (
+                    <Image
+                      src={group.group_Picture}
+                      alt={group.group_Name}
+                      width={150}
+                      height={150}
+                    />
+                    )
+                  : (
+                    <div className={styles.noimage}>?</div>
+                    )}
               </Link>
               <div>
                 <h1>

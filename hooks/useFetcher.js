@@ -6,7 +6,6 @@ import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
 import updatePost from '@/app/posts/[id]/edit/updatePost'
 import getComments from '@/app/posts/[id]/comments/getComments'
 import getComment from '@/app/posts/[id]/comments/getComment'
-import createComment from '@/app/posts/[id]/comments/postComment'
 import errorTextReplace from '@/utility/errorTextReplace'
 
 const FetcherContext = createContext(null)
@@ -22,10 +21,7 @@ const initialState = {
   // * Comments
   comments: {},
   commentsStatus: null,
-  commentsPost: null,
   commentPosted: false,
-  commentPostedResponse: null,
-  commentPostedStatus: null,
   comment: null,
   commentStatus: null,
 
@@ -50,18 +46,44 @@ const reducer = (state, action) => {
     case 'PATCH_POST': {
       const data = actionPayload
 
+      if (data.status === 200) {
+        return {
+          ...state,
+          msg: 'Post update success',
+          changed: true,
+          patchPostStatus: actionPayload.status
+        }
+      }
+
       if (data.status === 400) {
         const replacedErrorText = errorTextReplace(data)
         return {
           ...state,
           msg: replacedErrorText
         }
-      } else {
+      }
+
+      if (data.status === undefined) {
+        setTimeout(() => {
+          ;['token', 'user'].forEach((item) =>
+            window.localStorage.removeItem(item)
+          )
+          window.location.reload()
+        }, 2000)
         return {
           ...state,
-          msg: 'Post update success',
-          changed: true,
-          patchPostStatus: actionPayload.status
+          msg: 'Something went wrong'
+        }
+      } else {
+        setTimeout(() => {
+          ;['token', 'user'].forEach((item) =>
+            window.localStorage.removeItem(item)
+          )
+          window.location.reload()
+        }, 2000)
+        return {
+          ...state,
+          msg: 'Something went wrong'
         }
       }
     }
@@ -81,23 +103,12 @@ const reducer = (state, action) => {
       }
     }
 
-    case 'CREATE_COMMENT': {
+    case 'UPDATE_COMMENT_POSTED': {
       const data = actionPayload
 
-      if (data.status === 400) {
-        const replacedErrorText = errorTextReplace(data)
-        return {
-          ...state,
-          commentPostedResponse: replacedErrorText
-        }
-      } else {
-        return {
-          ...state,
-          commentPostedResponse: actionPayload.data,
-          commentPostedStatus: actionPayload.status,
-          commentsPost: actionPayload,
-          commentPosted: true
-        }
+      return {
+        ...state,
+        commentPosted: data
       }
     }
 
@@ -226,24 +237,6 @@ export const Fetcher = ({ children }) => {
     }
   }
 
-  const createAComment = async (postId, content, parent) => {
-    try {
-      const response = await createComment(postId, content, parent)
-      dispatch({
-        type: 'CREATE_COMMENT',
-        payload: response
-      })
-    } catch (error) {
-      console.error(error)
-    }
-
-    setTimeout(() => {
-      dispatch({
-        type: 'SET_COMMENT_POSTED_FALSE'
-      })
-    }, 3000)
-  }
-
   const fetchComment = async (commentId) => {
     try {
       const fetched = await getComment(commentId)
@@ -256,13 +249,8 @@ export const Fetcher = ({ children }) => {
     }
   }
 
-  const updateCommentPostedResponse = (response) => {
-    dispatch({
-      type: 'CREATE_COMMENT',
-      payload: {
-        data: response
-      }
-    })
+  const updateCommentPostedResponse = (status) => {
+    dispatch({ type: 'UPDATE_COMMENT_POSTED', payload: status })
   }
 
   // * Groups
@@ -333,10 +321,7 @@ export const Fetcher = ({ children }) => {
         changed: state.changed,
         comments: state.comments,
         commentsStatus: state.commentsStatus,
-        commentPostedResponse: state.commentPostedResponse,
-        commentPostedStatus: state.commentPostedStatus,
         commentPosted: state.commentPosted,
-        commentsPost: state.commentsPost,
         comment: state.comment,
         commentStatus: state.commentStatus,
         group: state.group,
@@ -347,7 +332,6 @@ export const Fetcher = ({ children }) => {
         fetchGroupById,
         patchPost,
         fetchComments,
-        createAComment,
         fetchComment,
         updateCommentPostedResponse,
         handleJoinGroup,
