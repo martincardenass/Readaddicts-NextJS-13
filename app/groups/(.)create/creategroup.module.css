@@ -67,7 +67,7 @@
     outline: 0;
 }
 
-.modalcontainer img {
+.modalcontainer img, .modalpage img {
     border-radius: 50%;
     object-fit: cover;
 }
@@ -79,11 +79,23 @@
     border-radius: 25px;
     border: 1px solid rgba(0, 0, 0, 0.25);
     padding: 2rem 5rem;
-    top: 5rem;
+    top: 1rem;
     gap: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.modalpage {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    margin: 1rem 5rem;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    gap: 10rem;
 }
 
 .close {
@@ -117,7 +129,7 @@
     transform: rotate(-45deg);
 }
 
-.modal input[type="text"]  {
+.modal input[type="text"], .modalpage input[type="text"]  {
     padding: .5rem;
     background-color: whitesmoke;
     border: 0;
@@ -130,11 +142,11 @@
     padding: 1rem;
 }
 
-.modal input[type="file"] {
+.modal input[type="file"], .modalpage input[type="file"] {
     display: none;
 }
 
-.modal input:focus {
+.modal input:focus, .modalpage input:focus {
     outline: none;
 }
 

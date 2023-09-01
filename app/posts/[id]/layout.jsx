@@ -1,5 +1,5 @@
-'use client'
-import { useFetcher } from '@/hooks/useFetcher'
+// 'use client'
+// import { useFetcher } from '@/hooks/useFetcher'
 import styles from './post.module.css'
 import dynamic from 'next/dynamic'
 
@@ -13,27 +13,26 @@ const DynamicUpdatePost = dynamic(() => import('./UpdateChild'))
 const DynamicPost = dynamic(() => import('./Post'))
 
 const Post = ({ params, children }) => {
-  const { post, status } = useFetcher()
+  // const { post } = useFetcher()
   const { id } = params
 
-  if (status === 404) {
-    return post
-  }
+  // if (post?.status === 404) {
+  //   return post
+  // }
 
   return (
     <main className={styles.postpage}>
       <DynamicImages>{children}</DynamicImages>
       <article className={styles.postandoptions}>
         <DynamicPost id={id} />
-        <DynamicOptions username={post.author} id={id} />
+        <DynamicOptions id={id} />
         {/* Childrens use onditional rendering based on the pathname. Might use parallel routes next time */}
         <DynamicDeletePost>{children}</DynamicDeletePost>
         <DynamicUpdatePost>{children}</DynamicUpdatePost>
-
       </article>
       <article className={styles.comment}>
         <DynamicAddComment postId={id} placeholderText='Leave a comment...' href={`/posts/${id}/comments`} />
-        <DynamicLoadComments id={id} comments={post.comments} />
+        <DynamicLoadComments id={id} />
         <DynamicComments>{children}</DynamicComments>
       </article>
     </main>

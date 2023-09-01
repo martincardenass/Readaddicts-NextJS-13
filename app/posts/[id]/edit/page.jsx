@@ -20,7 +20,7 @@ const EditPost = ({ params }) => {
     const dataHasChanges = Object.fromEntries(new FormData(e.target))
 
     const fieldsHaveChanged = Object.values(dataHasChanges).some(
-      (field) => field !== post.content
+      (field) => field !== post?.data?.content
     )
 
     if (fieldsHaveChanged) {
@@ -36,10 +36,10 @@ const EditPost = ({ params }) => {
   }, [patchPostStatus, changed])
 
   useEffect(() => {
-    if (post?.content) {
-      setCharacters(post?.content?.length)
+    if (post?.data?.content) {
+      setCharacters(post?.data?.content?.length)
     }
-  }, [post.author])
+  }, [post?.data?.author])
 
   const handleCharacterCount = (e) => {
     const targetValue = e.target.value
@@ -57,7 +57,7 @@ const EditPost = ({ params }) => {
           <textarea
             type='text'
             name='content'
-            defaultValue={post?.content}
+            defaultValue={post?.data?.content}
             maxLength='255'
             onChange={handleCharacterCount}
             placeholder='You can type here'

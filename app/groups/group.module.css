@@ -1,14 +1,3 @@
-.groupsmain {
-    display: flex;
-    flex-direction: column;
-}
-
-.groupsmain h1 {
-    font-size: 32px;
-    font-weight: 500;
-    text-align: center;
-}
-
 .groups {
     display: flex;
     width: 100%;
@@ -60,40 +49,6 @@
     text-transform: capitalize;
 }
 
-.individualgroup {
-    background-color: white;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.individualgroup h1 {
-    font-weight: 500;
-}
-
-.individualgroup ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.individualgroup img {
-    border-radius: 50%;
-}
-
-.individualgroup ul li p {
-    text-transform: capitalize;
-}
-
-.individualgroup ul li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1.5rem 0;
-}
-
 .groupsheader {
     display: flex;
     align-items: center;
@@ -102,23 +57,15 @@
     margin-bottom: -1rem;
 }
 
+.groupsheader h1 {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+}
+
 .noimage {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
-    background-color: lightgray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 100px;
-    font-weight: 400;
-    color: white;
-    user-select: none;
-}
-
-.noimageid {
-    width: 300px;
-    height: 300px;
     border-radius: 50%;
     background-color: lightgray;
     display: flex;

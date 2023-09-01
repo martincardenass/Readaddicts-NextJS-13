@@ -10,31 +10,37 @@ import getUser from '@/app/profile/[name]/getUser'
 
 const Login = () => {
   const { handleLogin, msg } = useAuth() // * Trabajar en el message.
-  const [event, updateEvent] = useReducer((event, action) => {
-    const newEvent = { ...event }
+  const [event, updateEvent] = useReducer(
+    (event, action) => {
+      const newEvent = { ...event }
 
-    switch (action.type) {
-      case 'UPDATE_USERNAME': {
-        newEvent.username = action.username
-        break
-      }
-      case 'UPDATE_PASSWORD': {
-        newEvent.password = action.password
-        break
-      }
-      case 'SET_USER_DATA': {
-        newEvent.userData = action.userData
-        if (action.userData.status === 404) {
-          newEvent.message = action.userData.text
+      switch (action.type) {
+        case 'UPDATE_USERNAME': {
+          newEvent.username = action.username
+          break
         }
-        break
+        case 'UPDATE_PASSWORD': {
+          newEvent.password = action.password
+          break
+        }
+        case 'SET_USER_DATA': {
+          newEvent.userData = action.userData
+          if (action.userData.status === 404) {
+            newEvent.message = action.userData.text
+          }
+          break
+        }
       }
-    }
 
-    return newEvent
-  }, {
-    username: '', password: '', userData: null, message: null
-  })
+      return newEvent
+    },
+    {
+      username: '',
+      password: '',
+      userData: null,
+      message: null
+    }
+  )
   const formRef = useRef()
 
   const handleSubmit = useSubmitRef(formRef)
@@ -47,7 +53,10 @@ const Login = () => {
   const populateUsername = (e) => {
     e.preventDefault()
     const usernameFormData = Object.fromEntries(new FormData(e.target))
-    updateEvent({ type: 'UPDATE_USERNAME', username: usernameFormData.username })
+    updateEvent({
+      type: 'UPDATE_USERNAME',
+      username: usernameFormData.username
+    })
   }
 
   const handleSubmitCredentials = (e) => {
@@ -66,12 +75,14 @@ const Login = () => {
     return (
       <section className={styles.user}>
         <section className={styles.userbanner}>
-          <Image
-            src={user.profile_Picture}
-            alt={user.username}
-            width={200}
-            height={200}
-          />
+          {user.profile_Picture && (
+            <Image
+              src={user.profile_Picture}
+              alt={user.username}
+              width={200}
+              height={200}
+            />
+          )}
           <h1>
             Welcome back, <span>{user.username}</span>. Please type your
             password.
@@ -82,7 +93,11 @@ const Login = () => {
                 type='password'
                 name='password'
                 placeholder='Password'
-                onChange={(e) => updateEvent({ type: 'UPDATE_PASSWORD', password: e.target.value })}
+                onChange={(e) =>
+                  updateEvent({
+                    type: 'UPDATE_PASSWORD',
+                    password: e.target.value
+                  })}
                 required
                 autoFocus
               />
@@ -96,9 +111,7 @@ const Login = () => {
               effectColor='rgb(235, 235, 235)'
             />
           </div>
-          <span style={{ marginTop: '1rem' }}>
-            {msg && msg}
-          </span>
+          <span style={{ marginTop: '1rem' }}>{msg && msg}</span>
         </section>
       </section>
     )

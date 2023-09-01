@@ -159,7 +159,7 @@ const SignUpPage = () => {
   const handleCreate = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    formData.append('role', 'user') // * Add user role
+    formData.append('role', 'x') // * Add user role
 
     const formDataChecker = Object.fromEntries(new FormData(e.target))
 

@@ -2,7 +2,6 @@
 import { createContext, useContext, useReducer } from 'react'
 import getPost from '@/app/posts/[id]/getPost'
 import getGroup from '@/app/groups/[groupId]/fetchGroup'
-import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
 import updatePost from '@/app/posts/[id]/edit/updatePost'
 import getComments from '@/app/posts/[id]/comments/getComments'
 import getComment from '@/app/posts/[id]/comments/getComment'
@@ -13,23 +12,18 @@ const FetcherContext = createContext(null)
 const initialState = {
   // * Posts
   post: {},
-  status: null,
   patchPostStatus: null,
   msg: null,
   changed: false,
 
   // * Comments
   comments: {},
-  commentsStatus: null,
   commentPosted: false,
   comment: null,
-  commentStatus: null,
 
   // * Groups
   group: {},
-  groupStatus: null,
-  groupChanged: false,
-  groupLoading: false
+  groupChanged: false
 }
 
 const reducer = (state, action) => {
@@ -38,8 +32,7 @@ const reducer = (state, action) => {
     case 'FETCH_POST': {
       return {
         ...state,
-        post: actionPayload.data,
-        status: actionPayload.status
+        post: actionPayload
       }
     }
 
@@ -98,8 +91,7 @@ const reducer = (state, action) => {
     case 'FETCH_COMMENTS': {
       return {
         ...state,
-        comments: actionPayload.data,
-        commentsStatus: actionPayload.status
+        comments: actionPayload
       }
     }
 
@@ -122,16 +114,14 @@ const reducer = (state, action) => {
     case 'FETCH_COMMENT': {
       return {
         ...state,
-        comment: actionPayload.data,
-        commentStatus: actionPayload.status
+        comment: actionPayload
       }
     }
 
     case 'FETCH_GROUP': {
       return {
         ...state,
-        group: actionPayload.data,
-        groupStatus: actionPayload.status
+        group: actionPayload
       }
     }
 
@@ -139,48 +129,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         groupChanged: false
-      }
-    }
-
-    case 'JOIN_GROUP': {
-      const data = actionPayload
-      if (data.status === 200) {
-        return {
-          ...state,
-          groupChanged: true
-        }
-      } else {
-        return {
-          ...state
-        }
-      }
-    }
-
-    case 'LEAVE_GROUP': {
-      const data = actionPayload
-      if (data.status === 200) {
-        return {
-          ...state,
-          groupChanged: true
-        }
-      } else {
-        return {
-          ...state
-        }
-      }
-    }
-
-    case 'SET_GROUP_LOADING_TRUE': {
-      return {
-        ...state,
-        groupLoading: true
-      }
-    }
-
-    case 'SET_GROUP_LOADING_FALSE': {
-      return {
-        ...state,
-        groupLoading: false
       }
     }
   }
@@ -191,7 +139,6 @@ export const Fetcher = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   // * Posts
-
   const fetchPost = async (id) => {
     try {
       const fetched = await getPost(id)
@@ -224,7 +171,6 @@ export const Fetcher = ({ children }) => {
   }
 
   // * Comments
-
   const fetchComments = async (postId) => {
     try {
       const fetched = await getComments(postId)
@@ -254,7 +200,6 @@ export const Fetcher = ({ children }) => {
   }
 
   // * Groups
-
   const fetchGroupById = async (groupId) => {
     try {
       const fetched = await getGroup(groupId)
@@ -267,75 +212,24 @@ export const Fetcher = ({ children }) => {
     }
   }
 
-  const handleJoinGroup = async (groupId) => {
-    try {
-      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
-
-      const data = await groupJoinLeave(groupId, 'POST')
-      dispatch({
-        type: 'JOIN_GROUP',
-        payload: data
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
-    }
-
-    setTimeout(() => {
-      dispatch({
-        type: 'SET_GROUP_CHANGED_FALSE'
-      })
-    }, 1000)
-  }
-
-  const handleLeaveGroup = async (groupId) => {
-    try {
-      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
-
-      const data = await groupJoinLeave(groupId, 'DELETE')
-      dispatch({
-        type: 'LEAVE_GROUP',
-        payload: data
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
-    }
-
-    setTimeout(() => {
-      dispatch({
-        type: 'SET_GROUP_CHANGED_FALSE'
-      })
-    }, 1000)
-  }
-
   return (
     <FetcherContext.Provider
       value={{
         post: state.post,
-        status: state.status,
         patchPostStatus: state.patchPostStatus,
         msg: state.msg,
         changed: state.changed,
         comments: state.comments,
-        commentsStatus: state.commentsStatus,
         commentPosted: state.commentPosted,
         comment: state.comment,
-        commentStatus: state.commentStatus,
         group: state.group,
-        groupStatus: state.groupStatus,
         groupChanged: state.groupChanged,
-        groupLoading: state.groupLoading,
         fetchPost,
         fetchGroupById,
         patchPost,
         fetchComments,
         fetchComment,
-        updateCommentPostedResponse,
-        handleJoinGroup,
-        handleLeaveGroup
+        updateCommentPostedResponse
       }}
     >
       {children}

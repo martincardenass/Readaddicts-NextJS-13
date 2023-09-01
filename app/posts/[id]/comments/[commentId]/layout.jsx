@@ -13,7 +13,7 @@ const CommentIdPage = ({ params, children }) => {
   const {
     fetchComment,
     comment,
-    commentStatus,
+    // commentStatus,
     commentPosted
   } = useFetcher()
   const { commentId, id } = params
@@ -22,7 +22,7 @@ const CommentIdPage = ({ params, children }) => {
     fetchComment(commentId)
   }, [commentPosted])
 
-  if (commentStatus === 404) {
+  if (comment?.status === 404) {
     return (
       <div style={{ textAlign: 'center' }}>
         <h3>Not Found</h3>
@@ -31,12 +31,12 @@ const CommentIdPage = ({ params, children }) => {
     )
   }
 
-  if (commentStatus === 200) {
+  if (comment?.status === 200) {
     return (
       <aside className={styles.asidecomment}>
         <section className={styles.comment}>
           <ul>
-            {comment.map(comment => (
+            {comment?.data.map(comment => (
               <DynamicRecursiveComments key={comment.comment_Id} comment={comment}>{children}</DynamicRecursiveComments>
             ))}
           </ul>

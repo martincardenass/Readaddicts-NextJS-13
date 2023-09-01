@@ -9,21 +9,21 @@ const DynamicComments = dynamic(() => import('./Comments'), {
 })
 
 const CommentsPage = ({ params }) => {
-  const { fetchComments, comments, commentsStatus, commentPosted } = useFetcher()
+  const { fetchComments, comments, commentPosted } = useFetcher()
   const { id } = params
 
   useEffect(() => {
     fetchComments(id)
   }, [commentPosted])
 
-  if (commentsStatus === 404) {
-    return <h4 style={{ fontWeight: 400, textAlign: 'center' }}>{comments}</h4>
+  if (comments?.status === 404) {
+    return <h4 style={{ fontWeight: 400, textAlign: 'center' }}>{comments?.data}</h4>
   }
 
-  if (commentsStatus === 200) {
+  if (comments?.status === 200) {
     return (
       <main className={styles.comments}>
-        <DynamicComments comments={comments} id={id} />
+        <DynamicComments comments={comments?.data} id={id} />
       </main>
     )
   }

@@ -11,6 +11,7 @@ import Alert from '@/components/Alert/Alert'
 const UpdateProfile = ({ params }) => {
   const { name } = params
   const { user } = useAuth()
+
   const [privateUser, setPrivateUser] = useState(null)
   const [updated, setUpdated] = useState(false)
   const [loading, setLoading] = useState(false)

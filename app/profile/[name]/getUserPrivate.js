@@ -9,7 +9,7 @@ async function getUserPrivate (userId) {
       {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer' + window.localStorage.getItem('token')
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`
         }
       },
       { cache: 'no-store' }

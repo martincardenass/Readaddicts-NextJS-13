@@ -1,54 +1,51 @@
 import Button from '@/components/Button/Button'
 import { useAuth } from '@/hooks/useAuth'
-import { useState } from 'react'
 
-const JoinGroupButton = ({
-  groupdId,
-  members,
-  joinGroup,
-  leaveGroup,
-  loading
-}) => {
+const JoinGroupButton = ({ groupdId, members, owner }) => {
   const { user } = useAuth()
-  const [msg, setMsg] = useState(null)
 
   const isUserInGroup = members?.some(
     (member) => member.user_Id === user?.user_Id
   )
 
-  const handleClick = () => {
+  const isUserOwner = owner?.user_Id === user?.user_Id
+
+  const handleJoin = () => {
     if (isUserInGroup) {
       leaveGroup(groupdId)
-      setMsg('You left the group')
-
-      setTimeout(() => {
-        setMsg(null)
-      }, 2000)
     } else {
       joinGroup(groupdId)
-      setMsg('You joined the group')
-
-      setTimeout(() => {
-        setMsg(null)
-      }, 2000)
     }
   }
 
   return (
     <section style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-      <div
-        style={{ width: '120px' }}
-        onClick={handleClick}
-      >
-        <Button
-          text={isUserInGroup ? 'Leave Group' : 'Join Group'}
-          width='120px'
-          effectWidth='120px'
-          effectHeight='120px'
-          loading={loading}
-        />
+      <div style={{ width: '120px' }}>
+        {isUserOwner
+          ? (
+            <Button
+              text='Delete group'
+              width='120px'
+              effectWidth='120px'
+              backgroundColor='red'
+              textColor='white'
+              effectHeight='120px'
+              // loading={loading}
+              href={`/groups/${groupdId}/delete`}
+            />
+            )
+          : (
+            <div onClick={handleJoin}>
+              <Button
+                text={isUserInGroup ? 'Leave group' : 'Join group'}
+                width='120px'
+                effectWidth='120px'
+                effectHeight='120px'
+                // loading={loading}
+              />
+            </div>
+            )}
       </div>
-      {msg && <p style={{ margin: 0, padding: 0 }}>{msg}</p>}
     </section>
   )
 }

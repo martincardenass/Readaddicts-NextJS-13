@@ -1,68 +1,55 @@
 import styles from './group.module.css'
-import Button from '@/components/Button/Button'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Groups = ({ groups }) => {
+const Groups = ({ groups, idFromParams }) => {
+  // ! Fix IDFROMPARAMS
+  // ! Might just use usePathname and make this a client component
   return (
-    <article className={styles.groupsmain}>
-      <div className={styles.groupsheader}>
-        <h1>Discover new groups</h1>
-        <Button
-          text='Create new'
-          backgroundColor='white'
-          effectColor='rgb(235, 235, 235)'
-          width='120px'
-          effectWidth='120px'
-          effectHeight='120px'
-          href='/groups/create'
-        />
-      </div>
-      <section className={styles.groups}>
-        <ul>
-          {groups.map((group) => (
-            <li key={group.group_Id}>
-              <Link href={`/groups/${group.group_Id}`}>
-                {group.group_Picture
-                  ? (
-                    <Image
-                      src={group.group_Picture}
-                      alt={group.group_Name}
-                      width={150}
-                      height={150}
-                    />
-                    )
-                  : (
-                    <div className={styles.noimage}>?</div>
-                    )}
-              </Link>
-              <div>
-                <h1>
-                  <Link href={`/groups/${group.group_Id}`}>
-                    {group.group_Name}
+    <ul>
+      {groups
+        // ?.filter(group => group.group_Id !== idFromParams)
+        ?.map((group) => (
+          <li key={group.group_Id}>
+            <Link href={`/groups/${group.group_Id}`}>
+              {group.group_Picture
+                ? (
+                  <Image
+                    src={group.group_Picture}
+                    alt={group.group_Name}
+                    width={150}
+                    height={150}
+                  />
+                  )
+                : (
+                  <div className={styles.noimage}>?</div>
+                  )}
+            </Link>
+            <div>
+              <h1>
+                <Link href={`/groups/${group.group_Id}`}>
+                  {group.group_Name}
+                </Link>
+              </h1>
+              {group.members_Count > 1
+                ? (
+                  <p>{group.members_Count} members</p>
+                  )
+                : (
+                  <p>{group.members_Count} member</p>
+                  )}
+              <h3>
+                Group owner:{' '}
+                <span>
+                  <Link href={`/profile/${group.owner.username}`}>
+                    {group.owner.username}
                   </Link>
-                </h1>
-                {group.members_Count > 1
-                  ? (
-                    <p>{group.members_Count} members</p>
-                    )
-                  : (
-                    <p>{group.members_Count} member</p>
-                    )}
-                <h3>
-                  Group owner:{' '}
-                  <span>
-                    <Link href={`/profile/${group.owner.username}`}>
-                      {group.owner.username}
-                    </Link>
-                  </span>
-                </h3>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </article>
+                </span>
+              </h3>
+            </div>
+          </li>
+        ))}
+    </ul>
   )
 }
 

@@ -2,8 +2,11 @@
 import styles from './post.module.css'
 import { usePathname } from 'next/navigation'
 import Button from '@/components/Button/Button'
+import { useFetcher } from '@/hooks/useFetcher'
 
-const LoadComments = ({ id, comments }) => {
+const LoadComments = ({ id }) => {
+  const { post } = useFetcher()
+  const comments = post?.data?.comments
   const pathname = usePathname()
 
   // * If the pathname is /comments we dont need to display the Show Comments component
