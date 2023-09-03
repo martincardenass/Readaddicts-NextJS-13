@@ -1,8 +1,9 @@
 import RemovePostModal from './RemovePostModal'
 
-const RemovePost = ({ params }) => {
+const Default = ({ params }) => {
   const { id } = params
 
   return <RemovePostModal id={id} />
 }
-export default RemovePost
+
+export default Default

@@ -1,9 +1,9 @@
 import UpdatePostModal from './UpdatePostModal'
 
-const EditPost = ({ params }) => {
+const Default = ({ params }) => {
   const { id } = params
 
   return <UpdatePostModal id={id} />
 }
 
-export default EditPost
+export default Default

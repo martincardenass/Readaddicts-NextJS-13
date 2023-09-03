@@ -20,9 +20,9 @@ const Options = ({ update, remove }) => {
   const username = post?.data?.author
 
   return (
-    user?.username === username && !paramsHaveCommentId && (
+    user?.username === username && (
       <>
-        <h2 style={{ textAlign: 'center' }}>Options</h2>
+        <h2 style={{ textAlign: 'center' }}>Manage post</h2>
         <section className={styles.options}>
           <section className={styles.optionscontainer}>
             <span
