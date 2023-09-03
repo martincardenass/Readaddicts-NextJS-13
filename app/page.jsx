@@ -3,16 +3,10 @@ import getPosts from './getPosts'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-
-const DynamicLogin = dynamic(() => import('@/components/Login/Login'), {
-  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
-})
+import AddNewPost from './posts/new/page'
+import Login from '@/components/Login/Login'
 
 const DynamicPosts = dynamic(() => import('./posts/Posts'), {
-  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
-})
-
-const DynamicAddPost = dynamic(() => import('./posts/new/page'), {
   loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
 })
 
@@ -20,7 +14,7 @@ const HomePage = () => {
   const { user } = useAuth()
   const [posts, setPosts] = useState([])
   const [postsStatus, setPostsStatus] = useState(null)
-  // * ref and isIntersecting for infinite scroll using IntersectionObserver API
+
   const ref = useRef(null)
   const [isIntersecting, setIsIntersecting] = useState(false)
   const [page, setPage] = useState(1)
@@ -66,12 +60,12 @@ const HomePage = () => {
     }
   }, [isIntersecting])
 
-  if (!user) return <DynamicLogin />
+  if (!user) return <Login />
 
   if (user) {
     return (
       <>
-        <DynamicAddPost user={user} />
+        <AddNewPost user={user} placeholder='New post' />
         <DynamicPosts posts={posts} postsStatus={postsStatus} />
         <p
           ref={ref}

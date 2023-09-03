@@ -101,7 +101,7 @@ const initialState = {
   loading: false
 }
 
-const NewPostPage = ({ user }) => {
+const AddNewPost = ({ user, placeholder, groupId }) => {
   const [newPost, dispatch] = useReducer(postReducer, initialState)
 
   const formRef = useRef(null)
@@ -113,7 +113,10 @@ const NewPostPage = ({ user }) => {
   const handlePost = async (e) => {
     e.preventDefault()
     const formData = new FormData()
-    formData.append('content', e.target.content.value) // * Append the content to the formData
+    formData.append('content', e.target.content.value)
+
+    // * Append groupId, if provided
+    if (groupId) formData.append('groupId', groupId)
 
     for (let i = 0; i < newPost.images.length; i++) {
       formData.append('files', newPost.images[i])
@@ -167,7 +170,7 @@ const NewPostPage = ({ user }) => {
                 style={{ cursor: newPost.done ? 'not-allowed' : '' }}
                 type='text'
                 name='content'
-                placeholder='New post'
+                placeholder={placeholder}
                 required
                 autoComplete='off'
                 onChange={(e) =>
@@ -255,4 +258,4 @@ const NewPostPage = ({ user }) => {
   )
 }
 
-export default NewPostPage
+export default AddNewPost

@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { getTimeAgo } from '@/utility/relativeTime'
+import Menu from './Menu'
+import Icons from './Icons'
 
-const DynamicMenu = dynamic(() => import('./Menu'))
-const DynamicIcons = dynamic(() => import('./Icons'))
 const DynamicImages = dynamic(() => import('./Images'))
 
 const Posts = ({ posts, postsStatus }) => {
@@ -60,8 +60,8 @@ const Posts = ({ posts, postsStatus }) => {
                   href={`/posts/${post.post_Id}`}
                 />
               )}
-              <DynamicMenu username={post.author} postId={post.post_Id} />
-              <DynamicIcons id={post.post_Id} commentCount={post.comments} />
+              <Menu username={post.author} postId={post.post_Id} />
+              <Icons id={post.post_Id} commentCount={post.comments} />
             </li>
           ))}
         </ul>

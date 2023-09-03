@@ -3,6 +3,7 @@ import { createContext, useContext, useReducer } from 'react'
 import getPost from '@/app/posts/[id]/getPost'
 import getGroup from '@/app/groups/[groupId]/fetchGroup'
 import getGroups from '@/app/groups/fetchGroups'
+import getGroupPosts from '@/app/groups/[groupId]/@posts/getGroupPosts'
 import updatePost from '@/app/posts/[id]/@update/updatePost'
 import getComments from '@/app/posts/[id]/@comments/getComments'
 import getComment from '@/app/posts/[id]/@comments/getComment'
@@ -14,6 +15,7 @@ const FetcherContext = createContext(null)
 const initialState = {
   // * Posts
   post: {},
+  groupPosts: {},
   patchPostStatus: null,
   msg: null,
   changed: false,
@@ -37,6 +39,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         post: actionPayload
+      }
+    }
+
+    case 'FETCH_GROUP_POSTS': {
+      return {
+        ...state,
+        groupPosts: actionPayload
       }
     }
 
@@ -114,6 +123,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         groupChanged: data
+      }
+    }
+
+    case 'UPDATE_POST_CHANGED': {
+      return {
+        ...state,
+        changed: actionPayload
       }
     }
 
@@ -198,6 +214,15 @@ export const Fetcher = ({ children }) => {
     }
   }
 
+  const fetchGroupPosts = async (groupId) => {
+    try {
+      const fetched = await getGroupPosts(groupId)
+      dispatch({ type: 'FETCH_GROUP_POSTS', payload: fetched })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const patchPost = async (id, content) => {
     try {
       const data = await updatePost(id, content)
@@ -237,6 +262,10 @@ export const Fetcher = ({ children }) => {
 
   const updateGroupChanged = (status) => {
     dispatch({ type: 'UPDATE_GROUP_CHANGED', payload: status })
+  }
+
+  const updatePostChanged = (status) => {
+    dispatch({ type: 'UPDATE_POST_CHANGED', payload: status })
   }
 
   // * Groups
@@ -292,6 +321,7 @@ export const Fetcher = ({ children }) => {
     <FetcherContext.Provider
       value={{
         post: state.post,
+        groupPosts: state.groupPosts,
         patchPostStatus: state.patchPostStatus,
         msg: state.msg,
         changed: state.changed,
@@ -304,12 +334,14 @@ export const Fetcher = ({ children }) => {
         groupLoading: state.groupLoading,
         fetchPost,
         fetchGroupById,
+        fetchGroupPosts,
         fetchAllGroups,
         patchPost,
         fetchComments,
         fetchComment,
         updateCommentPostedResponse,
         updateGroupChanged,
+        updatePostChanged,
         joinGroup,
         leaveGroup
       }}
