@@ -126,6 +126,16 @@
     border-radius: 25px;
 }
 
+.optionscontainer span {
+    padding: 1rem;
+    user-select: none;
+    cursor: pointer;
+}
+
+.optionscontainer span:hover {
+    color: rgb(83, 83, 83);
+}
+
 .optionscontainer a {
     font-size: 20px;
     font-weight: 500;

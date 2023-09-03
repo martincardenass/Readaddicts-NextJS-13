@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import Button from '@/components/Button/Button'
 import createComment from './postComment'
 
-const AddComent = ({ postId, parent, placeholderText, href }) => {
+const AddComent = ({ postId, parent, placeholderText }) => {
   const [characters, setCharacters] = useState(0)
   const [newComment, setNewComment] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -73,7 +73,7 @@ const AddComent = ({ postId, parent, placeholderText, href }) => {
       status !== undefined &&
       newComment !== false
     ) {
-      router.push(href)
+      router.push(`/posts/${postId}/comments/${newComment?.data}`)
     }
   }, [newComment])
 

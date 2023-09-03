@@ -1,37 +1,50 @@
 'use client'
 import { useAuth } from '@/hooks/useAuth'
 import { useFetcher } from '@/hooks/useFetcher'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import styles from './post.module.css'
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
 
-const Options = ({ id }) => {
-  const pathname = usePathname()
+const Options = ({ update, remove }) => {
+  const params = useParams()
+
+  const paramsHaveCommentId = Object.prototype.hasOwnProperty.call(params, 'commentId')
+
+  const [toggle, setToggle] = useState({
+    update: false,
+    remove: false
+  })
   const { user } = useAuth()
   const { post } = useFetcher()
 
   const username = post?.data?.author
 
   return (
-    <>
-      {user?.username === username && (
-        <>
-          <h2 style={{ textAlign: 'center' }}>Options</h2>
-          <section className={styles.options}>
-            <section className={styles.optionscontainer}>
-              <Link href={`/posts/${id}/delete`}>
-                <span className='material-symbols-outlined'>delete</span>
-                <span className={pathname.includes('/delete') ? styles.active : ''}>Delete post</span>
-              </Link>
-              <Link href={`/posts/${id}/edit`}>
-                <span className='material-symbols-outlined'>edit_note</span>
-                <span className={pathname.includes('/edit') ? styles.active : ''}>Edit post</span>
-              </Link>
-            </section>
+    user?.username === username && !paramsHaveCommentId && (
+      <>
+        <h2 style={{ textAlign: 'center' }}>Options</h2>
+        <section className={styles.options}>
+          <section className={styles.optionscontainer}>
+            <span
+              onClick={() => setToggle({ remove: true })}
+              style={{ color: toggle.remove ? 'red' : 'black' }}
+              className='material-symbols-outlined'
+            >
+              delete
+            </span>
+            <span
+              onClick={() => setToggle({ update: true })}
+              style={{ color: toggle.update ? 'purple' : 'black' }}
+              className='material-symbols-outlined'
+            >
+              edit_note
+            </span>
           </section>
-        </>
-      )}
-    </>
+        </section>
+        {toggle.update && update}
+        {toggle.remove && remove}
+      </>
+    )
   )
 }
 

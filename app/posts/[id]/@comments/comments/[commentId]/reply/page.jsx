@@ -1,4 +1,4 @@
-import AddComent from '../../AddComent'
+import AddComent from '../../../AddComent'
 
 const ReplyComment = ({ params }) => {
   const { id, commentId } = params
@@ -8,7 +8,6 @@ const ReplyComment = ({ params }) => {
       postId={id}
       parent={commentId}
       placeholderText='Reply to this comment'
-      href={`/posts/${id}/comments/${commentId}`}
     />
   )
 }

@@ -1,70 +1,122 @@
 'use client'
 import styles from './newpost.module.css'
 import Image from 'next/image'
-import { useEffect, useReducer, useRef } from 'react'
+import { useReducer, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import createPost from './createPost'
-import errorTextReplace from '@/utility/errorTextReplace'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
 
-const NewPostPage = ({ user }) => {
-  const [event, dispatch] = useReducer(
-    (event, action) => {
-      const newEvent = { ...event }
+const ACTIONS = {
+  HANDLE_POST_DATA: 'HANDLE_POST_DATA',
+  SET_CHARACTERS: 'SET_CHARACTERS',
+  SET_IMAGES: 'SET_IMAGES',
+  REMOVE_IMAGES: 'REMOVE_IMAGES',
+  SET_LOADING: 'SET_LOADING',
+  SET_MSG: 'SET_MSG',
+  SET_DONE: 'SET_DONE'
+}
 
-      switch (action.type) {
-        case 'SET_CHARACTERS': {
-          newEvent.characters = action.characters
-          break
-        }
-        case 'SET_IMAGES': {
-          newEvent.images = action.images
-          break
-        }
-        case 'SET_LOADING': {
-          newEvent.loading = action.loading
-          break
-        }
-        case 'SET_MSG': {
-          newEvent.msg = action.msg
-          break
-        }
-        case 'SET_DONE': {
-          newEvent.done = action.done
+const postReducer = (newPost, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case ACTIONS.HANDLE_POST_DATA: {
+      if (payload.status === undefined) {
+        setTimeout(() => {
+          window.localStorage.removeItem('token')
+          window.localStorage.removeItem('user')
+          window.location.reload()
+        }, 1000)
+        return {
+          ...newPost,
+          msg: 'Your session has expired. Logging out...',
+          done: false
         }
       }
-
-      return newEvent
-    },
-    {
-      characters: 0,
-      images: [],
-      done: false,
-      msg: null,
-      loading: false
+      if (payload.status === 200) {
+        return {
+          ...newPost,
+          msg: 'Post published successfully',
+          done: true
+        }
+      } else {
+        return {
+          ...newPost
+        }
+      }
     }
-  )
+
+    case ACTIONS.SET_CHARACTERS: {
+      return {
+        ...newPost,
+        characters: payload
+      }
+    }
+
+    case ACTIONS.SET_IMAGES: {
+      return {
+        ...newPost,
+        images: payload
+      }
+    }
+
+    case ACTIONS.REMOVE_IMAGES: {
+      const newImages = [...newPost.images]
+      newImages.splice(payload, 1)
+      return {
+        ...newPost,
+        images: newImages
+      }
+    }
+
+    case ACTIONS.SET_LOADING: {
+      return {
+        ...newPost,
+        loading: true
+      }
+    }
+
+    case ACTIONS.SET_MSG: {
+      return {
+        ...newPost,
+        msg: payload
+      }
+    }
+
+    case ACTIONS.SET_DONE: {
+      return {
+        ...newPost,
+        done: payload
+      }
+    }
+  }
+}
+
+const initialState = {
+  characters: 0,
+  images: [],
+  done: false,
+  msg: null,
+  loading: false
+}
+
+const NewPostPage = ({ user }) => {
+  const [newPost, dispatch] = useReducer(postReducer, initialState)
+
   const formRef = useRef(null)
   const fileRef = useRef(null)
   const router = useRouter()
 
   const handleSubmit = useSubmitRef(formRef)
 
-  const handleRemoveImg = (index) => {
-    // * Remove the image visually
-    const newImages = [...event.images]
-    newImages.splice(index, 1)
-    dispatch({ type: 'SET_IMAGES', images: newImages })
-  }
-
   const handlePost = async (e) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('content', e.target.content.value) // * Append the content to the formData
 
-    for (let i = 0; i < event.images.length; i++) {
-      formData.append('files', event.images[i])
+    for (let i = 0; i < newPost.images.length; i++) {
+      formData.append('files', newPost.images[i])
     }
 
     const formDataChecker = Object.fromEntries(new FormData(e.target))
@@ -72,64 +124,34 @@ const NewPostPage = ({ user }) => {
 
     if (content !== '') {
       if (content.length >= 8) {
-        dispatch({ type: 'SET_LOADING', loading: true })
-      }
+        dispatch({ type: ACTIONS.SET_LOADING })
 
-      const data = await createPost(formData)
+        if (newPost.done) return
+        const data = await createPost(formData)
+        dispatch({ type: ACTIONS.HANDLE_POST_DATA, payload: data })
 
-      if (data.data !== undefined) {
-        router.push(`/posts/${data.data}`)
-      }
-
-      if (data.status === undefined) {
-        // * If token its invalid, log out the user
-        dispatch({
-          type: 'SET_MSG',
-          msg: 'Your session has expired. Logging out...'
-        })
-        dispatch({ type: 'SET_DONE', done: false })
-
-        setTimeout(() => {
-          window.localStorage.removeItem('token')
-          window.localStorage.removeItem('user')
-          window.location.reload()
-        }, 1000)
-        return
-      }
-
-      if (data.status === 400) {
-        const replacedErrorText = errorTextReplace(data)
-        dispatch({ type: 'SET_MSG', msg: replacedErrorText })
-      }
-      if (data.status === 200) {
-        dispatch({ type: 'SET_MSG', msg: 'Post published successfully' })
-        dispatch({ type: 'SET_DONE', done: true })
+        if (data.status === 200) {
+          router.push(`/posts/${data.data}`)
+        }
       } else {
-        dispatch({ type: 'SET_MSG', msg: 'Something went wrong' })
+        dispatch({
+          type: ACTIONS.SET_MSG,
+          payload: 'Please provide at least 8 characters'
+        })
       }
     } else {
-      dispatch({ type: 'SET_MSG', msg: 'Your post cannot be empty' })
+      dispatch({ type: ACTIONS.SET_MSG, payload: 'Your post cannot be empty' })
     }
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      dispatch({ type: 'SET_DONE', done: false })
-    }, 3000)
-
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [event.done])
-
   return (
-    <main className={event.done ? styles.newpostdenied : styles.newpost}>
+    <main className={newPost.done ? styles.newpostdenied : styles.newpost}>
       <section className={styles.newpostcontainer}>
         <div className={styles.newpostitems}>
           {user.profile_Picture
             ? (
               <Image
-                style={{ filter: event.done ? 'grayscale(100)' : '' }}
+                style={{ filter: newPost.done ? 'grayscale(100)' : '' }}
                 src={user.profile_Picture}
                 alt={user.username}
                 width={75}
@@ -142,20 +164,28 @@ const NewPostPage = ({ user }) => {
           <section className={styles.inputandcharcount}>
             <form ref={formRef} onSubmit={handlePost}>
               <input
-                style={{ cursor: event.done ? 'not-allowed' : '' }}
+                style={{ cursor: newPost.done ? 'not-allowed' : '' }}
                 type='text'
                 name='content'
-                placeholder='Post something new'
+                placeholder='New post'
                 required
                 autoComplete='off'
-                onChange={(e) => dispatch({ type: 'SET_CHARACTERS', characters: e.target.value.length })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_CHARACTERS,
+                    payload: e.target.value.length
+                  })}
                 maxLength='255'
               />
               <input
                 type='file'
                 name='files'
                 ref={fileRef}
-                onChange={(e) => dispatch({ type: 'SET_IMAGES', images: Array.from(e.target.files) })}
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_IMAGES,
+                    payload: Array.from(e.target.files)
+                  })}
                 multiple
               />
             </form>
@@ -163,16 +193,18 @@ const NewPostPage = ({ user }) => {
               <p
                 style={{
                   color:
-                    event.msg === 'Your post cannot be empty' ||
-                    event.msg === 'Please provide at least 8 characters'
+                    newPost.msg === 'Your post cannot be empty' ||
+                    newPost.msg === 'Please provide at least 8 characters'
                       ? 'red'
                       : 'black'
                 }}
               >
-                {event.msg}
+                {newPost.msg}
               </p>
-              <p style={{ color: event.characters === 255 ? 'red' : 'black' }}>
-                {event.characters}/255
+              <p
+                style={{ color: newPost.characters === 255 ? 'red' : 'black' }}
+              >
+                {newPost.characters}/255
               </p>
             </div>
           </section>
@@ -185,17 +217,17 @@ const NewPostPage = ({ user }) => {
           <div onClick={handleSubmit}>
             <Button
               text='Post'
-              backgroundColor={event.done ? '#7a7a7a' : '#ed2085'}
+              backgroundColor={newPost.done ? '#7a7a7a' : '#ed2085'}
               textColor='white'
-              loading={event.loading}
+              loading={newPost.loading}
             />
           </div>
         </div>
-        {event.images.length > 0
+        {newPost.images.length > 0
           ? (
             <section className={styles.uploadedimages}>
               <ul>
-                {event.images.map((image, index) => (
+                {newPost.images.map((image, index) => (
                   <li key={index}>
                     <Image
                       src={URL.createObjectURL(image)}
@@ -204,7 +236,8 @@ const NewPostPage = ({ user }) => {
                       height={100}
                     />
                     <span
-                      onClick={() => handleRemoveImg(index)}
+                      onClick={(index) =>
+                        dispatch({ type: ACTIONS.REMOVE_IMAGES, payload: index })}
                       className='material-symbols-outlined'
                     >
                       close

@@ -1,4 +1,4 @@
-import styles from '../comments.module.css'
+import styles from '@/app/posts/[id]/@comments/comments.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getTimeAgo } from '@/utility/relativeTime'

@@ -2,7 +2,7 @@
 import { useFetcher } from '@/hooks/useFetcher'
 import { useEffect } from 'react'
 import Link from 'next/link'
-import styles from '../comments.module.css'
+import styles from '@/app/posts/[id]/@comments/comments.module.css'
 import dynamic from 'next/dynamic'
 
 const DynamicRecursiveComments = dynamic(() => import('./RecursiveComment'), {
@@ -13,7 +13,6 @@ const CommentIdPage = ({ params, children }) => {
   const {
     fetchComment,
     comment,
-    // commentStatus,
     commentPosted
   } = useFetcher()
   const { commentId, id } = params
@@ -42,8 +41,8 @@ const CommentIdPage = ({ params, children }) => {
           </ul>
         </section>
         <div style={{ textAlign: 'center' }}>
-          <h3>
-            <Link href={`/posts/${id}/comments`}>Back to all comments</Link>
+          <h3 style={{ fontWeight: 500 }}>
+            <Link href={`/posts/${id}`}>Back to all comments</Link>
           </h3>
         </div>
       </aside>
