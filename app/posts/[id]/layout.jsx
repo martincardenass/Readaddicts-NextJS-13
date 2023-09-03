@@ -1,5 +1,3 @@
-// 'use client'
-// import { useFetcher } from '@/hooks/useFetcher'
 import styles from './post.module.css'
 import dynamic from 'next/dynamic'
 
@@ -13,12 +11,7 @@ const DynamicUpdatePost = dynamic(() => import('./UpdateChild'))
 const DynamicPost = dynamic(() => import('./Post'))
 
 const Post = ({ params, children }) => {
-  // const { post } = useFetcher()
   const { id } = params
-
-  // if (post?.status === 404) {
-  //   return post
-  // }
 
   return (
     <main className={styles.postpage}>

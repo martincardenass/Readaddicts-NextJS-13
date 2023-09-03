@@ -197,7 +197,7 @@ const CreateGroup = () => {
             <h1
               style={{
                 visibility:
-                    validation.groupNameTaken === null ? 'hidden' : 'visible',
+                  validation.groupNameTaken === null ? 'hidden' : 'visible',
                 color: validation.groupNameTaken ? 'red' : '#73ff83',
                 userSelect: 'none',
                 margin: '0',
@@ -222,7 +222,7 @@ const CreateGroup = () => {
             <h1
               style={{
                 visibility:
-                    validation.descriptionValid === null ? 'hidden' : 'visible',
+                  validation.descriptionValid === null ? 'hidden' : 'visible',
                 color: validation.descriptionValid ? '#73ff83' : 'red',
                 userSelect: 'none',
                 margin: '0',
@@ -233,14 +233,13 @@ const CreateGroup = () => {
             </h1>
           </div>
         </form>
-        <p style={{ visibility: msg === null ? 'hidden' : 'visible' }}>
-          {msg}
-        </p>
+        <p style={{ visibility: msg === null ? 'hidden' : 'visible' }}>{msg}</p>
         <div onClick={handleSubmit}>
           <Button
             text='Create group'
-            backgroundColor='rgb(159, 225, 255)'
+            backgroundColor='rgb(0, 210, 255)'
             width='150px'
+            textColor='white'
             effectHeight='150px'
             effectWidth='150px'
             loading={loading}

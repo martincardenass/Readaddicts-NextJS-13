@@ -5,15 +5,29 @@ import Link from 'next/link'
 import styles from './groupid.module.css'
 import JoinGroupButton from './JoinGroupButton'
 import { useEffect } from 'react'
-import GroupPosts from './GroupPosts'
+// import GroupPosts from './GroupPosts'
 
-const GroupIdPage = ({ groupId }) => {
-  const { group, groupChanged, fetchGroupById } = useFetcher()
-  console.log(group)
+const GroupIdPage = ({ groupId, children, posts }) => {
+  const {
+    group,
+    groupChanged,
+    fetchGroupById,
+    leaveGroup,
+    joinGroup,
+    groupLoading
+  } = useFetcher()
 
   useEffect(() => {
     fetchGroupById(groupId)
   }, [groupChanged])
+
+  if (group?.status === 404) {
+    return (
+      <h1 style={{ textAlign: 'center', fontWeight: 400 }}>
+        Group does not exist or was deleted
+      </h1>
+    )
+  }
 
   if (group?.status === 200) {
     return (
@@ -32,14 +46,17 @@ const GroupIdPage = ({ groupId }) => {
             : (
               <div className={styles.noimageid}>?</div>
               )}
-          <h2>Group options</h2>
           <JoinGroupButton
             groupdId={groupId}
             members={group?.data?.members}
             owner={group?.data?.owner}
+            leaveGroup={leaveGroup}
+            joinGroup={joinGroup}
+            groupLoading={groupLoading}
           />
+          {children}
         </section>
-        <GroupPosts />
+        {posts}
         <section className={styles.groupsection}>
           <h1>Members</h1>
           <ul>

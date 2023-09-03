@@ -1,51 +1,67 @@
 import Button from '@/components/Button/Button'
 import { useAuth } from '@/hooks/useAuth'
+import styles from './groupid.module.css'
 
-const JoinGroupButton = ({ groupdId, members, owner }) => {
+const JoinGroupButton = ({
+  groupdId,
+  members,
+  owner,
+  joinGroup,
+  leaveGroup,
+  groupLoading
+}) => {
   const { user } = useAuth()
 
   const isUserInGroup = members?.some(
-    (member) => member.user_Id === user?.user_Id
+    (member) => member?.user_Id === user?.user_Id
   )
 
   const isUserOwner = owner?.user_Id === user?.user_Id
 
-  const handleJoin = () => {
-    if (isUserInGroup) {
-      leaveGroup(groupdId)
-    } else {
-      joinGroup(groupdId)
-    }
+  const handleJoinClick = async () => {
+    if (isUserInGroup) return
+
+    await joinGroup(groupdId)
   }
 
   return (
-    <section style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-      <div style={{ width: '120px' }}>
-        {isUserOwner
-          ? (
-            <Button
-              text='Delete group'
-              width='120px'
-              effectWidth='120px'
-              backgroundColor='red'
-              textColor='white'
-              effectHeight='120px'
-              // loading={loading}
-              href={`/groups/${groupdId}/delete`}
-            />
-            )
-          : (
-            <div onClick={handleJoin}>
+    <section className={styles.options}>
+      {isUserOwner
+        ? (
+          <Button
+            text='Delete group'
+            width='120px'
+            effectWidth='120px'
+            backgroundColor='red'
+            textColor='white'
+            effectHeight='120px'
+            loading={groupLoading}
+            href={`/groups/${groupdId}/delete`}
+          />
+          )
+        : (
+          <section className={styles.optionsbuttons}>
+            <div onClick={handleJoinClick}>
               <Button
-                text={isUserInGroup ? 'Leave group' : 'Join group'}
+                text={isUserInGroup ? 'Joined' : 'Join group'}
+                width='120px'
+                backgroundColor={isUserInGroup ? 'rgb(0, 210, 255)' : ''}
+                effectWidth='120px'
+                effectHeight='120px'
+                loading={groupLoading}
+              />
+            </div>
+            {isUserInGroup && (
+              <Button
+                text='Options'
                 width='120px'
                 effectWidth='120px'
                 effectHeight='120px'
-                // loading={loading}
+                href={`/groups/${groupdId}/manage`}
               />
-            </div>
             )}
-      </div>
+          </section>
+          )}
     </section>
   )
 }

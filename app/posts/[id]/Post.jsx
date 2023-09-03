@@ -16,16 +16,16 @@ const Post = ({ id }) => {
     fetchPost(id)
   }, [changed])
 
-  if (post.images !== undefined) {
-    for (let i = 0; i < post.images.length; i++) {
+  if (post?.data?.images !== undefined) {
+    for (let i = 0; i < post?.data?.images.length; i++) {
       img.push(
         <Image
-          key={post.images[i].image_Id}
-          src={post.images[i].image_Url}
-          alt={post.images[i].image_Id}
+          key={post?.data?.images[i].image_Id}
+          src={post?.data?.images[i].image_Url}
+          alt={post?.data?.images[i].image_Id}
           onClick={() =>
             router.push(
-              `/posts/${post.post_Id}/image/${post.images[i].image_Id}`
+              `/posts/${post?.data?.post_Id}/image/${post?.data?.images[i].image_Id}`
             )}
           style={{ cursor: 'pointer' }}
           width={150}

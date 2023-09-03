@@ -1,16 +1,19 @@
 import dynamic from 'next/dynamic'
 
 const DynamicGroup = dynamic(() => import('./Group'), {
-  loading: () => <h1>Loading...</h1>
+  loading: () => (
+    <h1 style={{ textAlign: 'center', fontWeight: 400 }}>Loading...</h1>
+  )
 })
 
-const GroupLayout = async ({ params, children }) => {
-  const { groupId } = params
+const GroupLayout = (props) => {
+  const { groupId } = props.params
 
   return (
     <>
-      {children}
-      <DynamicGroup groupId={groupId} />
+      <DynamicGroup groupId={groupId} posts={props.posts}>
+        {props.children}
+      </DynamicGroup>
     </>
   )
 }

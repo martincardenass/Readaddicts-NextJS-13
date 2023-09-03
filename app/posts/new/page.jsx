@@ -9,7 +9,7 @@ import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
 
 const NewPostPage = ({ user }) => {
-  const [event, updateEvent] = useReducer(
+  const [event, dispatch] = useReducer(
     (event, action) => {
       const newEvent = { ...event }
 
@@ -51,21 +51,11 @@ const NewPostPage = ({ user }) => {
 
   const handleSubmit = useSubmitRef(formRef)
 
-  const handleCharacterCount = (e) => {
-    const targetValue = e.target.value
-    updateEvent({ type: 'SET_CHARACTERS', characters: targetValue.length })
-  }
-
-  const handleImageSelect = (e) => {
-    const files = Array.from(e.target.files)
-    updateEvent({ type: 'SET_IMAGES', images: files })
-  }
-
   const handleRemoveImg = (index) => {
     // * Remove the image visually
     const newImages = [...event.images]
     newImages.splice(index, 1)
-    updateEvent({ type: 'SET_IMAGES', images: newImages })
+    dispatch({ type: 'SET_IMAGES', images: newImages })
   }
 
   const handlePost = async (e) => {
@@ -82,7 +72,7 @@ const NewPostPage = ({ user }) => {
 
     if (content !== '') {
       if (content.length >= 8) {
-        updateEvent({ type: 'SET_LOADING', loading: true })
+        dispatch({ type: 'SET_LOADING', loading: true })
       }
 
       const data = await createPost(formData)
@@ -93,11 +83,11 @@ const NewPostPage = ({ user }) => {
 
       if (data.status === undefined) {
         // * If token its invalid, log out the user
-        updateEvent({
+        dispatch({
           type: 'SET_MSG',
           msg: 'Your session has expired. Logging out...'
         })
-        updateEvent({ type: 'SET_DONE', done: false })
+        dispatch({ type: 'SET_DONE', done: false })
 
         setTimeout(() => {
           window.localStorage.removeItem('token')
@@ -109,21 +99,22 @@ const NewPostPage = ({ user }) => {
 
       if (data.status === 400) {
         const replacedErrorText = errorTextReplace(data)
-        updateEvent({ type: 'SET_MSG', msg: replacedErrorText })
-      } if (data.status === 200) {
-        updateEvent({ type: 'SET_MSG', msg: 'Post published successfully' })
-        updateEvent({ type: 'SET_DONE', done: true })
+        dispatch({ type: 'SET_MSG', msg: replacedErrorText })
+      }
+      if (data.status === 200) {
+        dispatch({ type: 'SET_MSG', msg: 'Post published successfully' })
+        dispatch({ type: 'SET_DONE', done: true })
       } else {
-        updateEvent({ type: 'SET_MSG', msg: 'Something went wrong' })
+        dispatch({ type: 'SET_MSG', msg: 'Something went wrong' })
       }
     } else {
-      updateEvent({ type: 'SET_MSG', msg: 'Your post cannot be empty' })
+      dispatch({ type: 'SET_MSG', msg: 'Your post cannot be empty' })
     }
   }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      updateEvent({ type: 'SET_DONE', done: false })
+      dispatch({ type: 'SET_DONE', done: false })
     }, 3000)
 
     return () => {
@@ -132,108 +123,102 @@ const NewPostPage = ({ user }) => {
   }, [event.done])
 
   return (
-    <>
-      <main className={event.done ? styles.newpostdenied : styles.newpost}>
-        <section className={styles.newpostcontainer}>
-          <div className={styles.newpostitems}>
-            {user.profile_Picture
-              ? (
-                <Image
-                  style={{ filter: event.done ? 'grayscale(100)' : '' }}
-                  src={user.profile_Picture}
-                  alt={user.username}
-                  width={75}
-                  height={75}
-                />
-                )
-              : (
-                <div className={styles.nouser}>?</div>
-                )}
-            <section className={styles.inputandcharcount}>
-              <form ref={formRef} onSubmit={handlePost}>
-                <input
-                  style={{ cursor: event.done ? 'not-allowed' : '' }}
-                  type='text'
-                  name='content'
-                  placeholder='Post something new'
-                  required
-                  autoComplete='off'
-                  onChange={handleCharacterCount}
-                  maxLength='255'
-                />
-                <input
-                  type='file'
-                  name='files'
-                  ref={fileRef}
-                  onChange={handleImageSelect}
-                  multiple
-                />
-              </form>
-              <div>
-                <p
-                  style={{
-                    color:
-                      event.msg === 'Your post cannot be empty' ||
-                      event.msg === 'Please provide at least 8 characters'
-                        ? 'red'
-                        : 'black'
-                  }}
-                >
-                  {event.msg}
-                </p>
-                <p
-                  style={{ color: event.characters === 255 ? 'red' : 'black' }}
-                >
-                  {event.characters}/255
-                </p>
-              </div>
-            </section>
-            <span
-              onClick={() => fileRef.current.click()}
-              className='material-symbols-outlined'
-            >
-              add_photo_alternate
-            </span>
-            <div onClick={handleSubmit}>
-              <Button
-                text='Post'
-                backgroundColor={event.done ? '#7a7a7a' : '#ed2085'}
-                textColor='white'
-                loading={event.loading}
-              />
-            </div>
-          </div>
-          {event.images.length > 0
+    <main className={event.done ? styles.newpostdenied : styles.newpost}>
+      <section className={styles.newpostcontainer}>
+        <div className={styles.newpostitems}>
+          {user.profile_Picture
             ? (
-              <section className={styles.uploadedimages}>
-                <ul>
-                  {event.images.map((image, index) => (
-                    <li key={index}>
-                      <Image
-                        src={URL.createObjectURL(image)}
-                        alt={`Image ${index}`}
-                        width={100}
-                        height={100}
-                      />
-                      <span
-                        onClick={() => handleRemoveImg(index)}
-                        className='material-symbols-outlined'
-                      >
-                        close
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <Image
+                style={{ filter: event.done ? 'grayscale(100)' : '' }}
+                src={user.profile_Picture}
+                alt={user.username}
+                width={75}
+                height={75}
+              />
               )
             : (
-              <p style={{ margin: 0 }}>
-                Select multiple images with CTRL + Click
-              </p>
+              <div className={styles.nouser}>?</div>
               )}
-        </section>
-      </main>
-    </>
+          <section className={styles.inputandcharcount}>
+            <form ref={formRef} onSubmit={handlePost}>
+              <input
+                style={{ cursor: event.done ? 'not-allowed' : '' }}
+                type='text'
+                name='content'
+                placeholder='Post something new'
+                required
+                autoComplete='off'
+                onChange={(e) => dispatch({ type: 'SET_CHARACTERS', characters: e.target.value.length })}
+                maxLength='255'
+              />
+              <input
+                type='file'
+                name='files'
+                ref={fileRef}
+                onChange={(e) => dispatch({ type: 'SET_IMAGES', images: Array.from(e.target.files) })}
+                multiple
+              />
+            </form>
+            <div>
+              <p
+                style={{
+                  color:
+                    event.msg === 'Your post cannot be empty' ||
+                    event.msg === 'Please provide at least 8 characters'
+                      ? 'red'
+                      : 'black'
+                }}
+              >
+                {event.msg}
+              </p>
+              <p style={{ color: event.characters === 255 ? 'red' : 'black' }}>
+                {event.characters}/255
+              </p>
+            </div>
+          </section>
+          <span
+            onClick={() => fileRef.current.click()}
+            className='material-symbols-outlined'
+          >
+            add_photo_alternate
+          </span>
+          <div onClick={handleSubmit}>
+            <Button
+              text='Post'
+              backgroundColor={event.done ? '#7a7a7a' : '#ed2085'}
+              textColor='white'
+              loading={event.loading}
+            />
+          </div>
+        </div>
+        {event.images.length > 0
+          ? (
+            <section className={styles.uploadedimages}>
+              <ul>
+                {event.images.map((image, index) => (
+                  <li key={index}>
+                    <Image
+                      src={URL.createObjectURL(image)}
+                      alt={`Image ${index}`}
+                      width={100}
+                      height={100}
+                    />
+                    <span
+                      onClick={() => handleRemoveImg(index)}
+                      className='material-symbols-outlined'
+                    >
+                      close
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+            )
+          : (
+            <p style={{ margin: 0 }}>Select multiple images with CTRL + Click</p>
+            )}
+      </section>
+    </main>
   )
 }
 

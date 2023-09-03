@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic'
-import getGroups from './fetchGroups'
 import Header from './Header'
 import styles from './group.module.css'
 
@@ -7,10 +6,7 @@ const DynamicGroups = dynamic(() => import('./Groups'), {
   loading: () => <h1>Loading groups...</h1>
 })
 
-const GroupsLayout = async ({ children }) => {
-  const fetched = await getGroups()
-  const groups = fetched.data
-
+const GroupsLayout = ({ children }) => {
   return (
     <>
       {children}
@@ -18,7 +14,7 @@ const GroupsLayout = async ({ children }) => {
         <Header />
       </span>
       <section className={styles.groups}>
-        <DynamicGroups groups={groups} />
+        <DynamicGroups />
       </section>
     </>
   )

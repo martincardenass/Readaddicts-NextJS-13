@@ -1,14 +1,25 @@
+'use client'
 import styles from './group.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useFetcher } from '@/hooks/useFetcher'
+import { useEffect } from 'react'
+import { useParams } from 'next/navigation'
 
-const Groups = ({ groups, idFromParams }) => {
-  // ! Fix IDFROMPARAMS
-  // ! Might just use usePathname and make this a client component
+const Groups = () => {
+  const { groups, fetchAllGroups, groupChanged } = useFetcher()
+  const params = useParams()
+
+  const { groupId } = params
+
+  useEffect(() => {
+    fetchAllGroups()
+  }, [groupChanged])
+
   return (
     <ul>
-      {groups
-        // ?.filter(group => group.group_Id !== idFromParams)
+      {groups?.data
+        ?.filter(group => group.group_Id !== parseInt(groupId))
         ?.map((group) => (
           <li key={group.group_Id}>
             <Link href={`/groups/${group.group_Id}`}>

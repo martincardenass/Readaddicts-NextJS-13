@@ -19,6 +19,7 @@
     font-weight: 600;
     font-size: 48px;
     margin: 0;
+    margin-bottom: 1.5rem;
 }
 
 .group ul {
@@ -54,4 +55,16 @@
     font-weight: 400;
     color: white;
     user-select: none;
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.optionsbuttons {
+    display: flex;
+    gap: 1rem;
 }
