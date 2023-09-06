@@ -260,8 +260,12 @@ export const Fetcher = ({ children }) => {
     dispatch({ type: 'UPDATE_COMMENT_POSTED', payload: status })
   }
 
-  const updateGroupChanged = (status) => {
+  const updateGroupChanged = (status, timeout) => {
     dispatch({ type: 'UPDATE_GROUP_CHANGED', payload: status })
+
+    setTimeout(() => {
+      dispatch({ type: 'UPDATE_GROUP_CHANGED', payload: !status })
+    }, timeout)
   }
 
   const updatePostChanged = (status) => {

@@ -3,11 +3,10 @@ import { useFetcher } from '@/hooks/useFetcher'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './groupid.module.css'
-import JoinGroupButton from './JoinGroupButton'
+import GroupButtons from './GroupButtons'
 import { useEffect } from 'react'
-// import GroupPosts from './GroupPosts'
 
-const GroupIdPage = ({ groupId, children, posts }) => {
+const GroupIdPage = ({ groupId, deletePost, manage, posts }) => {
   const {
     group,
     groupChanged,
@@ -46,19 +45,35 @@ const GroupIdPage = ({ groupId, children, posts }) => {
             : (
               <div className={styles.noimageid}>?</div>
               )}
-          <JoinGroupButton
+          <p>{group?.data?.group_Description}</p>
+          <GroupButtons
             groupdId={groupId}
             members={group?.data?.members}
             owner={group?.data?.owner}
             leaveGroup={leaveGroup}
             joinGroup={joinGroup}
             groupLoading={groupLoading}
+            deletePost={deletePost}
+            update={manage}
           />
-          {children}
         </section>
         {posts}
         <section className={styles.groupsection}>
-          <h1>Members</h1>
+          <h2>Group Admin</h2>
+          <div className={styles.optionsbuttons}>
+            <Link href={`/profile/${group?.data?.owner.username}`}>
+              <Image
+                src={group?.data?.owner.profile_Picture}
+                alt={group?.data?.owner.username}
+                width={50}
+                height={50}
+              />
+            </Link>
+            <Link href={`/profile/${group?.data?.owner.username}`}>
+              <p>{group?.data?.owner.username}</p>
+            </Link>
+          </div>
+          <h2>Members</h2>
           <ul>
             {group?.data?.members?.map((member) => (
               <li key={member.user_Id}>

@@ -1,0 +1,45 @@
+.image {
+    width: 225px;
+    height: 225px;
+    border-radius: 50%;
+    background-color: rgb(225, 225, 225);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    user-select: none;
+}
+
+.imagetext {
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    position: absolute;
+}
+
+.imagecontainer {
+    position: relative;
+}
+
+.image img {
+    opacity: .5;
+    object-fit: cover;
+}
+
+.image:hover {
+    background-color: rgb(220, 220, 220);
+    cursor: pointer;
+}
+
+.imagecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imagecontainer p {
+    margin: .5rem 0;
+}

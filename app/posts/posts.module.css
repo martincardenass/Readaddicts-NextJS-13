@@ -1,7 +1,5 @@
 .posts {
-    margin: 0;
     width: 100%;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,9 +12,20 @@
     font-size: 32px;
 }
 
+.postshomepage {
+    margin: 0 auto;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .postsul {
+    list-style: none;
+    padding: 0;
     margin: 0;
     width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,9 +44,10 @@
 
 .postsli {
     width: 100%;
+    max-width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.25);
     margin: 1rem;
-    padding: 2rem 0;
+    padding: 2.5rem;
     background-color: white;
     border-radius: 25px;
     display: flex;

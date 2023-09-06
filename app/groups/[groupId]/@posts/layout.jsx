@@ -1,4 +1,3 @@
-'use client'
 import TopModal from './TopModal'
 import styles from './groupPosts.module.css'
 

@@ -14,6 +14,9 @@ const DeleteGroupPage = () => {
     color: 'red'
   })
 
+  const [showBanner, setShowBanner] = useState(false)
+  const [success, setSuccess] = useState(false)
+
   const { group, updateGroupChanged } = useFetcher()
   const router = useRouter()
 
@@ -21,18 +24,16 @@ const DeleteGroupPage = () => {
     const dataFromInput = e.target.value
 
     if (dataFromInput === group?.data?.group_Name) {
-      updateGroupChanged(true)
-      setTimeout(() => {
-        updateGroupChanged(false)
-      }, 2000)
       setOk(true)
       setValidation({
+        ...validation,
         status: true,
         color: '#73ff83'
       })
     } else {
       setOk(false)
       setValidation({
+        ...validation,
         status: false,
         color: 'red'
       })
@@ -46,7 +47,18 @@ const DeleteGroupPage = () => {
         const del = await deleteGroup(group?.data?.group_Id)
 
         if (del.status === 200) {
-          router.push('/groups')
+          setShowBanner(true)
+          setSuccess(true)
+          setTimeout(() => {
+            setSuccess(false)
+          }, 2000)
+          setTimeout(() => {
+            setShowBanner(false)
+            router.push('/groups')
+          }, 3000)
+          setTimeout(() => {
+            updateGroupChanged(true, 2000)
+          }, 3250)
           setLoading(false)
         }
       } catch (error) {
@@ -59,6 +71,15 @@ const DeleteGroupPage = () => {
 
   return (
     <section className={styles.delete}>
+      {showBanner && (
+        <div
+          className={`${styles.banner} ${
+            success ? styles.appear : styles.disappear
+          }`}
+        >
+          <span>Group deleted</span>
+        </div>
+      )}
       <h4>
         To delete this group, type <span>{group?.data?.group_Name}</span>
       </h4>
@@ -84,12 +105,6 @@ const DeleteGroupPage = () => {
         <Button
           text='Delete'
           backgroundColor={ok ? 'red' : 'gray'}
-          textColor='white'
-          loading={loading}
-        />
-        <Button
-          text='Cancel'
-          backgroundColor='rgb(0, 210, 255)'
           textColor='white'
           loading={loading}
         />

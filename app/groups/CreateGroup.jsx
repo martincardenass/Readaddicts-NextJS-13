@@ -1,11 +1,12 @@
 import styles from './(.)create/creategroup.module.css'
-import Image from 'next/image'
 import Button from '@/components/Button/Button'
 import { useState, useRef, useReducer } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import validateGroupName from './(.)create/groupValidator'
 import createGroup from './(.)create/createGroup'
 import { useRouter } from 'next/navigation'
+import ImageUtility from '@/components/ImageUploader/ImageUploader'
+import formValidation from '@/utility/formValidation'
 
 const ACTIONS = {
   NAME_VALIDATOR: 'NAME-VALIDATOR',
@@ -88,14 +89,10 @@ const CreateGroup = () => {
   const [msg, setMsg] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const inputRef = useRef(null)
-  const formRef = useRef(null)
-
   const router = useRouter()
 
-  const handleInputClick = () => {
-    inputRef.current.click()
-  }
+  const formRef = useRef(null)
+  const inputRef = useRef(null)
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0]
@@ -125,13 +122,7 @@ const CreateGroup = () => {
     const group = new FormData(e.target)
     const validator = Object.fromEntries(new FormData(e.target))
 
-    const fieldsHaveContent = Object.values(validator).some((field) => {
-      if (typeof field === 'object') {
-        return field.name !== ''
-      } else {
-        return field !== ''
-      }
-    })
+    const fieldsHaveContent = formValidation(validator)
 
     if (
       fieldsHaveContent &&
@@ -143,6 +134,7 @@ const CreateGroup = () => {
 
       const newGroupName = newGroup?.data?.group_Name
       const newGroupId = newGroup?.data?.group_Id
+
       if (newGroup.status === 200) {
         setMsg(newGroupName + ' created')
         setLoading(false)
@@ -160,23 +152,7 @@ const CreateGroup = () => {
 
   return (
     <>
-      <aside className={styles.imagecontainer}>
-        <div className={styles.image} onClick={handleInputClick}>
-          {imageBlob
-            ? (
-              <Image
-                src={imageBlob}
-                alt='Uploaded image'
-                width={225}
-                height={225}
-              />
-              )
-            : (
-              <span>Upload picture</span>
-              )}
-        </div>
-        <p>{imageBlob ? <>This will be the group picture</> : ''}</p>
-      </aside>
+      <ImageUtility inputRef={inputRef} imageBlob={imageBlob} text='This will be the group picture' />
       <section className={styles.creategroup}>
         <h1>Create a new group</h1>
         <form ref={formRef} onSubmit={handlePost}>

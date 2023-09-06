@@ -10,11 +10,7 @@ const GroupLayout = (props) => {
   const { groupId } = props.params
 
   return (
-    <>
-      <DynamicGroup groupId={groupId} posts={props.posts}>
-        {props.children}
-      </DynamicGroup>
-    </>
+    <DynamicGroup groupId={groupId} posts={props.posts} deletePost={props.delete} manage={props.manage} />
   )
 }
 

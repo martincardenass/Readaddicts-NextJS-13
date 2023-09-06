@@ -52,8 +52,8 @@ const Groups = () => {
               <h3>
                 Group owner:{' '}
                 <span>
-                  <Link href={`/profile/${group.owner.username}`}>
-                    {group.owner.username}
+                  <Link href={`/profile/${group?.owner?.username}`}>
+                    {group?.owner?.username}
                   </Link>
                 </span>
               </h3>

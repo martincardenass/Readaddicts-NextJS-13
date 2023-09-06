@@ -66,3 +66,7 @@
     display: flex;
     gap: 1rem;
 }
+
+.optionsbuttons p {
+    text-transform: capitalize;
+}

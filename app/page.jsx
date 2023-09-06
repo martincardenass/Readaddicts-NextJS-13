@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import AddNewPost from './posts/new/page'
 import Login from '@/components/Login/Login'
+import styles from './posts/posts.module.css'
 
 const DynamicPosts = dynamic(() => import('./posts/Posts'), {
   loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
@@ -48,7 +49,7 @@ const HomePage = () => {
   useEffect(() => {
     if (isIntersecting) {
       const fetchPosts = async () => {
-        const postsData = await getPosts(page, 5)
+        const postsData = await getPosts(page, 10)
 
         setPostsStatus(postsData?.status)
 
@@ -66,7 +67,9 @@ const HomePage = () => {
     return (
       <>
         <AddNewPost user={user} placeholder='New post' />
-        <DynamicPosts posts={posts} postsStatus={postsStatus} />
+        <article className={styles.postshomepage}>
+          <DynamicPosts posts={posts} postsStatus={postsStatus} />
+        </article>
         <p
           ref={ref}
           style={{

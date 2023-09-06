@@ -7,13 +7,15 @@ const TopModal = () => {
   const { user } = useAuth()
   const { group } = useFetcher()
 
-  return (
-    <AddNewPost
-      user={user}
-      placeholder={`New post for ${group?.data?.group_Name}`}
-      groupId={group?.data?.group_Id}
-    />
-  )
+  if (user) {
+    return (
+      <AddNewPost
+        user={user}
+        placeholder={`New post for ${group?.data?.group_Name}`}
+        groupId={group?.data?.group_Id}
+      />
+    )
+  }
 }
 
 export default TopModal

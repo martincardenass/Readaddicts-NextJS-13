@@ -1,8 +1,18 @@
-async function fetcherId (endpoint, id) {
+async function fetcherId (endpoint, id, authorization) {
   try {
     const url = new URL(process.env.NEXT_PUBLIC_API_URL + endpoint + '/' + id)
 
-    const res = await fetch(url, { cache: 'no-store' })
+    const headers = new Headers()
+
+    if (authorization) {
+      const token = window.localStorage.getItem('token')
+      headers.append('Authorization', `Bearer ${token}`)
+    }
+
+    const res = await fetch(url, {
+      cache: 'no-store',
+      headers
+    })
 
     const statusCode = res.status
 

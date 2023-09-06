@@ -1,0 +1,89 @@
+.delete  {
+    margin: 2rem 0;
+    border-radius: 25px;
+    background-color: whitesmoke;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}
+
+.banner {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 25px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    opacity: 0;
+}
+
+.banner span {
+    color: white;
+    font-size: 24px;
+}
+
+.appear {
+    -webkit-animation: fade-in .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.disappear {
+    -webkit-animation: fade-out 1s ease-out both;
+    animation: fade-out 1s ease-out both;
+}
+
+.delete h4 {
+    margin: .5rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.delete h4 span {
+    color: red;
+}
+
+.delete input[type="text"]  {
+    background-color: white;
+    border: 2px solid whitesmoke;
+    border-radius: 25px;
+    margin: 1rem;
+    margin-top: 0;
+    width: 200px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 1rem;
+}
+
+.delete input[type="file"] {
+    display: none;
+}
+
+.delete input:focus {
+    outline: none;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+}
+
+.field h2 {
+    margin-top: 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
