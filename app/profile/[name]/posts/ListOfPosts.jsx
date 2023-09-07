@@ -22,6 +22,14 @@ const ListOfPosts = ({ name }) => {
   if (posts.status === 200) {
     return <DynamicPosts posts={posts.data} postsStatus={posts.status} />
   }
+
+  if (posts.status === 404) {
+    return (
+      <h1 style={{ textAlign: 'center', fontWeight: 400 }}>
+        {name} has no posts yet
+      </h1>
+    )
+  }
 }
 
 export default ListOfPosts
