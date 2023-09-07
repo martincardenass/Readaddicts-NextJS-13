@@ -164,63 +164,65 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
             : (
               <div className={styles.nouser}>?</div>
               )}
-          <section className={styles.inputandcharcount}>
-            <form ref={formRef} onSubmit={handlePost}>
-              <input
-                style={{ cursor: newPost.done ? 'not-allowed' : '' }}
-                type='text'
-                name='content'
-                placeholder={placeholder}
-                required
-                autoComplete='off'
-                onChange={(e) =>
-                  dispatch({
-                    type: ACTIONS.SET_CHARACTERS,
-                    payload: e.target.value.length
-                  })}
-                maxLength='255'
-              />
-              <input
-                type='file'
-                name='files'
-                ref={fileRef}
-                onChange={(e) =>
-                  dispatch({
-                    type: ACTIONS.SET_IMAGES,
-                    payload: Array.from(e.target.files)
-                  })}
-                multiple
-              />
-            </form>
-            <div>
-              <p
-                style={{
-                  color:
+          <div className={styles.inputandphoto}>
+            <section className={styles.inputandcharcount}>
+              <form ref={formRef} onSubmit={handlePost}>
+                <input
+                  style={{ cursor: newPost.done ? 'not-allowed' : '' }}
+                  type='text'
+                  name='content'
+                  placeholder={placeholder}
+                  required
+                  autoComplete='off'
+                  onChange={(e) =>
+                    dispatch({
+                      type: ACTIONS.SET_CHARACTERS,
+                      payload: e.target.value.length
+                    })}
+                  maxLength='255'
+                />
+                <input
+                  type='file'
+                  name='files'
+                  ref={fileRef}
+                  onChange={(e) =>
+                    dispatch({
+                      type: ACTIONS.SET_IMAGES,
+                      payload: Array.from(e.target.files)
+                    })}
+                  multiple
+                />
+              </form>
+              <div>
+                <p
+                  style={{
+                    color:
                     newPost.msg === 'Your post cannot be empty' ||
                     newPost.msg === 'Please provide at least 8 characters'
                       ? 'red'
                       : 'black'
-                }}
-              >
-                {newPost.msg}
-              </p>
-              <p
-                style={{ color: newPost.characters === 255 ? 'red' : 'black' }}
-              >
-                {newPost.characters}/255
-              </p>
-            </div>
-          </section>
-          <span
-            onClick={() => fileRef.current.click()}
-            className='material-symbols-outlined'
-          >
-            add_photo_alternate
-          </span>
+                  }}
+                >
+                  {newPost.msg}
+                </p>
+                <p
+                  style={{ color: newPost.characters === 255 ? 'red' : 'black' }}
+                >
+                  {newPost.characters}/255
+                </p>
+              </div>
+            </section>
+            <span
+              onClick={() => fileRef.current.click()}
+              className='material-symbols-outlined'
+            >
+              add_photo_alternate
+            </span>
+          </div>
           <div onClick={handleSubmit}>
             <Button
               text='Post'
-              backgroundColor={newPost.done ? '#7a7a7a' : '#ed2085'}
+              backgroundColor={newPost.done ? '#7a7a7a' : 'rgb(0, 210, 255)'}
               textColor='white'
               loading={newPost.loading}
             />
@@ -251,7 +253,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
             </section>
             )
           : (
-            <p style={{ margin: 0 }}>Select multiple images with CTRL + Click</p>
+            <p style={{ marginBottom: 0 }}>Select multiple images with CTRL + Click</p>
             )}
       </section>
     </main>

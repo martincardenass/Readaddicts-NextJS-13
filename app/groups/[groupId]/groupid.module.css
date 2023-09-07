@@ -9,6 +9,10 @@
     gap: 2rem;
 }
 
+.posts {
+    width: 50%;
+}
+
 .groupsection {
     display: flex;
     flex-direction: column;
@@ -69,4 +73,15 @@
 
 .optionsbuttons p {
     text-transform: capitalize;
+}
+
+@media screen and (max-width: 1600px) {
+    .group {
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .posts {
+        width: 100%;
+    }
 }

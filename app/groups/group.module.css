@@ -23,6 +23,7 @@
     padding: 0;
     margin: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: white;
@@ -30,10 +31,11 @@
     padding: 2rem;
     border-radius: 25px;
     gap: 2rem;
+    text-align: center;
 }
 
 .groups div h1 {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 600;
 }
 

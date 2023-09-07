@@ -3,7 +3,7 @@
     border-radius: 25px;
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: .5rem;
 }
 
 .addcomment img {
@@ -139,4 +139,10 @@
     font-weight: 400;
     color: white;
     user-select: none;
+}
+
+@media screen and (max-width: 1700px) {
+    .addcomment {
+        flex-direction: column;
+    }
 }

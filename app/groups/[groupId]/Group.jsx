@@ -57,7 +57,9 @@ const GroupIdPage = ({ groupId, deletePost, manage, posts }) => {
             update={manage}
           />
         </section>
-        {posts}
+        <section className={styles.posts}>
+          {posts}
+        </section>
         <section className={styles.groupsection}>
           <h2>Group Admin</h2>
           <div className={styles.optionsbuttons}>

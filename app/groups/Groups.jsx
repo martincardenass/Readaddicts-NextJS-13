@@ -19,7 +19,7 @@ const Groups = () => {
   return (
     <ul>
       {groups?.data
-        ?.filter(group => group.group_Id !== parseInt(groupId))
+        ?.filter((group) => group.group_Id !== parseInt(groupId))
         ?.map((group) => (
           <li key={group.group_Id}>
             <Link href={`/groups/${group.group_Id}`}>
@@ -47,16 +47,8 @@ const Groups = () => {
                   <p>{group.members_Count} members</p>
                   )
                 : (
-                  <p>{group.members_Count} member</p>
+                    group.members_Count === 1 && <p>{group.members_Count} member</p>
                   )}
-              <h3>
-                Group owner:{' '}
-                <span>
-                  <Link href={`/profile/${group?.owner?.username}`}>
-                    {group?.owner?.username}
-                  </Link>
-                </span>
-              </h3>
             </div>
           </li>
         ))}

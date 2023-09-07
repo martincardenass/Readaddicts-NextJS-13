@@ -1,7 +1,6 @@
 .postpage {
     display: flex;
     justify-content: center;
-    width: 100%;
     padding: 0;
     margin: 0;
 }
@@ -223,7 +222,7 @@
 
 .comment {
     display: flex;
-    width: 50%;
+    width: 30%;
     flex-direction: column;
     margin: 0 2.5rem 1rem 0;
 }
@@ -240,4 +239,18 @@
     font-weight: 400;
     color: white;
     user-select: none;
+}
+
+@media screen and (max-width: 1100px) {
+    .postpage {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 735px) {
+    .comment {
+        width: 90%;
+        margin: 0;
+    }
 }

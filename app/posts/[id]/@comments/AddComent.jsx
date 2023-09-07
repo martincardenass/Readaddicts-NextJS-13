@@ -122,7 +122,7 @@ const AddComent = ({ postId, parent, placeholderText }) => {
         <div onClick={handleSubmit}>
           <Button
             text='Comment'
-            backgroundColor='#ed2085'
+            backgroundColor='rgb(0, 210, 255)'
             textColor='white'
             loading={loading}
           />

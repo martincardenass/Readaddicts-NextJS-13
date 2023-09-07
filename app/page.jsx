@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import AddNewPost from './posts/new/page'
 import Login from '@/components/Login/Login'
-import styles from './posts/posts.module.css'
 
 const DynamicPosts = dynamic(() => import('./posts/Posts'), {
   loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
@@ -67,9 +66,7 @@ const HomePage = () => {
     return (
       <>
         <AddNewPost user={user} placeholder='New post' />
-        <article className={styles.postshomepage}>
-          <DynamicPosts posts={posts} postsStatus={postsStatus} />
-        </article>
+        <DynamicPosts posts={posts} postsStatus={postsStatus} />
         <p
           ref={ref}
           style={{

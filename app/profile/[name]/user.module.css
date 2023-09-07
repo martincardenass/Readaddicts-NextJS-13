@@ -20,7 +20,6 @@
 }
 
 .userprofilecontainer {
-    width: 50%;
     margin: 2.5rem 0;
     border-radius: 25px;
     display: flex;
@@ -31,7 +30,6 @@
 
 .userprofilecontainer img {
     border-radius: 50%;
-    /* border: 5px solid rgb(255, 0, 0); */
 }
 
 .usercontainer {

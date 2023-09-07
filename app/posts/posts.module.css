@@ -1,5 +1,4 @@
 .posts {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,20 +11,10 @@
     font-size: 32px;
 }
 
-.postshomepage {
-    margin: 0 auto;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .postsul {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 100%;
-    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,16 +27,15 @@
 
 .posts img {
     border-radius: 50%;
-    margin-right: 0.25rem;
-    padding: 0 1rem;
+    padding: 0 .5rem;
 }
 
 .postsli {
-    width: 100%;
+    width: 100%;;
     max-width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.25);
     margin: 1rem;
-    padding: 2.5rem;
+    padding: 1rem;
     background-color: white;
     border-radius: 25px;
     display: flex;
@@ -89,7 +77,6 @@
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: .5rem;
 }
 
 .usercontainer h4 {
@@ -148,7 +135,7 @@
 
 .images {
     display: flex;
-    width: 100%;
+    margin-bottom: 1rem;
     overflow: hidden;
     padding: 0 2rem;
 }
@@ -186,4 +173,27 @@
     font-weight: 400;
     color: white;
     user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+    .postsul {
+        width: 100%;
+        margin: 0;
+    }
+
+    .postcontentparagraph {
+        margin-bottom: 4rem;
+    }
+
+    .usercontainer {
+        flex-direction: column;
+    }
+
+    .usercontainer h3 {
+        margin: 0;
+    }
+
+    .usercontainer h4 {
+        margin: 0;
+    }
 }

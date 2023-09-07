@@ -52,7 +52,7 @@ const Posts = ({ posts, postsStatus }) => {
                     )}
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
-                <p>{post.content}</p>
+                <p className={styles.postcontentparagraph}>{post.content}</p>
               </Link>
               {post.images.length > 0 && (
                 <DynamicImages
