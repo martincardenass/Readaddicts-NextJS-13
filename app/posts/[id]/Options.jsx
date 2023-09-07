@@ -3,12 +3,12 @@ import { useAuth } from '@/hooks/useAuth'
 import { useFetcher } from '@/hooks/useFetcher'
 import styles from './post.module.css'
 import { useState } from 'react'
-import { useParams } from 'next/navigation'
+// import { useParams } from 'next/navigation'
 
 const Options = ({ update, remove }) => {
-  const params = useParams()
+  // const params = useParams()
 
-  const paramsHaveCommentId = Object.prototype.hasOwnProperty.call(params, 'commentId')
+  // const paramsHaveCommentId = Object.prototype.hasOwnProperty.call(params, 'commentId')
 
   const [toggle, setToggle] = useState({
     update: false,
@@ -22,9 +22,10 @@ const Options = ({ update, remove }) => {
   return (
     user?.username === username && (
       <>
-        <h2 style={{ textAlign: 'center' }}>Manage post</h2>
+
         <section className={styles.options}>
           <section className={styles.optionscontainer}>
+            <h2 style={{ textAlign: 'center', fontWeight: 500, fontSize: '32px' }}>Post options</h2>
             <span
               onClick={() => setToggle({ remove: true })}
               style={{ color: toggle.remove ? 'red' : 'black' }}

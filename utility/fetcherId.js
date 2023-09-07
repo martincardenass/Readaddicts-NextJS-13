@@ -14,11 +14,11 @@ async function fetcherId (endpoint, id, authorization) {
       headers
     })
 
-    const statusCode = res.status
+    if (res.status === 204) return { data: null, status: 204 }
 
-    if (!res.ok) return { data: await res.text(), status: statusCode }
+    if (!res.ok) return { data: await res.text(), status: res.status }
 
-    return { data: await res.json(), status: statusCode }
+    return { data: await res.json(), status: res.status }
   } catch (error) {
     return error.message
   }

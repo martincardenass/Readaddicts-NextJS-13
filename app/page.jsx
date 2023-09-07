@@ -3,7 +3,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useRef, useState } from 'react'
 import AddNewPost from './posts/new/page'
 import Login from '@/components/Login/Login'
-import IntersectedPosts from '@/utility/intersectionObserver'
+import IntersectedContent from '@/utility/intersectionObserver'
 import getPosts from './getPosts'
 
 const HomePage = () => {
@@ -33,7 +33,7 @@ const HomePage = () => {
     return (
       <>
         <AddNewPost user={user} placeholder='New post' />
-        <IntersectedPosts reference={ref} func={fetchPosts} posts={posts} />
+        <IntersectedContent reference={ref} func={fetchPosts} posts={posts} />
         <p
           ref={ref}
           style={{

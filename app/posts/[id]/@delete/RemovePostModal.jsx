@@ -45,10 +45,10 @@ const DeletePost = ({ id }) => {
             loading={loading}
           />
         </div>
-        <Button
+        {/* <Button
           href={`/posts/${id}`}
           text='Cancel'
-        />
+        /> */}
       </div>
     </section>
   )

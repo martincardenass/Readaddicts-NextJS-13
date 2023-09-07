@@ -5,7 +5,11 @@ import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 const DynamicComments = dynamic(() => import('./Comments'), {
-  loading: () => <h3 style={{ textAlign: 'center', fontWeight: 500 }}>Loading comments...</h3>
+  loading: () => (
+    <h3 style={{ textAlign: 'center', fontWeight: 500 }}>
+      Loading comments...
+    </h3>
+  )
 })
 
 const CommentsPage = ({ params }) => {
@@ -16,8 +20,8 @@ const CommentsPage = ({ params }) => {
     fetchComments(id)
   }, [commentPosted])
 
-  if (comments?.status === 404) {
-    return <h4 style={{ fontWeight: 400, textAlign: 'center' }}>{comments?.data}</h4>
+  if (comments?.status === 204) {
+    return <h4 style={{ fontWeight: 400, textAlign: 'center' }}>Seems like this post has no comments yet.</h4>
   }
 
   if (comments?.status === 200) {

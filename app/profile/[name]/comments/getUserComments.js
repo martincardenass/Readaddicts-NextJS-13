@@ -1,17 +1,5 @@
-async function getUserComments (username) {
-  try {
-    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'User/' + username + '/comments')
-    const res = await fetch(url, { cache: 'no-store' })
+import fetchPaginatedPosts from '@/utility/paginatedFetcher'
 
-    const statusCode = res.status
-
-    if (!res.ok) {
-      return { data: await res.text(), status: statusCode }
-    }
-    return { data: await res.json(), status: statusCode }
-  } catch (error) {
-    return error.message
-  }
-}
+const getUserComments = (page, pageSize, urlArgs) => fetchPaginatedPosts(page, pageSize, urlArgs)
 
 export default getUserComments

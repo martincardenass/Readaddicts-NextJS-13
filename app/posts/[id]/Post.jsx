@@ -12,13 +12,12 @@ const Post = ({ id }) => {
   const img = []
   const router = useRouter()
 
-  console.log(post)
-
   useEffect(() => {
     fetchPost(id)
   }, [changed])
 
-  if (post?.data?.images !== undefined) {
+  // * If images in the post and allowed to see the post
+  if (post?.data?.images !== undefined && post?.data?.allowed) {
     for (let i = 0; i < post?.data?.images.length; i++) {
       img.push(
         <Image
@@ -37,8 +36,8 @@ const Post = ({ id }) => {
     }
   }
 
-  return (
-    post?.status === 200 && (
+  if (post?.status === 200 && post?.data?.allowed) {
+    return (
       <article className={styles.post}>
         <section className={styles.postflex}>
           <Link
@@ -113,7 +112,35 @@ const Post = ({ id }) => {
         </section>
       </article>
     )
-  )
+  }
+
+  // * undefined check to fix blinking issue
+  if (!post?.data?.allowed && post?.data?.allowed !== undefined) {
+    return (
+      <article className={styles.post}>
+        <section className={styles.postflex}>
+          <h1>{post?.data?.content}</h1>
+        </section>
+        <section className={styles.textcontainer}>
+          <section className={styles.groupcontainer}>
+            <Image
+              src={post?.data?.group?.group_Picture}
+              alt={post?.data?.group?.group_Name}
+              width={75}
+              height={75}
+            />
+            <h1>
+              This post belongs to{' '}
+              <Link href={`/groups/${post?.data?.group?.group_Id}`}>
+                {post?.data?.group?.group_Name}
+              </Link>{' '}
+              and its only avaliable to its members.
+            </h1>
+          </section>
+        </section>
+      </article>
+    )
+  }
 }
 
 export default Post

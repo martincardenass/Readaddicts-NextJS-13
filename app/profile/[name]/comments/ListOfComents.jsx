@@ -1,45 +1,56 @@
 'use client'
 import getUserComments from './getUserComments'
-import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-
-const DynamicComments = dynamic(
-  () => import('@/app/posts/[id]/@comments/Comments'),
-  {
-    loading: () => (
-      <h2 style={{ textAlign: 'center', fontWeight: 500 }}>
-        Loading comments...
-      </h2>
-    )
-  }
-)
+import { useRef, useState } from 'react'
+import IntersectedContent from '@/utility/intersectionObserver'
 
 const ListOfComents = ({ name }) => {
   const [comments, setComments] = useState({ data: [], status: null })
+  const [page, setPage] = useState(1)
 
-  const fetchData = async () => {
-    const data = await getUserComments(name)
+  const ref = useRef(null)
 
-    setComments({
+  const fetchUserComments = async () => {
+    // * Page is 1, 10 for the number of comments to fetch
+    const data = await getUserComments(page, 10, `User/${name}/comments`)
+
+    setComments((prevComments) => ({
       ...comments,
-      data: data?.data,
+      data: [...prevComments.data, ...data?.data],
       status: data?.status
-    })
+    }))
+
+    setPage(page + 1)
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [name])
-
-  if (comments.status === 200) return <DynamicComments comments={comments?.data} />
-
-  if (comments.status === 404) {
-    return (
-      <h1 style={{ textAlign: 'center', fontWeight: 500 }}>
-        No comments. Yet.
-      </h1>
-    )
-  }
+  return (
+    <>
+      <h2
+        style={{
+          textAlign: 'center',
+          marginBottom: 0,
+          fontWeight: 500,
+          padding: '0 2.5rem'
+        }}
+      >
+        Showing only post comments
+      </h2>
+      <IntersectedContent
+        reference={ref}
+        func={fetchUserComments}
+        comments={comments}
+      />
+      <p
+        ref={ref}
+        style={{
+          textAlign: 'center',
+          marginTop: '-2rem',
+          userSelect: 'none'
+        }}
+      >
+        .
+      </p>
+    </>
+  )
 }
 
 export default ListOfComents

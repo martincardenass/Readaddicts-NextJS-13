@@ -5,7 +5,9 @@ const DynamicPosts = dynamic(() => import('@/app/posts/Posts'), {
   loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
 })
 
-const IntersectedPosts = ({ reference, func, posts }) => {
+const DynamicComments = dynamic(() => import('@/app/posts/[id]/@comments/Comments'))
+
+const IntersectedContent = ({ reference, func, posts, comments }) => {
   const [isIntersecting, setIsIntersecting] = useState(false)
 
   const handleIntersection = (entries) => {
@@ -40,7 +42,9 @@ const IntersectedPosts = ({ reference, func, posts }) => {
     }
   }, [isIntersecting])
 
-  return <DynamicPosts posts={posts?.data} postsStatus={posts?.status} />
+  if (posts) return <DynamicPosts posts={posts?.data} postsStatus={posts?.status} />
+
+  if (comments) return <DynamicComments comments={comments?.data} />
 }
 
-export default IntersectedPosts
+export default IntersectedContent

@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-import IntersectedPosts from '@/utility/intersectionObserver'
+import IntersectedContent from '@/utility/intersectionObserver'
 import getUserPosts from './getUserPosts'
 
 const ListOfPosts = ({ name }) => {
@@ -10,7 +10,7 @@ const ListOfPosts = ({ name }) => {
   const ref = useRef(null)
 
   const fetchUserPosts = async () => {
-    const data = await getUserPosts(page, 10, name)
+    const data = await getUserPosts(page, 10, `User/${name}/posts`)
 
     setPosts((prevPosts) => ({
       ...posts,
@@ -23,7 +23,7 @@ const ListOfPosts = ({ name }) => {
 
   return (
     <>
-      <IntersectedPosts reference={ref} func={fetchUserPosts} posts={posts} />
+      <IntersectedContent reference={ref} func={fetchUserPosts} posts={posts} />
       <p
         ref={ref}
         style={{

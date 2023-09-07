@@ -87,7 +87,9 @@ const UpdatePostModal = ({ id }) => {
             loading={loading}
           />
         </div>
-        <Button href={`/posts/${id}`} text='Cancel' />
+        {/* <div onClick={}>
+          <Button text='Cancel' />
+        </div> */}
       </div>
     </section>
   )

@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
 }
 
 .userprofilecontainer img {
@@ -135,7 +135,6 @@
 }
 
 .usersmenu {
-    border-top: 1px solid rgba(0, 0, 0, 0.25);
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
