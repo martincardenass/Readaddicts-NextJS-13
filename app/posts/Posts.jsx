@@ -19,37 +19,39 @@ const Posts = ({ posts, postsStatus }) => {
                 href={`/profile/${post.author}`}
                 className={styles.usercontainer}
               >
-                {post.profile_Picture
-                  ? (
-                    <Image
-                      src={post.profile_Picture}
-                      alt={post.author}
-                      width={50}
-                      height={50}
-                    />
-                    )
-                  : (
-                    <div className={styles.nouser}>?</div>
-                    )}
-                {post.first_Name && (
-                  <>
-                    <h3>
-                      {post.first_Name}{' '}
-                      {post.last_Name && <>{post.last_Name}</>}
-                    </h3>
-                    <h4>@{post.author}</h4>
-                  </>
-                )}
-                {!post.first_Name && <h3>@{post.author}</h3>}
-                {post.modified !== '0001-01-01T00:00:00'
-                  ? (
-                    <p>
-                      Modified {getTimeAgo(new Date(post.modified).getTime())}
-                    </p>
-                    )
-                  : (
-                    <p>Created {getTimeAgo(new Date(post.created).getTime())}</p>
-                    )}
+                <div className={styles.usercontainerwrapper}>
+                  {post.profile_Picture
+                    ? (
+                      <Image
+                        src={post.profile_Picture}
+                        alt={post.author}
+                        width={50}
+                        height={50}
+                      />
+                      )
+                    : (
+                      <div className={styles.nouser}>?</div>
+                      )}
+                  {post.first_Name && (
+                    <>
+                      <h3>
+                        {post.first_Name}{' '}
+                        {post.last_Name && <>{post.last_Name}</>}
+                      </h3>
+                      <h4>@{post.author}</h4>
+                    </>
+                  )}
+                  {!post.first_Name && <h3>@{post.author}</h3>}
+                  {post.modified !== '0001-01-01T00:00:00'
+                    ? (
+                      <p>
+                        Modified {getTimeAgo(new Date(post.modified).getTime())}
+                      </p>
+                      )
+                    : (
+                      <p>Created {getTimeAgo(new Date(post.created).getTime())}</p>
+                      )}
+                </div>
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
                 <p>{post.content}</p>

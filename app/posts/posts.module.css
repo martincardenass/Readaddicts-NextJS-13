@@ -52,13 +52,22 @@
 }
 
 .usercontainer {
-    background-color: whitesmoke;
-    border-radius: 25px;
-    padding: 1rem;
-    gap: 1rem;
-    white-space: nowrap;
     display: flex;
     align-items: center;
+}
+
+.usercontainerwrapper {
+    display: flex;
+    padding: .75rem 1.5rem;
+    background-color: whitesmoke;
+    border-radius: 25px;
+    align-items: center;
+    gap: .5rem;
+}
+
+.usercontainerwrapper p {
+    color: rgb(43, 43, 43);
+    font-size: 12px;
 }
 
 .usercontainer h4 {
@@ -138,6 +147,8 @@
     border: none;
     align-items: center;
     justify-content: center; 
+    padding: 0;
+    margin: 0;
 }
 
 .images img {
@@ -156,6 +167,12 @@
     font-weight: 400;
     color: white;
     user-select: none;
+}
+
+@media screen and (max-width: 1050px) {
+    .posts ul {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: 768px) {

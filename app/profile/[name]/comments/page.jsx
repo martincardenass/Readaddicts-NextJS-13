@@ -5,6 +5,7 @@ const DynamicListOfComments = dynamic(() => import('./ListOfComents'), {
 })
 const CommentsPage = ({ params }) => {
   const { name } = params
+
   return <DynamicListOfComments name={name} />
 }
 

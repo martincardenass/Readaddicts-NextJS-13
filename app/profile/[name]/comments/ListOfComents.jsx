@@ -1,58 +1,43 @@
 'use client'
 import getUserComments from './getUserComments'
 import { useEffect, useState } from 'react'
-import styles from '../posts/listofposts.module.css'
-import Image from 'next/image'
-import { getTimeAgo } from '@/utility/relativeTime'
+import dynamic from 'next/dynamic'
+
+const DynamicComments = dynamic(
+  () => import('@/app/posts/[id]/@comments/Comments'),
+  {
+    loading: () => (
+      <h2 style={{ textAlign: 'center', fontWeight: 500 }}>
+        Loading comments...
+      </h2>
+    )
+  }
+)
 
 const ListOfComents = ({ name }) => {
-  const [comments, setComments] = useState(null)
-  const [status, setStatus] = useState(null)
+  const [comments, setComments] = useState({ data: [], status: null })
+
+  const fetchData = async () => {
+    const data = await getUserComments(name)
+
+    setComments({
+      ...comments,
+      data: data?.data,
+      status: data?.status
+    })
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserComments(name)
-      setComments(data.data)
-      setStatus(data.status)
-    }
-
     fetchData()
   }, [name])
 
-  if (status === 200) {
-    return (
-      <article className={styles.postslist}>
-        <ul>
-          {comments && comments?.map((comment) => (
-            <li key={comment.post_Id}>
-              <div>
-                <Image src={comment.profile_Picture} alt={comment.author} width={35} height={35} />
-                <h4>@{comment.author}</h4>
-                {comment.modified !== '0001-01-01T00:00:00'
-                  ? (
-                    <span>
-                      Modified {getTimeAgo(new Date(comment.modified).getTime())}
-                    </span>
-                    )
-                  : (
-                    <span>
-                      Created {getTimeAgo(new Date(comment.created).getTime())}
-                    </span>
-                    )}
-              </div>
-              <p>{comment.content}</p>
-            </li>
-          ))}
-        </ul>
-      </article>
-    )
-  }
+  if (comments.status === 200) return <DynamicComments comments={comments?.data} />
 
-  if (status === 404) {
+  if (comments.status === 404) {
     return (
-      <div className={styles.errormessage}>
-        <h1>{comments}</h1>
-      </div>
+      <h1 style={{ textAlign: 'center', fontWeight: 500 }}>
+        No comments. Yet.
+      </h1>
     )
   }
 }

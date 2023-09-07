@@ -1,4 +1,4 @@
-.postpage {
+ .postpage {
     display: flex;
     justify-content: center;
     padding: 0;
@@ -63,6 +63,28 @@
     padding: 1rem 2.5rem;
     font-weight: 400;
     font-size: 16px;
+}
+
+.groupcontainer {
+    padding: .5rem 2rem;
+    border-radius: 25px;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.groupcontainer img {
+    border-radius: 50%;
+}
+
+.groupcontainer h1 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.groupcontainer a {
+    font-weight: 600;
 }
 
 .loadcomments {

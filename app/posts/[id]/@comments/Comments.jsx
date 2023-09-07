@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from './comments.module.css'
 import { getTimeAgo } from '@/utility/relativeTime'
 
-const Comments = ({ comments, id }) => {
+const Comments = ({ comments }) => {
   return (
     <ul>
       {comments?.map(
@@ -51,14 +51,14 @@ const Comments = ({ comments, id }) => {
                 {comment.replies > 0
                   ? (
                     <b>
-                      <Link href={`/posts/${id}/comments/${comment.comment_Id}`}>
+                      <Link href={`/posts/${comment.post_Id}/comments/${comment.comment_Id}`}>
                         {comment.replies} replies
                       </Link>
                     </b>
                     )
                   : (
                     <b>
-                      <Link href={`/posts/${id}/comments/${comment.comment_Id}/reply`}>
+                      <Link href={`/posts/${comment.post_Id}/comments/${comment.comment_Id}/reply`}>
                         Leave a reply
                       </Link>
                     </b>

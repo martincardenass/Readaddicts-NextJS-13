@@ -12,6 +12,8 @@ const Post = ({ id }) => {
   const img = []
   const router = useRouter()
 
+  console.log(post)
+
   useEffect(() => {
     fetchPost(id)
   }, [changed])
@@ -88,6 +90,22 @@ const Post = ({ id }) => {
           </section>
         </section>
         <section className={styles.textcontainer}>
+          {post?.data?.group_Id && (
+            <section className={styles.groupcontainer}>
+              <Image
+                src={post?.data?.group?.group_Picture}
+                alt={post?.data?.group?.group_Name}
+                width={75}
+                height={75}
+              />
+              <h1>
+                This was originally posted on{' '}
+                <Link href={`/groups/${post?.data?.group?.group_Id}`}>
+                  {post?.data?.group?.group_Name}
+                </Link>
+              </h1>
+            </section>
+          )}
           <p>{post?.data?.content}</p>
           {post?.data?.images.length > 0 && (
             <section className={styles.images}>{img}</section>
