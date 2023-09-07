@@ -1,35 +1,41 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState, useRef } from 'react'
+import IntersectedPosts from '@/utility/intersectionObserver'
 import getUserPosts from './getUserPosts'
-import dynamic from 'next/dynamic'
-
-const DynamicPosts = dynamic(() => import('@/app/posts/Posts'), {
-  loading: () => <h1 style={{ textAlign: 'center' }}>Loading...</h1>
-})
 
 const ListOfPosts = ({ name }) => {
-  const [posts, setPosts] = useState({ data: null, status: null })
+  const [posts, setPosts] = useState({ data: [], status: null })
+  const [page, setPage] = useState(1)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserPosts(name)
-      setPosts({ ...posts, data: data.data, status: data.status })
-    }
+  const ref = useRef(null)
 
-    fetchData()
-  }, [name])
+  const fetchUserPosts = async () => {
+    const data = await getUserPosts(page, 10, name)
 
-  if (posts.status === 200) {
-    return <DynamicPosts posts={posts.data} postsStatus={posts.status} />
+    setPosts((prevPosts) => ({
+      ...posts,
+      data: [...prevPosts.data, ...data?.data],
+      status: data?.status
+    }))
+
+    setPage(page + 1)
   }
 
-  if (posts.status === 404) {
-    return (
-      <h1 style={{ textAlign: 'center', fontWeight: 400 }}>
-        {name} has no posts yet
-      </h1>
-    )
-  }
+  return (
+    <>
+      <IntersectedPosts reference={ref} func={fetchUserPosts} posts={posts} />
+      <p
+        ref={ref}
+        style={{
+          textAlign: 'center',
+          marginTop: '-2rem',
+          userSelect: 'none'
+        }}
+      >
+        .
+      </p>
+    </>
+  )
 }
 
 export default ListOfPosts

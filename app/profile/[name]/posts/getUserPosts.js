@@ -1,8 +1,11 @@
-async function getUserPosts (username) {
+async function getUserPosts (page, pageSize, username) {
   try {
     const url = new URL(
       process.env.NEXT_PUBLIC_API_URL + 'User/' + username + '/posts'
     )
+    url.searchParams.set('page', page)
+    url.searchParams.set('pageSize', pageSize)
+
     const res = await fetch(url, { cache: 'no-cache' })
 
     const statusCode = res.status
