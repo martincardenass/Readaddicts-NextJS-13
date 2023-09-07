@@ -12,9 +12,9 @@ const Posts = ({ posts, postsStatus }) => {
   return (
     <section className={styles.posts}>
       {postsStatus === 200 && (
-        <ul className={styles.postsul}>
+        <ul>
           {posts.map((post) => (
-            <li className={styles.postsli} key={post.post_Id}>
+            <li key={post.post_Id}>
               <Link
                 href={`/profile/${post.author}`}
                 className={styles.usercontainer}
@@ -37,7 +37,7 @@ const Posts = ({ posts, postsStatus }) => {
                       {post.first_Name}{' '}
                       {post.last_Name && <>{post.last_Name}</>}
                     </h3>
-                    <h4>(@{post.author})</h4>
+                    <h4>@{post.author}</h4>
                   </>
                 )}
                 {!post.first_Name && <h3>@{post.author}</h3>}
@@ -52,7 +52,7 @@ const Posts = ({ posts, postsStatus }) => {
                     )}
               </Link>
               <Link href={`/posts/${post.post_Id}`}>
-                <p className={styles.postcontentparagraph}>{post.content}</p>
+                <p>{post.content}</p>
               </Link>
               {post.images.length > 0 && (
                 <DynamicImages
