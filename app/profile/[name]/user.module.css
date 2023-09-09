@@ -183,4 +183,8 @@
     .childsection > div {
         align-items: center;
     }
+
+    .userprofile {
+        margin-top: 75px;
+    }
 }

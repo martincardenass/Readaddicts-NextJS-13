@@ -23,37 +23,21 @@ const Button = ({
   // * If props
   useEffect(() => {
     const button = buttonRef.current
-
-    if (duration !== undefined) {
-      button.style.setProperty('--effect-duration', duration)
+    const styleConfig = {
+      '--button-width': width,
+      '--button-height': height,
+      '--button-background-color': backgroundColor,
+      '--button-text-color': textColor,
+      '--effect-color': effectColor,
+      '--effect-width': effectWidth,
+      '--effect-height': effectHeight,
+      '--effect-duration': duration
     }
 
-    if (width !== undefined) {
-      button.style.setProperty('--button-width', width)
-    }
-
-    if (height !== undefined) {
-      button.style.setProperty('--button-height', height)
-    }
-
-    if (backgroundColor !== undefined) {
-      button.style.setProperty('--button-background-color', backgroundColor)
-    }
-
-    if (textColor !== undefined) {
-      button.style.setProperty('--button-text-color', textColor)
-    }
-
-    if (effectColor !== undefined) {
-      button.style.setProperty('--effect-color', effectColor)
-    }
-
-    if (effectWidth !== undefined) {
-      button.style.setProperty('--effect-width', effectWidth)
-    }
-
-    if (effectHeight !== undefined) {
-      button.style.setProperty('--effect-height', effectHeight)
+    for (const [prop, value] of Object.entries(styleConfig)) {
+      if (value !== undefined) {
+        button.style.setProperty(prop, value)
+      }
     }
   }, [
     duration,

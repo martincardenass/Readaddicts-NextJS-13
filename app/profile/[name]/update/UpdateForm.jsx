@@ -1,15 +1,17 @@
 'use client'
 import styles from '@/components/Login/users.module.css'
 import styles2 from './updateprofile.module.css'
-import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
+import ImageUtility from '@/components/ImageUploader/ImageUploader'
 
 const UpdateForm = ({ user, handleUpdate, loading }) => {
   const formRef = useRef(null)
+  const inputRef = useRef(null)
+
   const handleSubmit = useSubmitRef(formRef)
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(user?.profile_Picture || null)
 
   const handleImageSelect = (e) => {
     e.preventDefault()
@@ -21,23 +23,21 @@ const UpdateForm = ({ user, handleUpdate, loading }) => {
 
   return (
     <article className={`${styles.usersmain} ${styles2.updateform}`}>
+      <ImageUtility inputRef={inputRef} imageBlob={image} text='Change your profile picture' />
       <form
         ref={formRef}
         onSubmit={handleUpdate}
         className={styles2.updateformcontainer}
       >
         <section className={styles2.inputfield}>
-          <p>Profile picture:</p>
           <input
             type='file'
             name='imageFile'
             autoComplete='off'
             onChange={handleImageSelect}
+            ref={inputRef}
           />
         </section>
-        {image && (
-          <Image src={image} alt='Uploaded picture' width={150} height={150} />
-        )}
         <section className={styles2.inputfield}>
           <p>Username:</p>
           <input

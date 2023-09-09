@@ -285,3 +285,9 @@
         margin: 0;
     }
 }
+
+@media screen and (max-width: 1050px) {
+    .postpage {
+        margin-top: 75px;
+    }
+}

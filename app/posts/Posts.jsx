@@ -49,7 +49,9 @@ const Posts = ({ posts, postsStatus }) => {
                       </p>
                       )
                     : (
-                      <p>Created {getTimeAgo(new Date(post.created).getTime())}</p>
+                      <p>
+                        Created {getTimeAgo(new Date(post.created).getTime())}
+                      </p>
                       )}
                 </div>
               </Link>

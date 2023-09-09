@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from './navbar.module.css'
 import { useAuth } from '@/hooks/useAuth'
+import Button from '../Button/Button'
 import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
   )
 
   const handleLogout = () => {
-    ['token', 'user'].forEach(item => window.localStorage.removeItem(item))
+    ;['token', 'user'].forEach((item) => window.localStorage.removeItem(item))
     window.location.reload()
   }
 
@@ -127,8 +128,13 @@ const Navbar = () => {
         <section className={styles.overlay}>
           {!user && (
             <section className={styles.useroverlay}>
-              <p>Log in</p>
-              <p>Sign up</p>
+              <Button text='Login' href='/' />
+              <Button
+                text='Sign up'
+                backgroundColor='rgb(0, 210, 255)'
+                textColor='white'
+                href='/register'
+              />
             </section>
           )}
           {user && (
@@ -157,7 +163,9 @@ const Navbar = () => {
                   </span>
                 </section>
               </section>
-              <p className={styles.userlogout}>Log out</p>
+              <div onClick={handleLogout}>
+                <Button text='Logout' backgroundColor='red' textColor='white' />
+              </div>
             </section>
           )}
           <section className={styles.items}>{navItems}</section>

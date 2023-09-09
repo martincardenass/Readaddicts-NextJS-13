@@ -50,6 +50,7 @@ const GroupButtons = ({
         <div onClick={handleJoinClick}>
           <Button
             text={isUserInGroup || isUserOwner ? 'Joined' : 'Join group'}
+            textColor={isUserInGroup ? 'white' : 'black'}
             width='120px'
             backgroundColor={isUserInGroup ? 'rgb(0, 210, 255)' : ''}
             effectWidth='120px'

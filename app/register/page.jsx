@@ -277,7 +277,7 @@ const SignUpPage = () => {
         <div onClick={handleSubmit}>
           <Button
             text='Sign up'
-            backgroundColor='#ed2085'
+            backgroundColor='rgb(0, 210, 255)'
             textColor='white'
             effectColor='rgb(235, 235, 235)'
           />

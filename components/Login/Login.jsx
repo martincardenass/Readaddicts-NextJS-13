@@ -106,7 +106,7 @@ const Login = () => {
           <div onClick={handleSubmitCredentials}>
             <Button
               text='Login'
-              backgroundColor='#ed2085'
+              backgroundColor='rgb(0, 210, 255)'
               textColor='white'
               effectColor='rgb(235, 235, 235)'
             />
@@ -141,7 +141,7 @@ const Login = () => {
       <div onClick={handleSubmit}>
         <Button
           text='Next'
-          backgroundColor='#ed2085'
+          backgroundColor='rgb(0, 210, 255)'
           textColor='white'
           effectColor='rgb(235, 235, 235)'
         />

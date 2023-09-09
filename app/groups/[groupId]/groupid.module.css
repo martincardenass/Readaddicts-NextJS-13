@@ -85,3 +85,9 @@
         width: 100%;
     }
 }
+
+@media screen and (max-width: 1050px) {
+    .group {
+        margin-top: 90px;
+    }
+}

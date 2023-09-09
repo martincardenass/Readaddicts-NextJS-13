@@ -2,15 +2,30 @@
 @keyframes slide-in-right{0%{transform:translateX(200px);opacity:.5}100%{transform:translateX(0);opacity:1}}
 @keyframes slide-in-left{0%{transform:translateX(-200px);opacity:1}100%{transform:translateX(0);opacity:1}}
 
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 .navbar {
+    position: relative;
     background-color: white;
     overflow: hidden;
     height: 75px;
     padding: 0 0 0 1rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
+    z-index: 999999;
 }
 
 .navbar ul, .navbar ul li a {
@@ -54,12 +69,19 @@
     display: none;
 }
 
+.fadeIn {
+    animation: fade-in-bck .6s cubic-bezier(.39,.575,.565,1.000) both;
+}
+
 .overlay {
+    margin-top: 75px;
+    position: fixed;
+    top: 0;
     background-color: rgb(243, 243, 243);
-    height: 100vh;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
     width: 100%;
-    animation:fade-in-bck .6s cubic-bezier(.39,.575,.565,1.000) both;
-    z-index: 9999;
+    animation: slideIn 0.5s forwards;
+    z-index: 1;
 }
 
 .user p {
@@ -82,29 +104,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-    width: 100%;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
     gap: 1rem;
     height: 100px;
-}
-
-.useroverlay p {
-    color: #e782b4;
-    margin: 0;
-    border: 1px solid #ed2085;
-    cursor: pointer;
-    border-radius: 5px;
-    padding: .5rem 1rem;
-}
-
-.useroverlay p:hover, .useroverlay p:focus, .useroverlay p:active {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.userlogout:hover, .userlogout:focus, .userlogout:active {
-    color: white;
-    background-color: #ed2085 !important;
 }
 
 .userinfo {
@@ -143,7 +145,6 @@
     align-items: center;
     padding: 0 1rem;
     height: 75px;
-    /* box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1); */
     background-color: rgba(0, 0, 0, 0.05);
 }
 
@@ -218,6 +219,12 @@
 }
 
 @media screen and (max-width: 1050px) {
+    .navbar {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        right: 0;
+    }
     .links { display: none; }
     .user { display: none; }
     .menu {
