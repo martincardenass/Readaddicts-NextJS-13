@@ -127,7 +127,7 @@ const UpdateForm = ({ user, handleUpdate, loading }) => {
       <div onClick={handleSubmit}>
         <Button
           text='Update'
-          backgroundColor='#ed2085'
+          backgroundColor='rgb(0, 210, 255)'
           textColor='white'
           loading={loading}
         />

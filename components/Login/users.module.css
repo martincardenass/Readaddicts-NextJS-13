@@ -83,3 +83,13 @@
     cursor: pointer;
     border: 5px solid greenyellow;
 }
+
+@media screen and (max-width: 1050px) {
+    .usersmain {
+        margin-top: 75px;
+    }
+
+    .user {
+        margin-top: 75px;
+    }
+}

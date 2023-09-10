@@ -1,23 +1,45 @@
-'use client'
-import { useEffect, useRef } from 'react'
 import styles from './alert.module.css'
 
-const Alert = ({ message, width }) => {
-  const ref = useRef()
+// * props with default values if not provided
+const Alert = ({
+  message,
+  width = '125px',
+  color = 'black',
+  backgroundColor = 'white',
+  boxShadow = `0px 0px 15px 0px ${backgroundColor}`,
+  ready, // * bool. set tiemout back to false to define the duration of the alert. state initial value should be null to avoid slideOut animation on initial render
+  loading = null // * for promises
+}) => {
+  if (loading) {
+    return (
+      <section
+        style={{ width, backgroundColor, boxShadow, color }}
+        className={`${styles.customalert} ${
+          loading ? styles.slideIn : styles.slideOut
+        }`}
+      >
+        <div className={styles.ldsring}>
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </section>
+    )
+  }
 
-  useEffect(() => {
-    const reference = ref.current
-
-    if (width !== undefined) {
-      reference.style.setProperty('--width', width)
-    }
-  }, [width])
-
-  return (
-    <section ref={ref} className={styles.customalert}>
-      <div>{message}</div>
-    </section>
-  )
+  if (ready !== null) {
+    return (
+      <section
+        style={{ width, backgroundColor, boxShadow, color }}
+        className={`${styles.customalert} ${
+          ready === true ? styles.slideIn : ready === false ? styles.slideOut : ''
+        }`}
+      >
+        <span>{message}</span>
+      </section>
+    )
+  }
 }
 
 export default Alert

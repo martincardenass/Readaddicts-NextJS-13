@@ -13,7 +13,7 @@ const UpdateProfile = ({ params }) => {
   const { user } = useAuth()
 
   const [privateUser, setPrivateUser] = useState(null)
-  const [updated, setUpdated] = useState(false)
+  const [updated, setUpdated] = useState(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -33,6 +33,8 @@ const UpdateProfile = ({ params }) => {
     const formData = new FormData(e.target)
     const formDataHasContentChecker = Object.fromEntries(new FormData(e.target))
 
+    // * ...formData.values()
+
     const fieldsHaveChanged = Object.values(formDataHasContentChecker).some(
       (field) => {
         if (typeof field === 'object') {
@@ -51,11 +53,16 @@ const UpdateProfile = ({ params }) => {
 
       if (privateUser?.data?.username === name) {
         const newProfile = await patchProfile(formData)
-        user.profile_Picture = newProfile.data.profile_Picture
-        const updatedUser = JSON.stringify(user)
-        window.localStorage.setItem('user', updatedUser)
-        setUpdated(true)
-        setLoading(false)
+        if (newProfile?.status === 200) {
+          user.profile_Picture = newProfile.data.profile_Picture
+          const updatedUser = JSON.stringify(user)
+          window.localStorage.setItem('user', updatedUser)
+          setUpdated(true)
+          setTimeout(() => {
+            setUpdated(false)
+          }, 4000)
+          setLoading(false)
+        }
       } else {
         setLoading(false)
       }
@@ -74,13 +81,11 @@ const UpdateProfile = ({ params }) => {
           handleUpdate={handleUpdate}
           loading={loading}
         />
-        {updated
-          ? (
-            <Alert message='Your changes have been saved.' width='240px' />
-            )
-          : (
-            <Alert message='Beware! No field changes detected' width='270px' />
-            )}
+        <Alert
+          message='Your changes have been saved.'
+          width='240px'
+          ready={updated}
+        />
       </>
     )
   } else {

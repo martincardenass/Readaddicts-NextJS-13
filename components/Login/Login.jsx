@@ -119,7 +119,7 @@ const Login = () => {
 
   return (
     <main className={styles.usersmain}>
-      <h1>Welcome to Social Stuff</h1>
+      <h1>Welcome to Readaddicts</h1>
       <p>
         Dont have an account?{' '}
         <Link href='register'>

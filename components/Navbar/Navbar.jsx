@@ -11,10 +11,11 @@ import { usePathname } from 'next/navigation'
 const Navbar = () => {
   const pathname = usePathname()
   const { user } = useAuth()
+
   const [toggle, setToggle] = useState(false)
+  const [showOverlay, setShowOverlay] = useState(false) // * Avoid animation on initial render
   const [popup, setPopup] = useState(false)
   const [toggleDoor, setToggleDoor] = useState(false)
-
   const door = (
     <svg
       width='24'
@@ -35,6 +36,18 @@ const Navbar = () => {
     window.location.reload()
   }
 
+  const handleToggle = () => {
+    setToggle(!toggle)
+    // * When toggle its true (overlay open) give time for the slide transition to complete
+    if (toggle) {
+      setTimeout(() => {
+        setShowOverlay(false)
+      }, 250) // * < time needs to be equal to animation duration
+    } else {
+      setShowOverlay(true)
+    }
+  }
+
   const navItems = (
     <ul>
       {navLinks.map((link) => (
@@ -42,6 +55,7 @@ const Navbar = () => {
           <Link
             href={link.href}
             className={pathname === link.href ? styles.active : ''}
+            onClick={() => setToggle(false)} // * Close menu when click on a link
           >
             {link.text}
           </Link>
@@ -54,7 +68,9 @@ const Navbar = () => {
     <>
       <nav className={styles.navbar}>
         <section className={styles.navlinks}>
-          <p className={styles.logo}>Social stuff</p>
+          <p className={styles.logo}>
+            <Link onClick={() => setToggle(false)} href='/'>Readaddicts</Link>
+          </p>
           <section className={styles.links}>{navItems}</section>
         </section>
         <section className={styles.user}>
@@ -113,19 +129,18 @@ const Navbar = () => {
             </aside>
           )}
         </section>
-        <section
-          onClick={() => {
-            setToggle(!toggle)
-          }}
-          className={styles.menu}
-        >
+        <section onClick={handleToggle} className={styles.menu}>
           <span className={toggle ? styles.rotate : ''} />
           <span className={toggle ? styles.opacity0 : ''} />
           <span className={toggle ? styles.rotateminus : ''} />
         </section>
       </nav>
-      {toggle && (
-        <section className={styles.overlay}>
+      {showOverlay && (
+        <section
+          className={`${styles.overlay} ${
+            toggle ? styles.fadeIn : styles.fadeOut
+          }`}
+        >
           {!user && (
             <section className={styles.useroverlay}>
               <Button text='Login' href='/' />
@@ -159,7 +174,7 @@ const Navbar = () => {
                     <span className={styles.uppercase}>{user.username}</span>
                   </span>
                   <span className={styles.openprofile}>
-                    <Link href={`/profile/${user.username}`}>Your profile</Link>
+                    <Link onClick={() => setToggle(false)} href={`/profile/${user.username}`}>Your profile</Link>
                   </span>
                 </section>
               </section>
