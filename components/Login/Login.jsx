@@ -119,7 +119,8 @@ const Login = () => {
 
   return (
     <main className={styles.usersmain}>
-      <h1>Welcome to Readaddicts</h1>
+      <h1>Welcome to Readaddicts.</h1>
+      <h2>Connect with readers, share books, ignite conversations.</h2>
       <p>
         Dont have an account?{' '}
         <Link href='register'>

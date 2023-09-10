@@ -14,13 +14,11 @@ async function createComment (postId, content, parentComment) {
       body: JSON.stringify({ content })
     })
 
-    const statusCode = res.status
-
     if (!res.ok) {
-      return { text: await res.json(), status: statusCode }
+      return { text: await res.json(), status: res.status }
     }
 
-    return { data: await res.json(), status: statusCode }
+    return { data: await res.json(), status: res.status }
   } catch (error) {
     return error.message
   }

@@ -5,6 +5,11 @@
     justify-content: center;
 }
 
+.usersmain h2 {
+    font-weight: 400;
+    text-align: center;
+}
+
 .usersmain input[type="text"], .userbanner input[type="password"], .usersmain input[type="password"]  {
     padding: .5rem;
     background-color: whitesmoke;
@@ -76,12 +81,7 @@
 
 .userbanner img {
     border-radius: 50%;
-    border: 5px solid rgb(235, 235, 235);
-}
-
-.userbanner img:hover {
-    cursor: pointer;
-    border: 5px solid greenyellow;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0, .1);
 }
 
 @media screen and (max-width: 1050px) {

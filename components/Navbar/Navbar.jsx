@@ -143,13 +143,16 @@ const Navbar = () => {
         >
           {!user && (
             <section className={styles.useroverlay}>
-              <Button text='Login' href='/' />
-              <Button
-                text='Sign up'
-                backgroundColor='rgb(0, 210, 255)'
-                textColor='white'
-                href='/register'
-              />
+              <p>You are not logged in.</p>
+              <div onClick={() => setToggle(false)}>
+                <Button text='Login' href='/' />
+                <Button
+                  text='Sign up'
+                  backgroundColor='rgb(0, 210, 255)'
+                  textColor='white'
+                  href='/register'
+                />
+              </div>
             </section>
           )}
           {user && (
@@ -177,10 +180,10 @@ const Navbar = () => {
                     <Link onClick={() => setToggle(false)} href={`/profile/${user.username}`}>Your profile</Link>
                   </span>
                 </section>
+                <div onClick={handleLogout}>
+                  <Button text='Logout' backgroundColor='red' textColor='white' />
+                </div>
               </section>
-              <div onClick={handleLogout}>
-                <Button text='Logout' backgroundColor='red' textColor='white' />
-              </div>
             </section>
           )}
           <section className={styles.items}>{navItems}</section>

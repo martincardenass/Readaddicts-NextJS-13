@@ -32,7 +32,7 @@ const HomePage = () => {
   if (user) {
     return (
       <>
-        <AddNewPost user={user} placeholder='New post' />
+        <AddNewPost user={user} placeholder={`Post something, ${user?.username}`} />
         <IntersectedContent reference={ref} func={fetchPosts} posts={posts} />
         <p
           ref={ref}
