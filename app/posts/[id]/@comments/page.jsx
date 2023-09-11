@@ -13,12 +13,12 @@ const DynamicComments = dynamic(() => import('./Comments'), {
 })
 
 const CommentsPage = ({ params }) => {
-  const { fetchComments, comments, commentPosted } = useFetcher()
+  const { fetchComments, comments } = useFetcher()
   const { id } = params
 
   useEffect(() => {
     fetchComments(id)
-  }, [commentPosted])
+  }, [])
 
   if (comments?.status === 204) {
     return <h4 style={{ fontWeight: 400, textAlign: 'center' }}>Seems like this post has no comments yet.</h4>

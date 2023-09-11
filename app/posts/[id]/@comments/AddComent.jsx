@@ -4,18 +4,23 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './comments.module.css'
 import Image from 'next/image'
 import { useSubmitRef } from '@/utility/formSubmitRef'
-import { useFetcher } from '@/context/useFetcher'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/Button/Button'
 import createComment from './postComment'
+import Alert from '@/components/Alert/Alert'
 
 const AddComent = ({ postId, parent, placeholderText }) => {
   const [characters, setCharacters] = useState(0)
   const [newComment, setNewComment] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [msg, setMsg] = useState(null)
+  const [msg, setMsg] = useState({
+    text: null,
+    status: null,
+    backgroundColor: null,
+    color: null,
+    width: null
+  })
 
-  const { updateCommentPostedResponse, commentPosted } = useFetcher()
   const { user } = useAuth()
   const formRef = useRef(null)
   const router = useRouter()
@@ -33,37 +38,79 @@ const AddComent = ({ postId, parent, placeholderText }) => {
         const data = await createComment(postId, formData.content, parent)
 
         if (data?.status === 200) {
-          updateCommentPostedResponse(true)
           setNewComment(data)
-          setMsg('Comment posted')
+          setLoading(false)
+          setMsg({
+            ...msg,
+            text: 'Comment posted',
+            backgroundColor: 'white',
+            width: '125px',
+            color: 'black',
+            status: true
+          })
+
+          setTimeout(() => {
+            setMsg((prevMsg) => ({
+              ...prevMsg,
+              status: false
+            }))
+          }, 5000)
         }
 
         if (data?.status === undefined) {
-          setMsg('Something went wrong')
+          setLoading(false)
           setTimeout(() => {
+            setMsg({
+              ...msg,
+              text: 'Something went wrong',
+              backgroundColor: 'red',
+              color: 'white',
+              width: '150px',
+              status: false
+            })
             ;['token', 'user'].forEach((item) =>
               window.localStorage.removeItem(item)
             )
             window.location.reload()
-          }, 2000)
+          }, 500)
         }
       } else {
-        setMsg('Min 8 characters')
+        setLoading(false)
+        setMsg({
+          ...msg,
+          text: 'Comment must be at least 8 characters long.',
+          backgroundColor: 'red',
+          color: 'white',
+          width: '325px',
+          status: true
+        })
+
+        setTimeout(() => {
+          setMsg((prevMsg) => ({
+            ...prevMsg,
+            status: false
+          }))
+        }, 5000)
       }
     } else {
-      setMsg('Comment cannot be empty')
+      setLoading(false)
+      setMsg({
+        ...msg,
+        text: 'Comment cannot be empty.',
+        backgroundColor: 'red',
+        color: 'white',
+        width: '210px',
+        status: true
+      })
+
+      setTimeout(() => {
+        setMsg((prevMsg) => ({
+          ...prevMsg,
+          status: false
+        }))
+      }, 5000)
     }
   }
-
-  useEffect(() => {
-    if (newComment?.status === 200) {
-      setLoading(false)
-      setTimeout(() => {
-        updateCommentPostedResponse(false)
-        setMsg('')
-      }, 2000)
-    }
-  }, [newComment, commentPosted])
 
   useEffect(() => {
     const status = newComment?.status
@@ -107,13 +154,6 @@ const AddComent = ({ postId, parent, placeholderText }) => {
             />
           </form>
           <div>
-            <p
-              style={{
-                color: msg === 'Min 8 characters' ? 'red' : 'black'
-              }}
-            >
-              {msg}
-            </p>
             <p style={{ color: characters === 255 ? 'red' : 'black' }}>
               {characters}/255
             </p>
@@ -127,6 +167,13 @@ const AddComent = ({ postId, parent, placeholderText }) => {
             loading={loading}
           />
         </div>
+        <Alert
+          message={msg.text}
+          ready={msg.status}
+          backgroundColor={msg.backgroundColor}
+          color={msg.color}
+          width={msg.width}
+        />
       </section>
     </section>
   )

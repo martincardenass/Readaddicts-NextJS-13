@@ -1,11 +1,12 @@
 'use client'
 import styles from './newpost.module.css'
 import Image from 'next/image'
-import { useReducer, useRef } from 'react'
+import { useEffect, useReducer, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import createPost from './createPost'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
+import Alert from '@/components/Alert/Alert'
 
 const ACTIONS = {
   HANDLE_POST_DATA: 'HANDLE_POST_DATA',
@@ -80,7 +81,13 @@ const postReducer = (newPost, action) => {
     case ACTIONS.SET_MSG: {
       return {
         ...newPost,
-        msg: payload
+        msg: {
+          text: payload.text,
+          status: payload.status,
+          backgroundColor: payload.backgroundColor,
+          color: payload.color,
+          width: payload.width
+        }
       }
     }
 
@@ -97,7 +104,13 @@ const initialState = {
   characters: 0,
   images: [],
   done: false,
-  msg: null,
+  msg: {
+    text: null,
+    status: null,
+    backgroundColor: null,
+    color: null,
+    width: null
+  },
   loading: false
 }
 
@@ -135,18 +148,67 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
 
         if (data.status === 200) {
           router.push(`/posts/${data.data}`)
+          dispatch({
+            type: ACTIONS.SET_MSG,
+            payload: {
+              text: 'Post created successfully',
+              status: true,
+              backgroundColor: 'rgb(0, 210, 255)',
+              width: '200px'
+            }
+          })
         }
       } else {
         dispatch({
           type: ACTIONS.SET_MSG,
-          payload: 'Please provide at least 8 characters'
+          payload: {
+            text: 'Please provide at least 8 characters',
+            status: true,
+            backgroundColor: 'red',
+            width: '275px'
+          }
         })
+
+        setTimeout(() => {
+          dispatch({
+            type: ACTIONS.SET_MSG,
+            payload: {
+              text: 'Please provide at least 8 characters',
+              status: false,
+              backgroundColor: 'red',
+              width: '275px'
+            }
+          })
+        }, 5000)
       }
     } else {
-      dispatch({ type: ACTIONS.SET_MSG, payload: 'Your post cannot be empty' })
+      dispatch({
+        type: ACTIONS.SET_MSG,
+        payload: {
+          text: 'Your post cannot be empty.',
+          status: true,
+          backgroundColor: 'red',
+          width: '225px'
+        }
+      })
+
+      setTimeout(() => {
+        dispatch({
+          type: ACTIONS.SET_MSG,
+          payload: {
+            text: 'Your post cannot be empty.',
+            status: false,
+            backgroundColor: 'red',
+            width: '225px'
+          }
+        })
+      }, 5000)
     }
   }
 
+  useEffect(() => {
+    console.log(newPost.msg)
+  }, [newPost.msg])
   return (
     <main className={newPost.done ? styles.newpostdenied : styles.newpost}>
       <section className={styles.newpostcontainer}>
@@ -196,17 +258,8 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
               <div>
                 <p
                   style={{
-                    color:
-                    newPost.msg === 'Your post cannot be empty' ||
-                    newPost.msg === 'Please provide at least 8 characters'
-                      ? 'red'
-                      : 'black'
+                    color: newPost.characters === 255 ? 'red' : 'black'
                   }}
-                >
-                  {newPost.msg}
-                </p>
-                <p
-                  style={{ color: newPost.characters === 255 ? 'red' : 'black' }}
                 >
                   {newPost.characters}/255
                 </p>
@@ -253,9 +306,18 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
             </section>
             )
           : (
-            <p style={{ marginBottom: 0 }}>Select multiple images with CTRL + Click</p>
+            <p style={{ marginBottom: 0 }}>
+              Select multiple images with CTRL + Click
+            </p>
             )}
       </section>
+      <Alert
+        message={newPost.msg.text}
+        ready={newPost.msg.status}
+        backgroundColor={newPost.msg.backgroundColor}
+        color={newPost.msg.color}
+        width={newPost.msg.width}
+      />
     </main>
   )
 }

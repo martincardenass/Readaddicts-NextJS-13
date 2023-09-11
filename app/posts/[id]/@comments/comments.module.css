@@ -54,10 +54,9 @@
 .commentinput div {
     width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
     margin: 0;
     padding: 0;
-    justify-content: space-between;
 }
 
 .commentinput div p {

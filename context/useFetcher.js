@@ -22,7 +22,6 @@ const initialState = {
 
   // * Comments
   comments: {},
-  commentPosted: false,
   comment: null,
 
   // * Groups
@@ -39,7 +38,6 @@ const ACTIONS = {
   ALTER_CHANGE: 'ALTER_CHANGE',
   FETCH_COMMENTS: 'FETCH_COMMENTS',
   FETCH_COMMENT: 'FETCH_COMMENT',
-  UPDATE_COMMENT_POSTED: 'UPDATE_COMMENT_POSTED',
   UPDATE_GROUP_CHANGED: 'UPDATE_GROUP_CHANGED',
   UPDATE_MESSAGES_CHANGED: 'UPDATE_MESSAGES_CHANGED',
   UPDATE_POST_CHANGED: 'UPDATE_POST_CHANGED',
@@ -144,15 +142,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         comments: actionPayload
-      }
-    }
-
-    case ACTIONS.UPDATE_COMMENT_POSTED: {
-      const data = actionPayload
-
-      return {
-        ...state,
-        commentPosted: data
       }
     }
 
@@ -264,10 +253,6 @@ export const Fetcher = ({ children }) => {
     dispatch({ type: ACTIONS.FETCH_COMMENT, payload: data })
   }
 
-  const updateCommentPostedResponse = (status) => {
-    dispatch({ type: ACTIONS.UPDATE_COMMENT_POSTED, payload: status })
-  }
-
   // * Groups
   const fetchGroupById = async (groupId) => {
     const data = await getGroup(groupId)
@@ -326,7 +311,6 @@ export const Fetcher = ({ children }) => {
         msg: state.msg,
         changed: state.changed,
         comments: state.comments,
-        commentPosted: state.commentPosted,
         comment: state.comment,
         group: state.group,
         groups: state.groups,
@@ -339,7 +323,6 @@ export const Fetcher = ({ children }) => {
         patchPost,
         fetchComments,
         fetchComment,
-        updateCommentPostedResponse,
         updateGroupChanged,
         updatePostChanged,
         joinGroup,
