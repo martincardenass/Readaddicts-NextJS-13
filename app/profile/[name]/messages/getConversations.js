@@ -1,6 +1,8 @@
-async function getConversation (receiver, sender) {
+async function getConversation (page, pageSize, receiver, sender) {
   try {
     const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'Message/messages/conversation')
+    url.searchParams.set('page', page)
+    url.searchParams.set('pageSize', pageSize)
     url.searchParams.set('receiver', receiver)
     url.searchParams.set('sender', sender)
 

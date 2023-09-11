@@ -10,6 +10,24 @@
     gap: 2.5rem;
 }
 
+.scrolleable {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.scrolleable span {
+    text-align: center;
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+    color: rgb(66, 66, 66);
+    cursor: pointer;
+    user-select: none;
+}
+
 .messages ul {
     padding-right: 1.5rem;
 }
@@ -63,18 +81,16 @@
 }
 
 .conversation ul {
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     background-color: white;
-    border-radius: 25px;
     width: 100%;
 }
 
 .conversation li {
-    padding: 0 3.5rem;
+    padding: 0 1rem;
     gap: 1rem;
     display: flex;
     flex-direction: column;

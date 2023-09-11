@@ -9,6 +9,7 @@ import getComments from '@/app/posts/[id]/@comments/getComments'
 import getComment from '@/app/posts/[id]/@comments/getComment'
 import errorTextReplace from '@/utility/errorTextReplace'
 import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
+import getConversation from '@/app/profile/[name]/messages/getConversations'
 
 const FetcherContext = createContext(null)
 
@@ -29,27 +30,75 @@ const initialState = {
   group: {},
   groups: {},
   groupChanged: false,
-  groupLoading: false
+  groupLoading: false,
+
+  // * Messages
+  messages: {
+    data: [],
+    status: null
+  },
+  messagesPage: 1,
+  initialMessageFetch: false,
+  messagesChanged: false
+}
+
+const ACTIONS = {
+  FETCH_POST: 'FETCH_POST',
+  FETCH_GROUP_POSTS: 'FETCH_GROUP_POSTS',
+  PATCH_POST: 'PATCH_POST',
+  ALTER_CHANGE: 'ALTER_CHANGE',
+  FETCH_COMMENTS: 'FETCH_COMMENTS',
+  FETCH_COMMENT: 'FETCH_COMMENT',
+  UPDATE_COMMENT_POSTED: 'UPDATE_COMMENT_POSTED',
+  UPDATE_GROUP_CHANGED: 'UPDATE_GROUP_CHANGED',
+  UPDATE_MESSAGES_CHANGED: 'UPDATE_MESSAGES_CHANGED',
+  UPDATE_POST_CHANGED: 'UPDATE_POST_CHANGED',
+  FETCH_GROUP: 'FETCH_GROUP',
+  FETCH_GROUPS: 'FETCH_GROUPS',
+  ALTER_GROUP_LOADING: 'ALTER_GROUP_LOADING',
+  ALERT_GROUP_CHANGED: 'ALERT_GROUP_CHANGED',
+  GROUP_JOIN_LEAVE_STUFF: 'GROUP_JOIN_LEAVE_STUFF',
+  FETCH_USERS_CONVERSATION: 'FETCH_USERS_CONVERSATION'
 }
 
 const reducer = (state, action) => {
   const { type: actionType, payload: actionPayload } = action
   switch (actionType) {
-    case 'FETCH_POST': {
+    case ACTIONS.FETCH_POST: {
       return {
         ...state,
         post: actionPayload
       }
     }
 
-    case 'FETCH_GROUP_POSTS': {
+    case ACTIONS.FETCH_GROUP_POSTS: {
       return {
         ...state,
         groupPosts: actionPayload
       }
     }
 
-    case 'PATCH_POST': {
+    case ACTIONS.FETCH_USERS_CONVERSATION: {
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          data: [...actionPayload?.data, ...state.messages.data],
+          status: actionPayload?.status
+        },
+        messagesPage: state.messagesPage + 1,
+        initialMessageFetch: true
+      }
+    }
+
+    case ACTIONS.UPDATE_MESSAGES_CHANGED: {
+      return {
+        ...state,
+        messagesChanged: actionPayload
+      }
+    }
+
+    case ACTIONS.PATCH_POST: {
       const data = actionPayload
 
       if (data.status === 200) {
@@ -94,21 +143,21 @@ const reducer = (state, action) => {
       }
     }
 
-    case 'SET_CHANGE_FALSE': {
+    case ACTIONS.ALTER_CHANGE: {
       return {
         ...state,
-        changed: false
+        changed: actionPayload
       }
     }
 
-    case 'FETCH_COMMENTS': {
+    case ACTIONS.FETCH_COMMENTS: {
       return {
         ...state,
         comments: actionPayload
       }
     }
 
-    case 'UPDATE_COMMENT_POSTED': {
+    case ACTIONS.UPDATE_COMMENT_POSTED: {
       const data = actionPayload
 
       return {
@@ -117,7 +166,7 @@ const reducer = (state, action) => {
       }
     }
 
-    case 'UPDATE_GROUP_CHANGED': {
+    case ACTIONS.UPDATE_GROUP_CHANGED: {
       const data = actionPayload
 
       return {
@@ -126,49 +175,42 @@ const reducer = (state, action) => {
       }
     }
 
-    case 'UPDATE_POST_CHANGED': {
+    case ACTIONS.UPDATE_POST_CHANGED: {
       return {
         ...state,
         changed: actionPayload
       }
     }
 
-    case 'SET_COMMENT_POSTED_FALSE': {
-      return {
-        ...state,
-        commentPosted: false
-      }
-    }
-
-    case 'FETCH_COMMENT': {
+    case ACTIONS.FETCH_COMMENT: {
       return {
         ...state,
         comment: actionPayload
       }
     }
 
-    case 'FETCH_GROUP': {
+    case ACTIONS.FETCH_GROUP: {
       return {
         ...state,
         group: actionPayload
       }
     }
 
-    case 'FETCH_GROUPS': {
+    case ACTIONS.FETCH_GROUPS: {
       return {
         ...state,
         groups: actionPayload
       }
     }
 
-    case 'SET_GROUP_CHANGED_FALSE': {
+    case ACTIONS.ALERT_GROUP_CHANGED: {
       return {
         ...state,
-        groupChanged: false
+        groupChanged: actionPayload
       }
     }
 
-    case 'GROUP_JOIN_LEAVE_STUFF': {
+    case ACTIONS.GROUP_JOIN_LEAVE_STUFF: {
       const data = actionPayload
 
       if (data.status === 200) {
@@ -184,17 +226,10 @@ const reducer = (state, action) => {
       }
     }
 
-    case 'SET_GROUP_LOADING_TRUE': {
+    case ACTIONS.ALTER_GROUP_LOADING: {
       return {
         ...state,
-        groupLoading: true
-      }
-    }
-
-    case 'SET_GROUP_LOADING_FALSE': {
-      return {
-        ...state,
-        groupLoading: false
+        groupLoading: actionPayload
       }
     }
   }
@@ -206,119 +241,104 @@ export const Fetcher = ({ children }) => {
 
   // * Posts
   const fetchPost = async (id) => {
-    try {
-      const fetched = await getPost(id)
-      dispatch({ type: 'FETCH_POST', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getPost(id)
+    dispatch({ type: ACTIONS.FETCH_POST, payload: data })
   }
 
   const fetchGroupPosts = async (groupId) => {
-    try {
-      const fetched = await getGroupPosts(groupId)
-      dispatch({ type: 'FETCH_GROUP_POSTS', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getGroupPosts(groupId)
+    dispatch({ type: ACTIONS.FETCH_GROUP_POSTS, payload: data })
   }
 
   const patchPost = async (id, content) => {
-    try {
-      const data = await updatePost(id, content)
-
-      dispatch({ type: 'PATCH_POST', payload: data })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await updatePost(id, content)
+    dispatch({ type: ACTIONS.PATCH_POST, payload: data })
 
     setTimeout(() => {
-      dispatch({ type: 'SET_CHANGE_FALSE' })
+      dispatch({ type: ACTIONS.ALTER_CHANGE, payload: false })
     }, 3000)
+  }
+
+  const updatePostChanged = (status) => {
+    dispatch({ type: ACTIONS.UPDATE_POST_CHANGED, payload: status })
   }
 
   // * Comments
   const fetchComments = async (postId) => {
-    try {
-      const fetched = await getComments(postId)
-      dispatch({ type: 'FETCH_COMMENTS', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getComments(postId)
+    dispatch({ type: ACTIONS.FETCH_COMMENTS, payload: data })
   }
 
   const fetchComment = async (commentId) => {
-    try {
-      const fetched = await getComment(commentId)
-      dispatch({ type: 'FETCH_COMMENT', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getComment(commentId)
+    dispatch({ type: ACTIONS.FETCH_COMMENT, payload: data })
   }
 
   const updateCommentPostedResponse = (status) => {
-    dispatch({ type: 'UPDATE_COMMENT_POSTED', payload: status })
-  }
-
-  const updateGroupChanged = (status, timeout) => {
-    dispatch({ type: 'UPDATE_GROUP_CHANGED', payload: status })
-
-    setTimeout(() => {
-      dispatch({ type: 'UPDATE_GROUP_CHANGED', payload: !status })
-    }, timeout)
-  }
-
-  const updatePostChanged = (status) => {
-    dispatch({ type: 'UPDATE_POST_CHANGED', payload: status })
+    dispatch({ type: ACTIONS.UPDATE_COMMENT_POSTED, payload: status })
   }
 
   // * Groups
   const fetchGroupById = async (groupId) => {
-    try {
-      const fetched = await getGroup(groupId)
-      dispatch({ type: 'FETCH_GROUP', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getGroup(groupId)
+    dispatch({ type: ACTIONS.FETCH_GROUP, payload: data })
   }
 
   const fetchAllGroups = async () => {
-    try {
-      const fetched = await getGroups()
-      dispatch({ type: 'FETCH_GROUPS', payload: fetched })
-    } catch (error) {
-      console.error(error)
-    }
+    const data = await getGroups()
+    dispatch({ type: ACTIONS.FETCH_GROUPS, payload: data })
   }
 
   const joinGroup = async (groupId) => {
     try {
-      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
+      dispatch({ type: ACTIONS.ALTER_GROUP_LOADING, payload: true })
       const join = await groupJoinLeave(groupId, 'POST')
-      dispatch({ type: 'GROUP_JOIN_LEAVE_STUFF', payload: join })
+      dispatch({ type: ACTIONS.GROUP_JOIN_LEAVE_STUFF, payload: join })
     } catch (error) {
       console.error(error)
     } finally {
-      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
+      dispatch({ type: ACTIONS.ALTER_GROUP_LOADING, payload: false })
       setTimeout(() => {
-        dispatch({ type: 'SET_GROUP_CHANGED_FALSE' })
+        dispatch({ type: ACTIONS.ALERT_GROUP_CHANGED, payload: false })
       }, 1000)
     }
   }
 
   const leaveGroup = async (groupId) => {
     try {
-      dispatch({ type: 'SET_GROUP_LOADING_TRUE' })
+      dispatch({ type: ACTIONS.ALTER_GROUP_LOADING, payload: true })
       const leave = await groupJoinLeave(groupId, 'DELETE')
-      dispatch({ type: 'GROUP_JOIN_LEAVE_STUFF', payload: leave })
+      dispatch({ type: ACTIONS.GROUP_JOIN_LEAVE_STUFF, payload: leave })
     } catch (error) {
       console.error(error)
     } finally {
-      dispatch({ type: 'SET_GROUP_LOADING_FALSE' })
+      dispatch({ type: ACTIONS.ALTER_GROUP_LOADING, payload: false })
       setTimeout(() => {
-        dispatch({ type: 'SET_GROUP_CHANGED_FALSE' })
+        dispatch({ type: ACTIONS.ALERT_GROUP_CHANGED, payload: false })
       }, 1000)
     }
+  }
+
+  const updateGroupChanged = (status, timeout) => {
+    dispatch({ type: ACTIONS.UPDATE_GROUP_CHANGED, payload: status })
+
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.UPDATE_GROUP_CHANGED, payload: !status })
+    }, timeout)
+  }
+
+  // * Messages working still on this
+  const fetchMessages = async (page, pageSizem, name, username) => {
+    const data = await getConversation(page, pageSizem, name, username)
+    dispatch({ type: ACTIONS.FETCH_USERS_CONVERSATION, payload: data })
+  }
+
+  const updatedMessagesChanged = (status, timeout) => {
+    dispatch({ type: ACTIONS.UPDATE_MESSAGES_CHANGED, payload: status })
+
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.UPDATE_MESSAGES_CHANGED, payload: !status })
+    }, timeout)
   }
 
   return (
@@ -336,6 +356,10 @@ export const Fetcher = ({ children }) => {
         groups: state.groups,
         groupChanged: state.groupChanged,
         groupLoading: state.groupLoading,
+        messages: state.messages,
+        messagesChanged: state.messagesChanged,
+        messagesPage: state.messagesPage,
+        initialMessageFetch: state.initialMessageFetch,
         fetchPost,
         fetchGroupById,
         fetchGroupPosts,
@@ -347,7 +371,9 @@ export const Fetcher = ({ children }) => {
         updateGroupChanged,
         updatePostChanged,
         joinGroup,
-        leaveGroup
+        leaveGroup,
+        fetchMessages,
+        updatedMessagesChanged
       }}
     >
       {children}

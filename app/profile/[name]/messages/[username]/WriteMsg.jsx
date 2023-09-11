@@ -8,7 +8,7 @@ import { useSubmitRef } from '@/utility/formSubmitRef'
 import Alert from '@/components/Alert/Alert'
 
 // * receiver its the person we are chatting with
-const WriteMsg = ({ receiver }) => {
+const WriteMsg = ({ receiver, updatedMessagesChanged }) => {
   const formRef = useRef()
   const { user } = useAuth()
 
@@ -27,6 +27,7 @@ const WriteMsg = ({ receiver }) => {
       const res = await sendMessage(receiver, formData)
       if (res.status === 204) {
         setSent(true)
+        updatedMessagesChanged(true, 1000)
         setTimeout(() => {
           setSent(false)
         }, 2000)

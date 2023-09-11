@@ -38,6 +38,7 @@ const MessagesPage = (props) => {
       </ul>
       {props.children}
     </section>
+
   )
 }
 

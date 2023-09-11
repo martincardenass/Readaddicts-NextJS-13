@@ -7,7 +7,9 @@ const DynamicPosts = dynamic(() => import('@/app/posts/Posts'), {
 
 const DynamicComments = dynamic(() => import('@/app/posts/[id]/@comments/Comments'))
 
-const IntersectedContent = ({ reference, func, posts, comments }) => {
+const DynamicMessages = dynamic(() => import('@/app/profile/[name]/messages/[username]/Messages'))
+
+const IntersectedContent = ({ reference, func, posts, comments, messages }) => {
   const [isIntersecting, setIsIntersecting] = useState(false)
 
   const handleIntersection = (entries) => {
@@ -45,6 +47,8 @@ const IntersectedContent = ({ reference, func, posts, comments }) => {
   if (posts) return <DynamicPosts posts={posts?.data} postsStatus={posts?.status} />
 
   if (comments) return <DynamicComments comments={comments?.data} />
+
+  if (messages) return <DynamicMessages messages={messages} />
 }
 
 export default IntersectedContent
