@@ -1,5 +1,5 @@
 'use client'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import { useRef, useState } from 'react'
 import AddNewPost from './posts/new/page'
 import Login from '@/components/Login/Login'

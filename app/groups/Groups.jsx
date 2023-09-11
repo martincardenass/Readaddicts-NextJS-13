@@ -2,7 +2,7 @@
 import styles from './group.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import { useEffect } from 'react'
 import { useParams } from 'next/navigation'
 

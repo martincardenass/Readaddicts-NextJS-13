@@ -1,6 +1,6 @@
 'use client'
 import styles from '@/app/groups/[groupId]/@delete/deletegroup.module.css'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import { useReducer, useRef, useState } from 'react'
 import ImageUtility from '@/components/ImageUploader/ImageUploader'
 import formValidation from '@/utility/formValidation'

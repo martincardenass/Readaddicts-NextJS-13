@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import styles from './posts.module.css'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import Link from 'next/link'
 
 const Menu = ({ username, postId }) => {

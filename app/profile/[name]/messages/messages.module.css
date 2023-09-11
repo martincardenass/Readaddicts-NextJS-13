@@ -24,8 +24,6 @@
     padding: 1rem;
     justify-content: center;
     color: rgb(66, 66, 66);
-    cursor: pointer;
-    user-select: none;
 }
 
 .messages ul {

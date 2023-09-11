@@ -2,7 +2,7 @@
 import styles from './post.module.css'
 import { usePathname } from 'next/navigation'
 import Button from '@/components/Button/Button'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 
 const LoadComments = ({ id }) => {
   const { post } = useFetcher()

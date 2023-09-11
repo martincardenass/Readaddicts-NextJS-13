@@ -1,8 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar/Navbar'
-import { AuthProvider } from '@/hooks/useAuth'
-import { Fetcher } from '@/hooks/useFetcher'
+import { AuthProvider } from '@/context/useAuth'
+import { Fetcher } from '@/context/useFetcher'
 
 const inter = Inter({
   subsets: ['latin'],

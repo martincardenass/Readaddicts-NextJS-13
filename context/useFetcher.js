@@ -9,7 +9,6 @@ import getComments from '@/app/posts/[id]/@comments/getComments'
 import getComment from '@/app/posts/[id]/@comments/getComment'
 import errorTextReplace from '@/utility/errorTextReplace'
 import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
-import getConversation from '@/app/profile/[name]/messages/getConversations'
 
 const FetcherContext = createContext(null)
 
@@ -30,16 +29,7 @@ const initialState = {
   group: {},
   groups: {},
   groupChanged: false,
-  groupLoading: false,
-
-  // * Messages
-  messages: {
-    data: [],
-    status: null
-  },
-  messagesPage: 1,
-  initialMessageFetch: false,
-  messagesChanged: false
+  groupLoading: false
 }
 
 const ACTIONS = {
@@ -327,20 +317,6 @@ export const Fetcher = ({ children }) => {
     }, timeout)
   }
 
-  // * Messages working still on this
-  const fetchMessages = async (page, pageSizem, name, username) => {
-    const data = await getConversation(page, pageSizem, name, username)
-    dispatch({ type: ACTIONS.FETCH_USERS_CONVERSATION, payload: data })
-  }
-
-  const updatedMessagesChanged = (status, timeout) => {
-    dispatch({ type: ACTIONS.UPDATE_MESSAGES_CHANGED, payload: status })
-
-    setTimeout(() => {
-      dispatch({ type: ACTIONS.UPDATE_MESSAGES_CHANGED, payload: !status })
-    }, timeout)
-  }
-
   return (
     <FetcherContext.Provider
       value={{
@@ -356,10 +332,6 @@ export const Fetcher = ({ children }) => {
         groups: state.groups,
         groupChanged: state.groupChanged,
         groupLoading: state.groupLoading,
-        messages: state.messages,
-        messagesChanged: state.messagesChanged,
-        messagesPage: state.messagesPage,
-        initialMessageFetch: state.initialMessageFetch,
         fetchPost,
         fetchGroupById,
         fetchGroupPosts,
@@ -371,9 +343,7 @@ export const Fetcher = ({ children }) => {
         updateGroupChanged,
         updatePostChanged,
         joinGroup,
-        leaveGroup,
-        fetchMessages,
-        updatedMessagesChanged
+        leaveGroup
       }}
     >
       {children}

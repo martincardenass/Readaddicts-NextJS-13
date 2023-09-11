@@ -1,6 +1,6 @@
 'use client'
-import { useAuth } from '@/hooks/useAuth'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useAuth } from '@/context/useAuth'
+import { useFetcher } from '@/context/useFetcher'
 import styles from './post.module.css'
 import { useState } from 'react'
 // import { useParams } from 'next/navigation'

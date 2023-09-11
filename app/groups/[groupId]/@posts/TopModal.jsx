@@ -1,7 +1,7 @@
 'use client'
 import AddNewPost from '@/app/posts/new/page'
-import { useAuth } from '@/hooks/useAuth'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useAuth } from '@/context/useAuth'
+import { useFetcher } from '@/context/useFetcher'
 
 const TopModal = () => {
   const { user } = useAuth()

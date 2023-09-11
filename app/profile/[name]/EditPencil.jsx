@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import styles from './user.module.css'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import { useState } from 'react'
 
 const EditPencil = ({ name }) => {

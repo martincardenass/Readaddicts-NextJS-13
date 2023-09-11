@@ -9,13 +9,13 @@ const MessagesPage = (props) => {
   const { name } = props.params
   const [users, setUsers] = useState({ data: null, status: null })
 
-  const fetchMessages = async () => {
+  const fetchUsers = async () => {
     const fetched = await getMessageSenders()
     setUsers({ ...users, data: fetched?.data, status: fetched?.status })
   }
 
   useEffect(() => {
-    fetchMessages()
+    fetchUsers()
   }, [])
 
   return (
@@ -38,7 +38,6 @@ const MessagesPage = (props) => {
       </ul>
       {props.children}
     </section>
-
   )
 }
 

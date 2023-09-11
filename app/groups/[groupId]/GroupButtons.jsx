@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import styles from './groupid.module.css'
 import { useState } from 'react'
 

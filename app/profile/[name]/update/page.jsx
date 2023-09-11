@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import patchProfile from './patchProfile'
 import getUserPrivate from '../getUserPrivate'
 import Unauthorized from './Unauthorized'

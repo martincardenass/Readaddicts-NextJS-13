@@ -1,6 +1,6 @@
 'use client'
 import styles from './deletegroup.module.css'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import Button from '@/components/Button/Button'
 import { useState } from 'react'
 import deleteGroup from './deleteGroup'

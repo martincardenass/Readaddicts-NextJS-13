@@ -2,7 +2,7 @@
 import styles from './users.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import Button from '../Button/Button'
 import { useEffect, useReducer, useRef } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'

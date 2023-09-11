@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import styles from '../post.module.css'
 import Button from '@/components/Button/Button'
 import { useSubmitRef } from '@/utility/formSubmitRef'

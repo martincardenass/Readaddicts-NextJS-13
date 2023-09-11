@@ -1,5 +1,5 @@
 'use client'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import { useEffect } from 'react'
 import styles from './post.module.css'
 import Link from 'next/link'

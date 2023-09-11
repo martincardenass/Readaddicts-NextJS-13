@@ -1,6 +1,6 @@
 'use client'
-import { useFetcher } from '@/hooks/useFetcher'
-import { useAuth } from '@/hooks/useAuth'
+import { useFetcher } from '@/context/useFetcher'
+import { useAuth } from '@/context/useAuth'
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 import Posts from '@/app/posts/Posts'

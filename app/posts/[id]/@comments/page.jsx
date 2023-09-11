@@ -1,6 +1,6 @@
 'use client'
 import styles from './comments.module.css'
-import { useFetcher } from '@/hooks/useFetcher'
+import { useFetcher } from '@/context/useFetcher'
 import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 

@@ -1,14 +1,16 @@
 import styles from '../messages.module.css'
 import Image from 'next/image'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import Button from '@/components/Button/Button'
 import sendMessage from './sendMessage'
 import { useRef, useState } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import Alert from '@/components/Alert/Alert'
+import { useMsg } from '@/context/useMsg'
 
 // * receiver its the person we are chatting with
-const WriteMsg = ({ receiver, updatedMessagesChanged }) => {
+const WriteMsg = ({ receiver }) => {
+  const { newMessage, setNewMessage } = useMsg()
   const formRef = useRef()
   const { user } = useAuth()
 
@@ -25,9 +27,15 @@ const WriteMsg = ({ receiver, updatedMessagesChanged }) => {
     if (content) {
       setLoading(true)
       const res = await sendMessage(receiver, formData)
-      if (res.status === 204) {
+      if (res.status === 200) {
+        // * set the response (which is the sent message object) to the context
+        setNewMessage({
+          ...newMessage,
+          data: res?.data,
+          status: res?.status,
+          sent: true
+        })
         setSent(true)
-        updatedMessagesChanged(true, 1000)
         setTimeout(() => {
           setSent(false)
         }, 2000)

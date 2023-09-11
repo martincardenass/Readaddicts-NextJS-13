@@ -4,7 +4,7 @@ import { navLinks } from './navlinks'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './navbar.module.css'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/useAuth'
 import Button from '../Button/Button'
 import { usePathname } from 'next/navigation'
 
