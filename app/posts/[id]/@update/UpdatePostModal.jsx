@@ -4,6 +4,7 @@ import { useFetcher } from '@/context/useFetcher'
 import styles from '../post.module.css'
 import Button from '@/components/Button/Button'
 import { useSubmitRef } from '@/utility/formSubmitRef'
+import Alert from '@/components/Alert/Alert'
 
 const UpdatePostModal = ({ id }) => {
   const { patchPost, msg, post, changed, patchPostStatus } = useFetcher()
@@ -63,17 +64,6 @@ const UpdatePostModal = ({ id }) => {
           />
         </form>
         <div>
-          <p
-            style={{
-              color:
-                msg === 'Your post cannot be empty' ||
-                msg === 'Please provide at least 8 characters'
-                  ? 'red'
-                  : 'black'
-            }}
-          >
-            {msg}
-          </p>
           <p style={{ color: characters === 255 ? 'red' : 'black' }}>
             {characters}/255
           </p>
@@ -83,14 +73,19 @@ const UpdatePostModal = ({ id }) => {
         <div onClick={handleSubmit}>
           <Button
             text='Confirm'
-            backgroundColor='rgb(185, 247, 255)'
+            textColor='white'
+            backgroundColor='rgb(0, 210, 255)'
             loading={loading}
           />
         </div>
-        {/* <div onClick={}>
-          <Button text='Cancel' />
-        </div> */}
       </div>
+      <Alert
+        message={msg.text}
+        ready={msg.status}
+        backgroundColor={msg.backgroundColor}
+        color={msg.color}
+        width={msg.width}
+      />
     </section>
   )
 }

@@ -7,7 +7,6 @@ import getGroupPosts from '@/app/groups/[groupId]/@posts/getGroupPosts'
 import updatePost from '@/app/posts/[id]/@update/updatePost'
 import getComments from '@/app/posts/[id]/@comments/getComments'
 import getComment from '@/app/posts/[id]/@comments/getComment'
-import errorTextReplace from '@/utility/errorTextReplace'
 import groupJoinLeave from '@/app/groups/[groupId]/groupLeaverAndJoiner'
 
 const FetcherContext = createContext(null)
@@ -17,7 +16,13 @@ const initialState = {
   post: {},
   groupPosts: {},
   patchPostStatus: null,
-  msg: null,
+  msg: {
+    text: null,
+    status: null,
+    backgroundColor: null,
+    color: null,
+    width: null
+  },
   changed: false,
 
   // * Comments
@@ -92,17 +97,28 @@ const reducer = (state, action) => {
       if (data.status === 200) {
         return {
           ...state,
-          msg: 'Post update success',
+          msg: {
+            text: 'Post updated successfully',
+            status: true,
+            backgroundColor: 'rgb(0, 210, 255)',
+            color: 'white',
+            width: '215px'
+          },
           changed: true,
           patchPostStatus: actionPayload.status
         }
       }
 
       if (data.status === 400) {
-        const replacedErrorText = errorTextReplace(data)
         return {
           ...state,
-          msg: replacedErrorText
+          msg: {
+            text: 'Something went wrong',
+            status: true,
+            backgroundColor: 'red',
+            color: 'white',
+            width: '185px'
+          }
         }
       }
 
@@ -115,7 +131,13 @@ const reducer = (state, action) => {
         }, 2000)
         return {
           ...state,
-          msg: 'Something went wrong'
+          msg: {
+            text: 'Your session has expired. You may login again.',
+            status: true,
+            backgroundColor: 'red',
+            color: 'white',
+            width: '350px'
+          }
         }
       } else {
         setTimeout(() => {
@@ -126,7 +148,13 @@ const reducer = (state, action) => {
         }, 2000)
         return {
           ...state,
-          msg: 'Something went wrong'
+          msg: {
+            text: 'Something went wrong',
+            status: true,
+            backgroundColor: 'red',
+            color: 'white',
+            width: '185px'
+          }
         }
       }
     }
@@ -134,7 +162,11 @@ const reducer = (state, action) => {
     case ACTIONS.ALTER_CHANGE: {
       return {
         ...state,
-        changed: actionPayload
+        changed: actionPayload,
+        msg: {
+          ...state.msg,
+          status: false
+        }
       }
     }
 

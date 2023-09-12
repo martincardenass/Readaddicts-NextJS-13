@@ -31,15 +31,14 @@ const postReducer = (newPost, action) => {
         }, 1000)
         return {
           ...newPost,
-          msg: 'Your session has expired. Logging out...',
+          msg: {
+            text: 'Your session has expired. You may login again.',
+            status: true,
+            backgroundColor: 'red',
+            width: '350px',
+            color: 'white'
+          },
           done: false
-        }
-      }
-      if (payload.status === 200) {
-        return {
-          ...newPost,
-          msg: 'Post published successfully',
-          done: true
         }
       } else {
         return {
@@ -153,6 +152,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
             payload: {
               text: 'Post created successfully',
               status: true,
+              color: 'white',
               backgroundColor: 'rgb(0, 210, 255)',
               width: '200px'
             }

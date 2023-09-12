@@ -42,10 +42,10 @@ const AddComent = ({ postId, parent, placeholderText }) => {
           setLoading(false)
           setMsg({
             ...msg,
-            text: 'Comment posted',
-            backgroundColor: 'white',
-            width: '125px',
-            color: 'black',
+            text: 'Comment created successfully',
+            backgroundColor: 'rgb(0, 210, 255)',
+            width: '225px',
+            color: 'white',
             status: true
           })
 
