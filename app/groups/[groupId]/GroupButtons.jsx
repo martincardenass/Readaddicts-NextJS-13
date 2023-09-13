@@ -53,8 +53,6 @@ const GroupButtons = ({
             textColor={isUserInGroup ? 'white' : 'black'}
             width='120px'
             backgroundColor={isUserInGroup ? 'rgb(0, 210, 255)' : ''}
-            effectWidth='120px'
-            effectHeight='120px'
             loading={groupLoading}
           />
         </div>
@@ -67,8 +65,6 @@ const GroupButtons = ({
                   backgroundColor='red'
                   textColor='white'
                   width='120px'
-                  effectWidth='120px'
-                  effectHeight='120px'
                 />
               </div>
             </section>
@@ -79,8 +75,6 @@ const GroupButtons = ({
                 <Button
                   text={toggleOptions ? 'Close options' : 'Options  '}
                   width='120px'
-                  effectWidth='120px'
-                  effectHeight='120px'
                 />
               </div>
               )
@@ -100,20 +94,13 @@ const GroupButtons = ({
               backgroundColor='red'
               textColor='white'
               width='120px'
-              effectWidth='120px'
-              effectHeight='120px'
             />
           </div>
           <div
             onClick={() =>
               setToggle({ ...toggle, update: !toggle.update, delete: false })}
           >
-            <Button
-              text='Manage group'
-              width='120px'
-              effectWidth='120px'
-              effectHeight='120px'
-            />
+            <Button text='Manage group' width='120px' />
           </div>
         </section>
       )}

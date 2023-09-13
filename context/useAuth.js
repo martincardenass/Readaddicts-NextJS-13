@@ -10,7 +10,13 @@ export const AuthProvider = ({ children }) => {
     tokenUser = window && window.localStorage.getItem('user')
   }
   const [user, setUser] = useState(JSON.parse(tokenUser))
-  const [msg, setMsg] = useState(null)
+  const [msg, setMsg] = useState({
+    text: null,
+    status: null,
+    backgroundColor: null,
+    color: null,
+    width: null
+  })
 
   const handleLogin = async (e, username, password) => {
     e.preventDefault()
@@ -28,12 +34,38 @@ export const AuthProvider = ({ children }) => {
       window.localStorage.setItem('token', auth.data.token)
       window.localStorage.setItem('user', JSON.stringify(auth.data.user))
       setUser(auth.data.user)
-      setMsg('')
+      setMsg({
+        text: 'Authentication successful',
+        status: true,
+        backgroundColor: 'rgb(0, 210, 255)',
+        color: 'white',
+        width: '200px'
+      })
+
+      setTimeout(() => {
+        setMsg((prevMsg) => ({
+          ...prevMsg,
+          status: false
+        }))
+      }, 5000)
     }
 
     // * If credentials are wrong, display a message
     if (auth.status === 400) {
-      setMsg(auth.data)
+      setMsg({
+        text: auth.data,
+        status: true,
+        backgroundColor: 'red',
+        color: 'white',
+        width: '150px'
+      })
+
+      setTimeout(() => {
+        setMsg((prevMsg) => ({
+          ...prevMsg,
+          status: false
+        }))
+      }, 5000)
     }
   }
 

@@ -68,6 +68,12 @@
     flex-direction: column;
 }
 
+.usernamecontainer .time {
+    font-size: 14px;
+   color: rgba(0,0,0, .75);
+   margin: 0;
+}
+
 .pencil {
     cursor: pointer;
     top: 0;
@@ -99,18 +105,20 @@
 
 .flexor h3 {
     font-weight: 600;
-    padding: 0 .5rem;
+    padding: 0 1.25rem 0 0 ;
     font-size: 24px;
 }
 
-.flexor h3:last-child {
+.flexor h2 {
     font-weight: 400;
-    color: rgb(0, 0, 0, .25)
+    font-size: 15px;
+    color: rgba(0,0,0, .75);
+    padding-right: 1.25rem;
 }
 
-.usernamecontainer h3::first-letter, .usernamecontainer p::first-letter {
+/* .usernamecontainer h3::first-letter, .usernamecontainer p::first-letter {
     text-transform: uppercase;
-}
+} */
 
 .childsection {
     display: flex;
@@ -133,7 +141,6 @@
 }
 
 .flexor {
-    gap: 1rem;
     align-items: center;
     display: flex;
 }

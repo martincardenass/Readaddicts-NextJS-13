@@ -216,8 +216,6 @@ const CreateGroup = () => {
             backgroundColor='rgb(0, 210, 255)'
             width='150px'
             textColor='white'
-            effectHeight='150px'
-            effectWidth='150px'
             loading={loading}
           />
         </div>

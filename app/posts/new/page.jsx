@@ -1,7 +1,7 @@
 'use client'
 import styles from './newpost.module.css'
 import Image from 'next/image'
-import { useEffect, useReducer, useRef } from 'react'
+import { useReducer, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import createPost from './createPost'
 import { useSubmitRef } from '@/utility/formSubmitRef'
@@ -206,9 +206,6 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
     }
   }
 
-  useEffect(() => {
-    console.log(newPost.msg)
-  }, [newPost.msg])
   return (
     <main className={newPost.done ? styles.newpostdenied : styles.newpost}>
       <section className={styles.newpostcontainer}>

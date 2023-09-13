@@ -18,8 +18,6 @@ const Header = () => {
               backgroundColor='white'
               effectColor='rgb(235, 235, 235)'
               width='120px'
-              effectWidth='120px'
-              effectHeight='120px'
               href='/groups/create'
             />
           </>

@@ -11,7 +11,8 @@ import { useMsg } from '@/context/useMsg'
 // * receiver its the person we are chatting with
 const WriteMsg = ({ receiver }) => {
   const { newMessage, setNewMessage } = useMsg()
-  const formRef = useRef()
+  const formRef = useRef(null)
+  const inputRef = useRef(null)
   const { user } = useAuth()
 
   const [loading, setLoading] = useState(false)
@@ -35,10 +36,14 @@ const WriteMsg = ({ receiver }) => {
           status: res?.status,
           sent: true
         })
+
+        // * Clear the input content
+        inputRef.current.value = ''
+
         setSent(true)
         setTimeout(() => {
           setSent(false)
-        }, 2000)
+        }, 3000)
         setLoading(false)
       } else {
         setLoading(false)
@@ -49,23 +54,35 @@ const WriteMsg = ({ receiver }) => {
   return (
     <section className={styles.writemsg}>
       <Image
-        src={user.profile_Picture}
-        alt={user.username}
+        src={user?.profile_Picture}
+        alt={user?.username}
         width={75}
         height={75}
       />
       <form ref={formRef} onSubmit={handleSendMessage}>
-        <input type='text' placeholder='Write a message...' name='content' />
+        <input
+          ref={inputRef}
+          type='text'
+          placeholder='Write a message...'
+          name='content'
+        />
       </form>
       <div onClick={handleSubmit}>
         <Button
           text='Send'
           backgroundColor='rgb(0, 210, 255)'
           textColor='white'
+          width='75px'
           loading={loading}
         />
       </div>
-      <Alert message='Message sent' ready={sent} />
+      <Alert
+        message='Message has been sent'
+        ready={sent}
+        backgroundColor='rgb(0, 210, 255)'
+        width='175px'
+        color='white'
+      />
     </section>
   )
 }

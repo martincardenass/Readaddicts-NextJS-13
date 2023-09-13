@@ -7,71 +7,138 @@ import Button from '../Button/Button'
 import { useEffect, useReducer, useRef } from 'react'
 import { useSubmitRef } from '@/utility/formSubmitRef'
 import getUser from '@/app/profile/[name]/getUser'
+import Alert from '../Alert/Alert'
 
-const Login = () => {
-  const { handleLogin, msg } = useAuth() // * Trabajar en el message.
-  const [event, updateEvent] = useReducer(
-    (event, action) => {
-      const newEvent = { ...event }
+const ACTIONS = {
+  UPDATE_USERNAME: 'UPDATE_USERNAME',
+  UPDATE_PASSWORD: 'UPDATE_PASSWORD',
+  SET_USER_DATA: 'SET_USER_DATA',
+  ALERT_MESSAGE_STATUS: 'ALERT_MESSAGE_STATUS'
+}
 
-      switch (action.type) {
-        case 'UPDATE_USERNAME': {
-          newEvent.username = action.username
-          break
-        }
-        case 'UPDATE_PASSWORD': {
-          newEvent.password = action.password
-          break
-        }
-        case 'SET_USER_DATA': {
-          newEvent.userData = action.userData
-          if (action.userData.status === 404) {
-            newEvent.message = action.userData.text
+const reducer = (state, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case ACTIONS.UPDATE_USERNAME: {
+      const { username } = payload
+      return {
+        ...state,
+        username
+      }
+    }
+    case ACTIONS.UPDATE_PASSWORD: {
+      return {
+        ...state,
+        password: payload
+      }
+    }
+    case ACTIONS.SET_USER_DATA: {
+      const { data, username } = payload
+
+      if (data.status === 200) {
+        return {
+          ...state,
+          userData: data,
+          message: {
+            text: `Welcome ${
+              username.charAt(0).toUpperCase() + state.username.slice(1)
+            }. Please enter your password.`,
+            status: true,
+            backgroundColor: 'rgb(0, 210, 255)',
+            width: '370px',
+            color: 'white'
           }
-          break
         }
       }
-
-      return newEvent
-    },
-    {
-      username: '',
-      password: '',
-      userData: null,
-      message: null
+      if (data.status === 404) {
+        return {
+          ...state,
+          userData: data.text,
+          message: {
+            text: `The user ${
+              username.charAt(0).toUpperCase() + state.username.slice(1)
+            } does not exist`,
+            status: true,
+            backgroundColor: 'red',
+            width: '300px',
+            color: 'white'
+          }
+        }
+      } else {
+        return {
+          ...state
+        }
+      }
     }
-  )
+
+    case ACTIONS.ALERT_MESSAGE_STATUS: {
+      return {
+        ...state,
+        message: {
+          ...state.message,
+          status: false
+        }
+      }
+    }
+  }
+}
+
+const initialState = {
+  username: '',
+  password: '',
+  userData: null,
+  message: {
+    text: null,
+    status: null,
+    backgroundColor: null,
+    color: null,
+    width: null
+  }
+}
+
+const Login = () => {
+  const { handleLogin, msg } = useAuth()
+  const [state, dispatch] = useReducer(reducer, initialState)
   const formRef = useRef()
 
   const handleSubmit = useSubmitRef(formRef)
 
   const fetchUser = async () => {
-    const data = await getUser(event.username)
-    updateEvent({ type: 'SET_USER_DATA', userData: data })
+    const data = await getUser(state.username)
+    dispatch({
+      type: ACTIONS.SET_USER_DATA,
+      payload: { data, username: state.username }
+    })
+
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.ALERT_MESSAGE_STATUS })
+    }, 2000)
   }
 
   const populateUsername = (e) => {
     e.preventDefault()
     const usernameFormData = Object.fromEntries(new FormData(e.target))
-    updateEvent({
-      type: 'UPDATE_USERNAME',
-      username: usernameFormData.username
-    })
+    dispatch({ type: ACTIONS.UPDATE_USERNAME, payload: usernameFormData })
   }
 
   const handleSubmitCredentials = (e) => {
     e.preventDefault() // * curried function
-    handleLogin(e, event.username, event.password)
+    handleLogin(e, state.username, state.password)
+
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.ALERT_MESSAGE_STATUS })
+    }, 5000)
   }
 
   useEffect(() => {
-    if (event.username && event.username !== '') {
+    if (state.username && state.username !== '') {
       fetchUser()
     }
-  }, [event.username])
+  }, [state.username])
 
-  if (event.userData?.status === 200) {
-    const user = event.userData.text
+  if (state.userData?.status === 200) {
+    const user = state.userData.text
     return (
       <section className={styles.user}>
         <section className={styles.userbanner}>
@@ -94,9 +161,9 @@ const Login = () => {
                 name='password'
                 placeholder='Password'
                 onChange={(e) =>
-                  updateEvent({
-                    type: 'UPDATE_PASSWORD',
-                    password: e.target.value
+                  dispatch({
+                    type: ACTIONS.UPDATE_PASSWORD,
+                    payload: e.target.value
                   })}
                 required
                 autoFocus
@@ -111,8 +178,14 @@ const Login = () => {
               effectColor='rgb(235, 235, 235)'
             />
           </div>
-          <span style={{ marginTop: '1rem' }}>{msg && msg}</span>
         </section>
+        <Alert
+          message={msg.text}
+          ready={msg.status}
+          backgroundColor={msg.backgroundColor}
+          color={msg.color}
+          width={msg.width}
+        />
       </section>
     )
   }
@@ -136,6 +209,7 @@ const Login = () => {
             required
             autoComplete='off'
             autoFocus
+            maxLength='16'
           />
         </section>
       </form>
@@ -147,9 +221,13 @@ const Login = () => {
           effectColor='rgb(235, 235, 235)'
         />
       </div>
-      <span style={{ marginTop: '1rem' }}>
-        {event.message && event.message}
-      </span>
+      <Alert
+        message={state.message.text}
+        ready={state.message.status}
+        backgroundColor={state.message.backgroundColor}
+        color={state.message.color}
+        width={state.message.width}
+      />
     </main>
   )
 }

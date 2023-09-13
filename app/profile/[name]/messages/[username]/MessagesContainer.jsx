@@ -3,8 +3,10 @@ import styles from '../messages.module.css'
 import IntersectedContent from '@/utility/intersectionObserver'
 import getConversation from '../getConversations'
 import { useMsg } from '@/context/useMsg'
+import { useAuth } from '@/context/useAuth'
 
 const MessagesContainer = ({ name, username }) => {
+  const { user } = useAuth()
   const [messages, setMessages] = useState({
     data: [],
     status: null,
@@ -19,11 +21,12 @@ const MessagesContainer = ({ name, username }) => {
   const scrolleable = useRef(null)
 
   const fetchUserMessages = async () => {
-    if (msg === 'Load more...') {
+    // * Dont if no user is logged
+    if (msg === 'Load more...' && user !== null) {
       const data = await getConversation(page, 10, name, username)
 
       // * Avoid fetching again and again when the new data was already empty
-      if (data?.data.length === 0) { setMsg(`This is the end of your conversation with ${username}`) }
+      if (data?.data?.length === 0) { setMsg('Looks like we reached the end.') }
 
       setMessages((prevMessages) => ({
         ...messages,

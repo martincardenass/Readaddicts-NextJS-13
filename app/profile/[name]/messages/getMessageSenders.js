@@ -1,6 +1,6 @@
 async function getMessageSenders () {
   try {
-    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'Message/messages/users')
+    const url = new URL(process.env.NEXT_PUBLIC_API_URL + 'Message/users/')
 
     const res = await fetch(url, {
       headers: {

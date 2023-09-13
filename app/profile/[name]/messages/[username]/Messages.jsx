@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import styles from '../messages.module.css'
 import { useParams } from 'next/navigation'
+import { useAuth } from '@/context/useAuth'
 
 const Messages = ({ messages }) => {
   const params = useParams()
   const { name } = params
+  const { user } = useAuth()
 
   return (
     <ul>
@@ -13,7 +15,7 @@ const Messages = ({ messages }) => {
           key={conversation.message_Id}
           style={{
             alignItems:
-              conversation?.sender_Username === name ? 'flex-end' : ''
+              conversation?.sender_Username === user.username ? 'flex-end' : ''
           }}
         >
           {conversation?.sender_Username === name

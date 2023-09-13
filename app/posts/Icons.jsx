@@ -10,8 +10,6 @@ const Icons = ({ id, commentCount }) => {
         }
         href={`/posts/${id}/comments`}
         width={commentCount > 0 ? '125px' : '150px'}
-        effectWidth={commentCount > 0 ? '125px' : '150px'}
-        effectHeight={commentCount > 0 ? '125px' : '150px'}
       />
     </div>
   )

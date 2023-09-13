@@ -19,8 +19,6 @@ const LoadComments = ({ id }) => {
           backgroundColor='white'
           width='275px'
           effectColor='rgb(235, 235, 235)'
-          effectWidth='275px'
-          effectHeight='275px'
         />
       </section>
     )

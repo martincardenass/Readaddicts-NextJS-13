@@ -3,13 +3,8 @@ import { useAuth } from '@/context/useAuth'
 import { useFetcher } from '@/context/useFetcher'
 import styles from './post.module.css'
 import { useState } from 'react'
-// import { useParams } from 'next/navigation'
 
 const Options = ({ update, remove }) => {
-  // const params = useParams()
-
-  // const paramsHaveCommentId = Object.prototype.hasOwnProperty.call(params, 'commentId')
-
   const [toggle, setToggle] = useState({
     update: false,
     remove: false

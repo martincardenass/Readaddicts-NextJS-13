@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './user.module.css'
 import dynamic from 'next/dynamic'
+import Header from './Header'
+import { getTimeAgo } from '@/utility/relativeTime'
 
 const DynamicPencil = dynamic(() => import('./EditPencil'))
 const DynamicUserMenu = dynamic(() => import('./UserMenu'))
@@ -45,13 +47,11 @@ const UserProfile = async ({ params, children }) => {
                 )}
           </span>
           <div className={styles.usernamecontainer}>
-            <span className={styles.flexor}>
-              <h3>
-                {userdata.first_Name} {userdata.last_Name}
-              </h3>
-              <h3>@{userdata.username}</h3>
-            </span>
-            <span className={styles.childsection}>
+            <Header userdata={userdata} />
+            {userdata?.last_Login && (
+              <p className={styles.time}>Last seen {getTimeAgo(new Date(userdata?.last_Login).getTime())}</p>
+            )}
+            <section className={styles.childsection}>
               <p style={{ fontStyle: 'italic' }}>{userdata.bio}</p>
               <div>
                 <span>
@@ -73,7 +73,7 @@ const UserProfile = async ({ params, children }) => {
                   </p>
                 )}
               </div>
-            </span>
+            </section>
           </div>
           <DynamicPencil name={name} />
         </div>

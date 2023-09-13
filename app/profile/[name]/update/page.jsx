@@ -18,7 +18,7 @@ const UpdateProfile = ({ params }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await getUserPrivate(user?.user_Id)
+      const data = await getUserPrivate(name)
       setPrivateUser(data)
     }
 
@@ -88,7 +88,9 @@ const UpdateProfile = ({ params }) => {
         />
       </>
     )
-  } else {
+  }
+
+  if (privateUser?.status === 401) {
     return <Unauthorized />
   }
 }
