@@ -5,12 +5,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from './messages.module.css'
 import { useAuth } from '@/context/useAuth'
-import { useRouter } from 'next/navigation'
 
 const MessagesPage = (props) => {
   const { name } = props.params
   const { user } = useAuth()
-  const router = useRouter()
   const [users, setUsers] = useState({ data: null, status: null })
 
   useEffect(() => {
@@ -22,8 +20,6 @@ const MessagesPage = (props) => {
         setUsers({ ...users, data: fetched?.data, status: fetched?.status })
       }
       fetchUsers()
-    } else {
-      router.push('/')
     }
   }, [])
 

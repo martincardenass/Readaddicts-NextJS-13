@@ -14,9 +14,10 @@
 }
 
 .userprofile {
-    display: flex;
     align-items: center;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
 }
 
 .userprofilecontainer {
@@ -116,31 +117,7 @@
     padding-right: 1.25rem;
 }
 
-/* .usernamecontainer h3::first-letter, .usernamecontainer p::first-letter {
-    text-transform: uppercase;
-} */
-
-.childsection {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.childsection > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding-left: 2.5rem;
-}
-
-
-.childsection > div > span {
-    display: flex;
-    align-items: center;
-    gap: .25rem;
-}
-
-.flexor {
+.flexor {  
     align-items: center;
     display: flex;
 }
@@ -185,19 +162,11 @@
         text-align: center !important;
     }
 
-    .flexor {
-        display: block;
-    }
-
-    .childsection {
-        flex-direction: column;
-    }
-
-    .childsection > div {
-        align-items: center;
-    }
-
     .userprofile {
         margin-top: 75px;
+    }
+
+    .flexor {
+        justify-content: center;
     }
 }

@@ -9,8 +9,8 @@ import { getTimeAgo } from '@/utility/relativeTime'
 const DynamicPencil = dynamic(() => import('./EditPencil'))
 const DynamicUserMenu = dynamic(() => import('./UserMenu'))
 
-const UserProfile = async ({ params, children }) => {
-  const { name } = params
+const UserProfile = async (props) => {
+  const { name } = props.params
   const user = await getUser(name)
   const userdata = user.text
 
@@ -51,35 +51,14 @@ const UserProfile = async ({ params, children }) => {
             {userdata?.last_Login && (
               <p className={styles.time}>Last seen {getTimeAgo(new Date(userdata?.last_Login).getTime())}</p>
             )}
-            <section className={styles.childsection}>
-              <p style={{ fontStyle: 'italic' }}>{userdata.bio}</p>
-              <div>
-                <span>
-                  {userdata.role === 'admin'
-                    ? (
-                      <span className='material-symbols-outlined'>
-                        supervisor_account
-                      </span>
-                      )
-                    : (
-                      <span className='material-symbols-outlined'>person</span>
-                      )}
-                  <p>{userdata.role}</p>
-                </span>
-                <p>{userdata.gender}</p>
-                {userdata.status && (
-                  <p>
-                    <b>Status</b>: {userdata.status}
-                  </p>
-                )}
-              </div>
-            </section>
+            <p style={{ fontStyle: 'italic' }}>{userdata.bio}</p>
           </div>
           <DynamicPencil name={name} />
         </div>
         <DynamicUserMenu name={name} />
-        {children}
+        {props.children}
       </section>
+      {props.groups}
     </article>
   )
 }

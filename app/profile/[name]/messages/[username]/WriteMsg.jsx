@@ -53,20 +53,22 @@ const WriteMsg = ({ receiver }) => {
 
   return (
     <section className={styles.writemsg}>
-      <Image
-        src={user?.profile_Picture}
-        alt={user?.username}
-        width={75}
-        height={75}
-      />
-      <form ref={formRef} onSubmit={handleSendMessage}>
-        <input
-          ref={inputRef}
-          type='text'
-          placeholder='Write a message...'
-          name='content'
+      <div>
+        <Image
+          src={user?.profile_Picture}
+          alt={user?.username}
+          width={75}
+          height={75}
         />
-      </form>
+        <form ref={formRef} onSubmit={handleSendMessage}>
+          <input
+            ref={inputRef}
+            type='text'
+            placeholder='Write a message...'
+            name='content'
+          />
+        </form>
+      </div>
       <div onClick={handleSubmit}>
         <Button
           text='Send'

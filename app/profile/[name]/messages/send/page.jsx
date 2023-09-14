@@ -10,15 +10,19 @@ const SendMessageToUserPage = (props) => {
   const { name } = props.params
   const { user } = useAuth()
 
-  return (
-    <section className={styles.conversation}>
-      <UserHeader username={name} />
-      <MsgProvider>
-        <MessagesContainer name={name} username={user.username} />
-        <WriteMsg receiver={name} />
-      </MsgProvider>
-    </section>
-  )
+  if (user !== null) {
+    return (
+      <section className={styles.conversation}>
+        <UserHeader username={name} />
+        <MsgProvider>
+          <MessagesContainer name={name} username={user.username} />
+          <WriteMsg receiver={name} />
+        </MsgProvider>
+      </section>
+    )
+  } else {
+    return <h1>Must be logged</h1>
+  }
 }
 
 export default SendMessageToUserPage

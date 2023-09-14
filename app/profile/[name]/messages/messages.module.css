@@ -26,8 +26,10 @@
     color: rgb(66, 66, 66);
 }
 
-.messages ul {
-    padding-right: 1.5rem;
+.messages ul:first-child {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
 }
 
 .user {
@@ -121,6 +123,12 @@
     gap: 1rem;
 }
 
+.writemsg div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .writemsg input[type="text"] {
     padding: .5rem;
     background-color: whitesmoke;
@@ -136,4 +144,43 @@
 
 .writemsg input:focus {
     outline: none;
+}
+
+@media screen and (max-width: 1050px) {
+    .messages {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .messages ul:first-child {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .messages ul:first-child {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .messages ul:first-child {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .writemsg {
+        flex-direction: column;
+        gap: .5rem;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .messages ul:first-child {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
