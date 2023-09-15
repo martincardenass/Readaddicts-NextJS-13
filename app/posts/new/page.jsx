@@ -164,6 +164,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
           payload: {
             text: 'Please provide at least 8 characters',
             status: true,
+            color: 'white',
             backgroundColor: 'red',
             width: '275px'
           }
@@ -175,6 +176,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
             payload: {
               text: 'Please provide at least 8 characters',
               status: false,
+              color: 'white',
               backgroundColor: 'red',
               width: '275px'
             }
@@ -187,6 +189,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
         payload: {
           text: 'Your post cannot be empty.',
           status: true,
+          color: 'white',
           backgroundColor: 'red',
           width: '225px'
         }
@@ -198,6 +201,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
           payload: {
             text: 'Your post cannot be empty.',
             status: false,
+            color: 'white',
             backgroundColor: 'red',
             width: '225px'
           }

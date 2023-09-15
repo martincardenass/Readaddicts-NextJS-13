@@ -1,42 +1,13 @@
 import getUsers from './getUsers'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './users.module.css'
+import UsersAndTiers from './Users'
 
-const Users = async () => {
-  const users = await getUsers()
+const Users = async ({ searchParams }) => {
+  const userTierCollection = await getUsers()
+  const users = userTierCollection?.data?.Users
+  const tiers = userTierCollection?.data?.Tiers
 
   return (
-    <section className={styles.users}>
-      <ul>
-        {users.data.map((user) => (
-          <li key={user.user_Id}>
-            <section className={styles.usercontainer}>
-              <Link href={`/profile/${user.username}`}>
-                {user.profile_Picture
-                  ? (
-                    <Image
-                      src={user.profile_Picture}
-                      alt={user.username}
-                      width={150}
-                      height={150}
-                    />
-                    )
-                  : (
-                    <div className={styles.nouser}>?</div>
-                    )}
-              </Link>
-              <Link href={`/profile/${user.username}`}>
-                <h1>{user.username}</h1>
-              </Link>
-              <p>
-                {user.gender} · {user.role}
-              </p>
-            </section>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <UsersAndTiers users={users} tiers={tiers} searchParams={searchParams} />
   )
 }
 

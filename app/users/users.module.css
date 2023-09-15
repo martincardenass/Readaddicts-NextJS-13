@@ -1,6 +1,5 @@
 .users {
     display: flex;
-    width: 100%;
     overflow: hidden;
     align-items: center;
     justify-content: center;
@@ -23,53 +22,94 @@
 .users ul {
     padding: 0;
     margin: 0;
-    display: grid;
-    width: 100%;
-    list-style: none;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
     align-items: center;
     justify-content: center;
     padding: 2rem 4rem;
+    padding-top: 0;
 }
 
 .users li {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 2rem;
     background-color: white;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
     border-radius: 25px;
     padding: 2rem;
+    width: 850px;
+}
+
+.users li section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.users li section p {
+    margin: 0;
+    padding: 0;
+}
+
+.users li h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 36px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.users li h3 {
+    color: rgba(0,0,0, .50);
+    font-weight: 400;
 }
 
 .users img {
     border-radius: 50%;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
 }
 
-.usercontainer {
+.tiers ul {
+    padding: 0;
+    margin: 0;
+    padding: 1rem 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.tiers li {
+    cursor: pointer;
+    border-radius: 25px;
+    padding: 0 1rem;
+    padding-bottom: 0;
+    background-color: white;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .1);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.tiers li:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0, .25);
+}
+
+.tierdescription {
+    display: flex;
     justify-content: center;
 }
 
-.usercontainer h1 {
-    font-size: 30px;
-    font-weight: 400;
-    margin: 0;
-    margin-top: 1rem;
-    padding: 0;
-    text-transform: capitalize;
-}
-
-.usercontainer p {
-    margin: 0;
-    font-size: 12px;
+.tierdescription span {
+    padding: 1rem;
 }
 
 @media screen and (max-width: 1050px) {
     .users {
         margin-top: 75px;
+    }
+    
+    .tiers {
+        margin-top: 100px;
     }
 }

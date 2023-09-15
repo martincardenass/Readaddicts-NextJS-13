@@ -93,6 +93,9 @@ const Navbar = () => {
               <section
                 className={popup ? styles.navuserfocused : styles.navuser}
               >
+                <Link href={`/profile/${user.username}/messages`} className='material-symbols-outlined'>
+                  forum
+                </Link>
                 {user.profile_Picture
                   ? (
                     <Image
