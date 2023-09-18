@@ -8,6 +8,8 @@ import { useSubmitRef } from '@/utility/formSubmitRef'
 import Button from '@/components/Button/Button'
 import Alert from '@/components/Alert/Alert'
 
+import ImageMemo from './Image'
+
 const ACTIONS = {
   HANDLE_POST_DATA: 'HANDLE_POST_DATA',
   SET_CHARACTERS: 'SET_CHARACTERS',
@@ -288,12 +290,7 @@ const AddNewPost = ({ user, placeholder, groupId }) => {
               <ul>
                 {newPost.images.map((image, index) => (
                   <li key={index}>
-                    <Image
-                      src={URL.createObjectURL(image)}
-                      alt={`Image ${index}`}
-                      width={100}
-                      height={100}
-                    />
+                    <ImageMemo imageBlob={image} index={index} />
                     <span
                       onClick={(index) =>
                         dispatch({ type: ACTIONS.REMOVE_IMAGES, payload: index })}
