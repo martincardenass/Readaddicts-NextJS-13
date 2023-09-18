@@ -9,6 +9,7 @@ import { useAuth } from '@/context/useAuth'
 import validateUsername from './usernameValidator'
 import validateEmail from './emailValidator'
 import { acceptedDomains } from './domains'
+import { readerTypes } from './readerTypes'
 
 const registerReducer = (state, action) => {
   const { type, payload } = action
@@ -159,7 +160,7 @@ const SignUpPage = () => {
   const handleCreate = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    formData.append('role', 'user') // * Add user role
+    // formData.append('role', 'user') // * Add user role.
 
     const formDataChecker = Object.fromEntries(new FormData(e.target))
 
@@ -264,6 +265,14 @@ const SignUpPage = () => {
             >
               {state.isPasswordValid ? '✓' : '!'}
             </h1>
+          </section>
+          <section className={styles.formfield} style={{ marginBottom: '1.25rem' }}>
+            <p>What is your reading experience?</p>
+            <select name='tier_id'>
+              {readerTypes.map(type => (
+                <option key={type.key} value={type.key}>{type.tier}</option>
+              ))}
+            </select>
           </section>
         </form>
         <p

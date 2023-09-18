@@ -32,6 +32,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.form select {
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+}
+
+.form select:focus {
+    outline: none;
 }
 
 .formfield {

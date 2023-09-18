@@ -17,3 +17,14 @@
     font-size: 40px;
     font-family: 'Pacifico', cursive;
 }
+
+@media screen and (max-width: 800px) {
+    .footer {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .footer h1 {
+        margin: 0;
+    }
+}

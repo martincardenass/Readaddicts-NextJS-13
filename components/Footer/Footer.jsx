@@ -13,7 +13,13 @@ const Footer = () => {
       </section>
       <section className={styles.footercontainer}>
         <b>Links</b>
-        <Link href='https://github.com/ItamCrdns' target='_blank' rel='noreferrer'>GitHub (source code)</Link>
+        <Link
+          href='https://github.com/ItamCrdns'
+          target='_blank'
+          rel='noreferrer'
+        >
+          GitHub (source code)
+        </Link>
         <Link href=''>LinkedIn</Link>
       </section>
     </footer>
