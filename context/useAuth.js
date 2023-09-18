@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   if (typeof window !== 'undefined') {
     tokenUser = window && window.localStorage.getItem('user')
   }
-  const [user, setUser] = useState(JSON.parse(tokenUser))
+  const [user, setUser] = useState(JSON.parse(tokenUser)) // ! Giving erro on deploy
   const [msg, setMsg] = useState({
     text: null,
     status: null,

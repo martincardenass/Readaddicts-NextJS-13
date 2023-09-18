@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar/Navbar'
+import Footer from '@/components/Footer/Footer'
 import { AuthProvider } from '@/context/useAuth'
 import { Fetcher } from '@/context/useFetcher'
 
@@ -20,10 +21,13 @@ export default function RootLayout ({ children }) {
       <title>Social Network</title>
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar />
-          <Fetcher>
-            {children}
-          </Fetcher>
+          <div style={{ flex: 1 }}>
+            <Navbar />
+            <Fetcher>
+              {children}
+            </Fetcher>
+          </div>
+          <Footer />
         </AuthProvider>
       </body>
     </html>

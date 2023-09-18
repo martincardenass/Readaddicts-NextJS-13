@@ -17,7 +17,7 @@ const UsersAndTiers = ({ users, tiers, searchParams }) => {
       <Tiers tiers={tiers} id={tier} />
       <section className={styles.users}>
         <ul>
-          {filteredUsers.map((user) => (
+          {filteredUsers?.map((user) => (
             <li key={user.user_Id}>
               <Link href={`/profile/${user.username}`}>
                 {user.profile_Picture

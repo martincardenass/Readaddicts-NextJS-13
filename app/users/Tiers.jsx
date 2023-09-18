@@ -2,12 +2,12 @@ import styles from './users.module.css'
 import Link from 'next/link'
 
 const Tiers = ({ tiers, id }) => {
-  const selectedTier = tiers.find((tier) => tier.tier_Id === parseInt(id))
+  const selectedTier = tiers?.find((tier) => tier.tier_Id === parseInt(id))
   return (
     <>
       <section className={styles.tiers}>
         <ul>
-          {tiers.map((tier) => (
+          {tiers?.map((tier) => (
             <li key={tier.tier_Id}>
               <Link
                 href={`/users?${new URLSearchParams({ tier: tier.tier_Id })}`}

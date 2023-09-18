@@ -48,6 +48,7 @@ const UserProfile = async (props) => {
           </span>
           <div className={styles.usernamecontainer}>
             <Header userdata={userdata} />
+            <p>{userdata.tier_Name}</p>
             {userdata?.last_Login && (
               <p className={styles.time}>Last seen {getTimeAgo(new Date(userdata?.last_Login).getTime())}</p>
             )}

@@ -49,7 +49,7 @@ const UpdateProfile = ({ params }) => {
     if (fieldsHaveChanged) {
       setLoading(true)
       const userFromtoken = window.localStorage.getItem('user')
-      const user = JSON.parse(userFromtoken)
+      const user = JSON.parse(userFromtoken) // ! Giving erro on deploy
 
       if (privateUser?.data?.username === name) {
         const newProfile = await patchProfile(formData)
