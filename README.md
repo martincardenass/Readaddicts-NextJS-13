@@ -1,34 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ReadAddicts
+*Web application for book lovers*
 
-## Getting Started
+# Introduction
+ReadAddicts creates a community where readers can share what they read.
 
-First, run the development server:
+![Main page](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_VwWkXbAJKz_x5lhfc.png)
+![Users](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_H6ADP2xrHN_tvp9dd.png)
+![Messages](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_Uwd9VQW5KF_clmqdd.png)
+![Read groups](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_twMnNiqMcu_vogfv8.png)
+![User posts](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_2pFfIoFpnw_pe5ioa.png)
+![Comments](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556766/chrome_ZgFG3Hsjw8_gmfxio.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+# Tech stack
+* React (frontend framework)
+* .NET (to build the backend)
+* SQL Server
+* Cloduinary (API to upload and retrieve images)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# List of features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Create posts
+* Create posts just in like any other social media.
+* Add images to your post.
+* Have other users leave comments about your post.
+### Reply on comments
+* Every comment can have their own reply. Infinitely.
+### Create and join groups
+* Invite users to your group.
+* Have a own comunnity with group posts only visible to group members.
+* Kick or ban members from your group.
+### Send and receive messages
+* See all your messages in one place, ordered by activity.
+### Filter posts and comments by user
+* Check users posts and comments inside their profile
