@@ -15,7 +15,7 @@ ReadAddicts creates a community where readers can share what they read.
 * React (frontend framework)
 * .NET (to build the backend)
 * SQL Server
-* Cloduinary (API to upload and retrieve images)
+* Cloudinary (API to upload and retrieve images)
 
 # List of features
 
