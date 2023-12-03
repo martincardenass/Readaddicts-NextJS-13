@@ -4,12 +4,12 @@
 # Introduction
 ReadAddicts creates a community where readers can share what they read.
 
-![Main page](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_VwWkXbAJKz_x5lhfc.png)
-![Users](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_H6ADP2xrHN_tvp9dd.png)
-![Messages](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_Uwd9VQW5KF_clmqdd.png)
-![Read groups](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_twMnNiqMcu_vogfv8.png)
-![User posts](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556765/chrome_2pFfIoFpnw_pe5ioa.png)
-![Comments](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701556766/chrome_ZgFG3Hsjw8_gmfxio.png)
+![Main page](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605655/chrome_lLkhJf0vbe_qw6zkr.png)
+![Users](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605656/chrome_SlxDl3WlAZ_j4v8hx.png)
+![Messages](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605655/chrome_zj4PlfRwns_phhdth.png)
+![Read groups](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605655/chrome_w0WBJLALWA_zw1n57.png)
+![User posts](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605655/chrome_9W9zvTkkFJ_xqhq2k.png)
+![Comments](https://res.cloudinary.com/dvu9fqdkn/image/upload/v1701605655/chrome_XBkFoEAVPa_f63kve.png)
 
 # Tech stack
 * React (frontend framework)
