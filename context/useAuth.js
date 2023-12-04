@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (e, username, password) => {
     e.preventDefault()
+    if (typeof window === 'undefined') return
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('user') // * Remove token and user from localStorage if they exist
 
