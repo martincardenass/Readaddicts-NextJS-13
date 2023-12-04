@@ -1,15 +1,11 @@
 'use client'
 import authenticate from '@/components/Login/authenticate'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  let tokenUser
-  if (typeof window !== 'undefined') {
-    tokenUser = window && window.localStorage.getItem('user')
-  }
-  const [user, setUser] = useState(JSON.parse(tokenUser)) // ! Giving erro on deploy
+  const [user, setUser] = useState() // ! Giving erro on deploy
   const [msg, setMsg] = useState({
     text: null,
     status: null,
@@ -17,6 +13,13 @@ export const AuthProvider = ({ children }) => {
     color: null,
     width: null
   })
+
+  useEffect(() => {
+    const user = window.localStorage.getItem('user')
+    if (user !== null) {
+      setUser(JSON.parse(user))
+    }
+  }, [window.localStorage])
 
   const handleLogin = async (e, username, password) => {
     e.preventDefault()
