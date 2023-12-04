@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   })
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const user = window.localStorage.getItem('user')
     if (user !== null) {
       setUser(JSON.parse(user))
